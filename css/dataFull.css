@@ -1,0 +1,127 @@
+.chart-box .title1 {
+  font-size: 17px;
+  font-weight: bold;
+  font-color: #404040;
+  height: 17px;
+  line-break: 17px;
+  margin-bottom: 36px;
+}
+.chart-box .title1:before {
+  display: inline-block;
+  content: " ";
+  width: 4px;
+  height: 20px;
+  background: #FF603B;
+  margin-right: 8px;
+  border-radius: 4px;
+  /* margin-top: 10px; */
+  margin-bottom: -4px;
+}
+.chart-box .title2 {
+  margin-bottom: 18px;
+  font-size: 16px;
+  color: #404040;
+}
+.chart-box .chart {
+  width: 68px;
+  display: inline-block;
+  margin-right: 8%;
+  margin-left: 8%;
+}
+/*.chart-box .chart:first-child {
+  margin-left: 120px;
+}*/
+.chart-box .chart{
+	/*width: 24%;*/
+}
+.chart-box .chart img {
+  width: 100%;
+  height: auto;
+}
+.chart-box .chart .text {
+  margin-bottom: 16px;
+  height: 34px;
+  line-height: 34px;
+  width: 68px;
+  border-radius: 3px;
+  border: 2px solid #7f9de9;
+  font-size: 18px;
+  font-weight: bold;
+  position: relative;
+  z-index: 2;
+  background: #fff;
+}
+.chart-box .chart .text .sanjiao {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  top: 27px;
+  left: 26px;
+  z-index: -1;
+  background: #fff;
+  border-radius: 3px;
+  border-bottom: 2px solid #000000;
+  border-right: 2px solid #000000;
+  transform: rotate(45deg);
+  -ms-transform: rotate(45deg);/* IE 9 */
+  -webkit-transform: rotate(45deg);/* Safari and Chrome */
+  -o-transform: rotate(45deg);/* Opera */
+  -moz-transform: rotate(45deg);
+  border-color: inherit;
+}
+.chart-box .chart .thin-text {
+  border-color: #7f9de9;
+}
+.chart-box .chart .normal-text {
+  border-color: #39c88a;
+}
+.chart-box .chart .overweight-text {
+  border-color: #ff9829;
+}
+.chart-box .chart .fat-text {
+  border-color: #ff455c;
+}
+.chart-box .chart .chart-pro {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  height: 10px;
+  border-radius: 5px;
+}
+.chart-box .chart .chart-pro .progress-bar {
+  height: inherit;
+  border-radius: 5px 0 0 0;
+}
+.chart-box .chart .percent {
+  margin-top: 25px;
+  color: #404040;
+  font-size: 28px;
+  line-height: 28px;
+}
+.chart-box .pro-box {
+  height: 18px;
+  border-radius: 9px;
+  margin-top: 36px;
+}
+.chart-box .thin-pro {
+  background: #7f9de9;
+}
+.chart-box .normal-pro {
+  background: #39c88a;
+}
+.chart-box .overweight-pro {
+  background: #ff9829;
+}
+.chart-box .fat-pro {
+  background: #ff455c;
+}
+.chart-box .cont-num {
+  margin-top: 12px;
+  width: 100%;
+  text-align: center;
+  font-size: 26px;
+  color: #767676;
+}
+.chart-box .cont-num #contNum {
+  color: #404040;
+}
+/*# sourceMappingURL=dataFull.css.map */

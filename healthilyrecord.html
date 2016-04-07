@@ -1,0 +1,360 @@
+<!--<!DOCTYPE html>-->
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="renderer" content="webkit">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="Keywords" content="体育,成绩,羚跑体育,中小学"/>
+		<title>健康成长档案 | 羚跑体育</title>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/mostly.css"/>
+		<link rel="stylesheet" type="text/css" href="css/jquery.mCustomScrollbar.css"/>
+        <link rel="stylesheet" type="text/css" href="css/confirm.css" />
+	</head>
+	<body>
+		<div class="container-fluid" id="health">
+			<div id="printF">
+				<div class="row header">
+				<div class="col-xs-8">
+					<div class="logo inline">
+						<img src="img/logomain.png" width="181" class="inline" />
+					</div>
+					<!--<div class="ul">
+						<ul>
+							<li>
+								<a href="personhealthyscore.html" >成绩报表</a>
+								<div></div>
+							</li>
+							<li><a href="healthilyrecord.html" class="checked">健康成长档案</a><div class="underline"></div></li>
+							<li><a href="dailytraining.html">日常训练</a><div></div></li>
+                            <li id="systemManageInfo"><a href="systemmanage.html">系统管理</a><div></div></li>
+						</ul>
+					</div>-->
+                    <div class="ul" id="nav_menu">
+                        <ul >
+
+                            <a href="personhealthyscore.html" >成绩报表</a>
+
+
+                            <a href="healthilyrecord.html" id="current_nav" class="checked">健康成长档案</a>
+                            <a href="dailytraining.html">日常训练</a>
+                            <a id="systemManageInfo" href="systemmanage.html">系统管理</a>
+                            <div class="underline" id="nav_animate_block"></div>
+                        </ul>
+                    </div>
+				</div>
+                <div class="pull-right">
+                    <div class="userInfo text-right">
+                        <div class="userImg" style="padding-top: 16px;">
+                           <!-- <div class="warn" id="messageInfo">
+                                <span class="colse" title="关闭提醒">×</span><span>距离系统到期还有<b>10</b>天</span>
+                            </div>-->
+                            <div style="cursor: pointer">
+                                <img src="img/person.png" width="42" id="quitLogin"/>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+				<div class="clearfix"></div>
+			</div>
+			<div class="clearfix"></div>
+			<div class="row function s_nv">
+             <!--   <div class="biaoT inline">
+                	<div class="biaoNow">
+                		<span class="biaoNow-ico perjk"></span>
+                		<a  href="##">个人健康评分表</a>
+                		<span class="biaoNow-ico more-dowun"></span>
+                		<div class="clearfix"></div>
+                	</div>
+                	<div class="biaoList">
+                		<img src="img/triangle.png" height="6" class="sj"/>
+                		<div>
+                			<img src="img/sjtj.png" width="12px"/>
+                		    <a href="##">数据统计</a>
+                		</div>
+                		<div>
+                			<img src="img/bjbang.png" width="12px"/>
+                		    <a href="##">各班成绩图</a>
+                		</div>
+                		<div>
+                			<img src="img/njbang.png" width="12px"/>
+                		    <a href="##">年级排行榜</a>
+                		</div>
+                	</div>
+                </div>-->
+               <div class="input inline" style="margin-left:55px" >
+                	<div id="yearId">
+                		<span class="h5">学年：</span><span class="cR" id="choiceYear"></span>
+                	    <img src="img/moredown_gray.png" width="7"/>
+                	</div>
+                	<div class="inputList" id="yearListId">
+                		<div class="list" >
+                			<!--<div><span>2016</span></div>
+	                		<div><span>2015</span></div>
+	                		<div><span>2014</span></div>
+	                		<div><span>2013</span></div>
+	                		<div><span>2012</span></div>
+	                		<div><span>2011</span></div>
+	                		<div><span>2010</span></div>
+	                		<div><span>2009</span></div>
+	                		<div><span>2008</span></div>
+	                		<div><span>2007</span></div>-->
+                		</div>
+                		<span class="now" id="nowYear">现在</span>
+                	</div>
+                </div>
+                <div class="input inline">
+                	<div id="termId">
+                		<span class="h5">学期：</span><span class="cR" id="choiceTerm"></span>
+                	    <img src="img/moredown_gray.png" width="7"/>  
+                	</div>
+                	
+                	<div class="inputList" id="termListId">
+                		<div class="list" >
+                            <div id="firstTerm"><span>第一学期</span></div>
+                            <div id="secondTerm"><span>第二学期</span></div>
+                		</div>
+                	</div>
+                </div>
+                <div class="input inline">
+                	<div id="gradeId">
+                		<span class="h5">年级：</span><span class="cR" id="choiceGrade"></span>
+                	    <img src="img/moredown_gray.png" width="7"/>
+                	</div>
+                	<div class="inputList" id="gradeListId">
+                		<div class="list" id="gradeListHtmlId">
+                			<!--<div><span>一年级</span></div>
+	                		<div><span>二年级</span></div>
+	                		<div><span>三年级</span></div>
+	                		<div><span>四年级</span></div>
+	                		<div><span>五年级</span></div>
+	                		<div><span>六年级</span></div>-->
+                		</div>
+                	</div>
+                </div>
+                <div class="input inline">
+                	<div id="classId"> 
+                		<span class="h5">班级：</span><span class="cR" id="choiceClass"></span>
+                	    <img src="img/moredown_gray.png" width="7"/>
+                	</div>
+                	
+                	<div class="inputList" id="classListId">
+                		<div class="list"  id="classListHtmlId">
+                			<div><span>1班</span></div>
+	                		<div><span>2班</span></div>
+	                		<div><span>3班</span></div>
+	                		<div><span>4班</span></div>
+	                		<div><span>5班</span></div>
+	                		<div><span>6班</span></div>
+	                		<div><span>7班</span></div>
+	                		<div><span>8班</span></div>
+	                		<div><span>9班</span></div>
+	                		<div><span>10班</span></div>
+                		</div>
+                	</div>
+                </div>
+                <div class="single inline" id="checkSex">
+                	<span style="padding-right: 7px;">性别：</span>
+                	<div class="inline md"><input type="radio" name="sex"  value="3" checked/><div></div></div>
+                	<span style="padding: 0 15px 0 3px;">全部</span>
+                	<div class="inline md"><input type="radio" name="sex"  value="1"/><div></div></div>
+                	<span style="padding: 0 15px 0 3px;">男</span>
+                	<div class="inline md"><input type="radio" name="sex"  value="2" /><div></div></div>
+                	<span style="padding: 0 15px 0 3px;">女</span>
+                </div>
+                <div class="so inline" id="personHealthLook">
+                	<a href="javascript:;"><img src="img/search.png" width="14"/>查看</a>
+                </div>
+			</div>
+			<div class="row text-center">
+				<span id="titleT">—————— 根据导入的成绩报表和提交的体测成绩，系统汇总产生以下报表
+ ——————</span>
+			</div>
+
+			</div>
+			
+
+			<div class="row tabT s_tabT">	
+				<div class="stu-list s_stu_list col-xs-2" id="printChildF">
+					<div class="scoll">
+					<ul id="childList" class="b">
+						<!--<li class="active"><a href="#" class="stu-name">张栋1<span class="stu-ico acitve"></span> </a></li>
+						<li><a href="#" class="stu-name">张栋2<span class="stu-ico"></span> </a></li>
+						<li><a href="#" class="stu-name">张栋3<span class="stu-ico"></span> </a></li>
+						<li><a href="#" class="stu-name">张栋4<span class="stu-ico"></span> </a></li>
+						<li><a href="#" class="stu-name">张栋5<span class="stu-ico"></span> </a></li>
+						<li><a href="#" class="stu-name">张栋6<span class="stu-ico"></span> </a></li>
+						<li><a href="#" class="stu-name">张栋<span class="stu-ico"></span> </a></li>
+						<li><a href="#" class="stu-name">张栋<span class="stu-ico"></span> </a></li>
+						<li><a href="#" class="stu-name">张栋<span class="stu-ico"></span> </a></li>
+						<li><a href="#" class="stu-name">张栋<span class="stu-ico"></span> </a></li>
+						<li><a href="#" class="stu-name">张栋<span class="stu-ico"></span> </a></li>
+						<li><a href="#" class="stu-name">张栋<span class="stu-ico"></span> </a></li>
+						<li><a href="#" class="stu-name">张栋<span class="stu-ico"></span> </a></li>
+						<li><a href="#" class="stu-name">张栋<span class="stu-ico"></span> </a></li>
+						<li><a href="#" class="stu-name">张栋<span class="stu-ico"></span> </a></li>
+						<li><a href="#" class="stu-name">张栋<span class="stu-ico"></span> </a></li>
+						<li><a href="#" class="stu-name">张栋<span class="stu-ico"></span> </a></li>
+						<li><a  class="stu-name">张栋<span class="stu-ico"></span> </a></li>-->
+					</ul>
+                    <div id="studentListId" style="font-size:14px;display:none;color:#adadad;margin-left: 27px;">暂无学生信息</div>
+                    </div>
+				</div>
+				<div class="col-xs-10 s_score"  id="printArea">
+					<h2 id="title">测试（合作学校）健康成长档案</h2>
+                    <div class="clearfix ">
+                    	 <a id="aPrint" class="aPrint" style="margin-top: -15px;margin-bottom: 20px;margin-right: 30px" >个人打印</a>
+                    	<a id="aPrint11" class="aPrint" style="margin-top: -15px;margin-bottom: 20px;margin-right: 30px" >全部打印</a>
+                       
+                    </div>
+					<div id="stuTabel">
+					<table class="healthTab"  id="stuInfoAddr">
+						<tr><td>姓名</td><td></td><td>班级</td><td></td></tr>
+						<tr><td>性别</td><td></td><td>年龄</td><td></td></tr>
+						<tr><td>学籍号</td><td></td><td>民族</td><td></td></tr>
+						<tr><td>学年</td><td></td><td>学期</td><td></td></tr>
+					</table>
+                        <table class="healthTab"  id="stuInfoAddrNoData" style="display:none">
+                            <tr><td>姓名</td><td></td><td>班级</td><td></td></tr>
+                            <tr><td>性别</td><td></td><td>年龄</td><td></td></tr>
+                            <tr><td>学籍号</td><td></td><td>民族</td><td></td></tr>
+                            <tr><td>学年</td><td></td><td>学期</td><td></td></tr>
+                        </table>
+
+					<table class="healthTab" id="healthItemList">
+						<tr><th colspan="6" style="border-top:none ;">健康指标体系</th></tr>
+						<tr><td>健康指标</td><td>单项指标</td><td>成绩</td><td>得分</td><td>国家级</td><td>健康指数(地区)</td></tr>
+
+
+						<tr><td rowspan="3">身体形态</td><td>身高(厘米)</td><td></td><td>/</td><td rowspan="3"></td><td rowspan="3"></td></tr>
+						<tr><td>体重(千克)</td><td></td><td>/</td></tr>
+						<tr><td>体重指数(BMI)</td><td></td><td>分</td></tr>
+
+
+
+						<tr><td>身体机能</td><td>肺活量(毫升)</td><td></td><td>分</td><td></td><td>级</td></tr>
+
+
+
+						<tr><td rowspan="3">身体体能</td><td>50米跑(秒)</td><td></td><td>分</td><td></td><td>级</td></tr>
+						<tr><td>坐立体前屈(厘米)</td><td></td><td>分</td><td></td><td>级</td></tr>
+						<tr><td>一分钟跳绳(次)</td><td></td><td>分</td><td></td><td>级</td></tr>
+
+
+						<tr><td colspan="3">总评</td><td>分</td><td></td><td>级</td></tr>
+						<tr><th colspan="6"><span id="sportSuggest">运动建议</span></th></tr>
+						<tr><td colspan="6">
+							<div class="imgCode">
+								<img src="img/code.png"/>
+								<span>运动指导App</span>
+							</div>
+							<div style="width: 100%;padding: 20px;">
+								<p align="left" style="color: red;text-indent: 15px;">建议扫描安装“运动指导”手机客户端，可以科学有效的协助孩子的日常训练。</p>
+								<p align="right" style="margin-top: 30px;color:rgba(50,20,30,.8);">签名：<span style="display:inline-block;width: 120px;border-bottom: 1px solid #ccc;"></span></p>
+							</div>
+						</td></tr>
+					</table>
+                        <table class="healthTab" id="healthItemListNoData" style="display:none">
+                            <tr><th colspan="6" style="border-top:none ;">健康指标体系</th></tr>
+                            <tr><td>健康指标</td><td>单项指标</td><td>成绩</td><td>得分</td><td>国家级</td><td>健康指数(地区)</td></tr>
+                            <tr><td rowspan="3">身体形态</td><td>身高(厘米)</td><td></td><td>/</td><td rowspan="3"></td><td rowspan="3"></td></tr>
+                            <tr><td>体重(千克)</td><td></td><td>/</td></tr>
+                            <tr><td>体重指数(BMI)</td><td></td><td>分</td></tr>
+                            <tr><td>身体机能</td><td>肺活量(毫升)</td><td></td><td>分</td><td></td><td>级</td></tr>
+                            <tr><td rowspan="3">身体体能</td><td>50米跑(秒)</td><td></td><td>分</td><td></td><td>级</td></tr>
+                            <tr><td>坐立体前屈(厘米)</td><td></td><td>分</td><td></td><td>级</td></tr>
+                            <tr><td>一分钟跳绳(次)</td><td></td><td>分</td><td></td><td>级</td></tr>
+                            <tr><td colspan="3">总评</td><td>分</td><td></td><td>级</td></tr>
+                            <tr><th colspan="6">运动处方</th></tr>
+                            <tr><td colspan="6">
+                                <div class="imgCode">
+                                    <img src="img/code.png"/>
+                                    <span>运动指导App</span>
+                                </div>
+                                <div style="width: 100%;padding: 20px;">
+                                    <p align="left" style="color: red;text-indent: 15px;">建议扫描安装“运动指导”手机客户端，可以科学有效的协助孩子的日常训练。</p>
+                                    <p align="right" style="margin-top: 100px;color:rgba(50,20,30,.8);">签名：<span style="display:inline-block;width: 120px;border-bottom: 1px solid #ccc;"></span></p>
+                                </div>
+                            </td></tr>
+                        </table>
+					</div>
+                    <!--startprint-->
+                    <div id="stuTabePrint" style="display: none">
+                        <div  class="stuInfo",style="margin-top:20px">
+                            <table class="healthTab">
+                                <tr><td>姓名</td><td></td><td>班级</td><td></td></tr>
+                                <tr><td>性别</td><td></td><td>年龄</td><td></td></tr>
+                                <tr><td>学籍号</td><td></td><td>民族</td><td></td></tr>
+                                <tr><td>学年</td><td></td><td>学期</td><td></td></tr>
+                            </table>
+
+
+                            <table class="healthTab" >
+                                <tr><th colspan="6" style="border-top:none ;">健康指标体系</th></tr>
+                                <tr><td>健康指标</td><td>单项指标</td><td>成绩</td><td>得分</td><td>国家级</td><td>健康指数(地区)</td></tr>
+
+
+                                <tr><td rowspan="3">身体形态</td><td>身高(厘米)</td><td></td><td>/</td><td rowspan="3"></td><td rowspan="3"></td></tr>
+                                <tr><td>体重(千克)</td><td></td><td>/</td></tr>
+                                <tr><td>体重指数(BMI)</td><td></td><td>分</td></tr>
+
+
+
+                                <tr><td>身体机能</td><td>肺活量(毫升)</td><td></td><td>分</td><td></td><td>级</td></tr>
+
+
+                                <tr><td rowspan="3">身体体能</td><td>50米跑(秒)</td><td></td><td>分</td><td></td><td>级</td></tr>
+                                <tr><td>坐立体前屈(厘米)</td><td></td><td>分</td><td></td><td>级</td></tr>
+                                <tr><td>一分钟跳绳(次)</td><td></td><td>分</td><td></td><td>级</td></tr>
+
+
+                                <tr><td colspan="3">总评</td><td>分</td><td></td><td>级</td></tr>
+                                <tr><th colspan="6">运动处方</th></tr>
+                                <tr><td colspan="6">
+                                    <div class="imgCode">
+                                        <img src="img/code.png"/>
+                                        <span>运动指导App</span>
+                                    </div>
+                                    <div style="width: 100%;padding: 20px;">
+                                        <p align="left" style="color: red;text-indent: 15px;">建议扫描安装“运动指导”手机客户端，可以科学有效的协助孩子的日常训练。</p>
+                                        <p align="right" style="margin-top: 100px;color:rgba(50,20,30,.8);">签名：<span style="display:inline-block;width: 120px;border-bottom: 1px solid #ccc;"></span></p>
+                                    </div>
+                                </td></tr>
+                            </table>
+                        </div>
+
+                    </div>
+                    <!--endprint-->
+				</div>
+				
+			</div>
+			<!--endprint-->	
+			<div id="printS">
+				<div class="row footer text-center navbar-fixed-bottom">
+				杭州羚跑体育&copy;2016
+			</div>
+			</div>
+			
+		</div>
+		<script src="js/common/jquery-2.1.4.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/common/bootstrap.min.js" type="text/javascript" charset="utf-8"></script><!--
+		<script src="js/common/ie10-viewport-bug-workaround.js" type="text/javascript" charset="utf-8"></script>-->
+        <script src="js/common/printarea.js?v=1" type="text/javascript" charset="utf-8"></script>
+		<script src="js/common/common.js?v=1" type="text/javascript" charset="utf-8"></script>
+		<script src="js/common/jquery.mCustomScrollbar.concat.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/common/confirm.js?v=1"  type="text/javascript" charset="utf-8"></script>
+        <script src="js/content/healthyrecord.js?v=1" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			(function($){
+				$(window).load(function(){
+					$(".scoll").mCustomScrollbar({
+					setHeight:523,
+					theme:"dark-3"
+				});
+				});
+			})(jQuery)
+		</script>
+	</body>
+</html>

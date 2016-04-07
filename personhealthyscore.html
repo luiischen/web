@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="Keywords" content="体育,成绩,羚跑体育,中小学" />
+    <title>成绩报表 | 羚跑体育</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/mostly.css" />
+    <link rel="stylesheet" type="text/css" href="css/confirm.css" />
+    <link rel="stylesheet" type="text/css" href="css/mostly.css" />
+    <link rel="stylesheet" media="print" type="text/css"  href="css/mostly.css" />
+
+        <style type="text/css" media="print">
+            </style>
+
+</head>
+<body>
+<!--<div class="row warn" id="messageInfo" style="text-align: center;display:none">
+    <span >距离系统到期还有10天！</span>
+    <span class="colse" title="关闭提醒">×</span>
+</div>-->
+
+<div class="container-fluid">
+	<div id="printF">
+		<div class="row header">
+        <div class="col-xs-10">
+            <div class="logo inline">
+                <img src="img/logomain.png" width="181" class="inline" />
+            </div>
+            <div class="ul" id="nav_menu">
+                <ul >
+
+                        <a href="personhealthyscore.html" id="current_nav" class="checked">成绩报表</a>
+
+
+                   <a href="healthilyrecord.html">健康成长档案</a>
+                    <a href="dailytraining.html">日常训练</a>
+                    <a  id="systemManageInfo" href="systemmanage.html">系统管理</a>
+                    <div class="underline" id="nav_animate_block"></div>
+                </ul>
+            </div>
+          <!--  <div class="pull-right warn" id="messageInfo">
+                <span class="colse" title="关闭提醒">×</span><span>距离系统到期还有<b>10</b>天</span>
+            </div>-->
+        </div>
+
+        <div class="pull-right">
+            <div class="userInfo text-right">
+                <div class="userImg">
+                    <!--<div class="warn" id="messageInfo">
+                        <span class="colse" title="关闭提醒">×</span><span>距离系统到期还有<b>10</b>天</span>
+                    </div>-->
+                    <div style="cursor: pointer">
+                        <img src="img/person.png" width="42" id="quitLogin"/>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="row function s_nv">
+        <div class="biaoT inline" style="margin-left:35px">
+            <div class="biaoNow">
+                <!--<img src="img/perjk.png" width="12"/>-->
+                <span class="biaoNow-ico perjk"></span>
+                <a id="personScore">个人健康评分表</a>
+                <img src="img/moredown_gray.png" width="7"/>
+
+            </div>
+            <div class="biaoList" id="biaoList">
+                <img src="img/triangle.png" height="6" class="sj"/>
+                <div id="dataCount">
+                    <img src="img/sjtj.png" width="12px"/>
+                    <a href="datafull.html">数据统计</a>
+                </div>
+                <div>
+                    <img src="img/bjbang.png" width="12px"/>
+                    <a href="clascschart.html">各班成绩图</a>
+                </div>
+                <div>
+                    <img src="img/njbang.png" width="12px"/>
+                    <a href="graderank.html">年级排行榜</a>
+                </div>
+            </div>
+        </div>
+        <div class="input inline" >
+            <div id="yearId">
+                <span class="h5">学年：</span><span class="cR" id="choiceYear"></span>
+                <img src="img/moredown_gray.png" width="7"/>
+            </div>
+            <div class="inputList" id="yearListId">
+                <div class="list">
+                    <!--<div><span>2016</span></div>
+                    <div><span>2015</span></div>
+                    <div><span>2014</span></div>
+                    <div><span>2013</span></div>
+                    <div><span>2012</span></div>
+                    <div><span>2011</span></div>
+                    <div><span>2010</span></div>
+                    <div><span>2009</span></div>
+                    <div><span>2008</span></div>
+                    <div><span>2007</span></div>-->
+                </div>
+                <span class="now" id="nowYear">现在</span>
+            </div>
+        </div>
+        <div class="input inline">
+            <div id="termId">
+                <span class="h5">学期：</span><span class="cR" id="choiceTerm">请选择</span>
+                <img src="img/moredown_gray.png" width="7"/>
+            </div>
+
+            <div class="inputList" id="termListId">
+                <div class="list" >
+                   <div id="firstTerm"><span>第一学期</span></div>
+                    <div id="secondTerm"><span>第二学期</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="input inline">
+            <div id="gradeId">
+                <span class="h5">年级：</span><span class="cR" id="choiceGrade"></span>
+                <img src="img/moredown_gray.png" width="7"/>
+            </div>
+            <div class="inputList" id="gradeListId">
+                <div class="list" id="gradeListHtmlId">
+                    <div><span>一年级</span></div>
+                    <div><span>二年级</span></div>
+                    <div><span>三年级</span></div>
+                    <div><span>四年级</span></div>
+                    <div><span>五年级</span></div>
+                    <div><span>六年级</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="input inline">
+            <div id="classId">
+                <span class="h5">班级：</span><span class="cR" id="choiceClass"></span>
+                <img src="img/moredown_gray.png" width="7"/>
+            </div>
+
+            <div class="inputList" id="classListId">
+                <div class="list" id="classListHtmlId">
+                    <!--<div><span>1班</span></div>
+                    <div><span>2班</span></div>
+                    <div><span>3班</span></div>
+                    <div><span>4班</span></div>
+                    <div><span>5班</span></div>
+                    <div><span>6班</span></div>
+                    <div><span>7班</span></div>
+                    <div><span>8班</span></div>
+                    <div><span>9班</span></div>
+                    <div><span>10班</span></div>-->
+                </div>
+            </div>
+        </div>
+        <div class="single inline" id="checkSex">
+            <span style="padding-right: 7px;">性别：</span>
+            <div class="inline md"><input type="radio" name="sex"  value="3" checked/><div></div></div>
+            <span style="padding: 0 15px 0 3px;">全部</span>
+            <div class="inline md"><input type="radio" name="sex"  value="1"/><div></div></div>
+            <span style="padding: 0 15px 0 3px;">男</span>
+            <div class="inline md"><input type="radio" name="sex"  value="2" /><div></div></div>
+            <span style="padding: 0 15px 0 3px;">女</span>
+        </div>
+        <div class="so inline" id="personHealthLook">
+            <a href="javascript:;"><img src="img/search.png" width="14"/>查看</a>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="row text-center">
+        <span id="titleT">—————— 根据导入的成绩报表和提交的体测成绩，系统汇总产生以下报表
+ ——————</span>
+    </div>
+	</div>
+    
+
+    <!--startprint-->
+    <div class="row paddingL paddingR tabT " id="printArea">
+        <div class="print">
+        <div class="col-xs-11">
+            <h2 id="title">XXX学年XXX学期XXX年级XX班级体质健康评分表</h2>
+        </div>
+        <div class="col-xs-1 aRight">
+            <a id="aPrint"  class="aPrint" target="_blank">打印</a>
+        </div>
+        <div class="col-xs-12">
+            <table class="table table-bordered" id="hasData" style="display:none;width: 100%;
+     margin: 0px auto;">
+                <tr id="personHealthTable">
+                   <!-- <th rowspan="2">学号</th>
+                    <th rowspan="2">姓名</th>
+                    <th rowspan="2">性别</th>
+                    <th colspan="3">一分钟跳绳( 分/个 )</th>
+                    <th colspan="3">坐立体前屈(厘米)</th>
+                    <th colspan="3">50米跑(秒)</th>-->
+                </tr>
+                <tr id='personHealthScore'>
+                   <!-- <td>成绩</td>
+                    <td>得分</td>
+                    <td>等级</td>
+                    <td>成绩</td>
+                    <td>得分</td>
+                    <td>等级</td>
+                    <td>成绩</td>
+                    <td>得分</td>
+                    <td>等级</td>-->
+                </tr>
+
+
+            </table>
+            <table class="table table-bordered" id="hasNoData" >
+                <tr >
+                    <th rowspan="2">学号</th>
+                    <th rowspan="2">姓名</th>
+                    <th rowspan="2">性别</th>
+                    <th colspan="3">一分钟跳绳( 分/个 )</th>
+                    <th colspan="3">坐立体前屈(厘米)</th>
+                    <th colspan="3">50米跑(秒)</th>
+                </tr>
+                <tr >
+                    <td>成绩</td>
+                    <td>得分</td>
+                    <td>等级</td>
+                    <td>成绩</td>
+                    <td>得分</td>
+                    <td>等级</td>
+                    <td>成绩</td>
+                    <td>得分</td>
+                    <td>等级</td>
+                </tr>
+
+            </table>
+            <div id="noDataList" style="text-align:center;font-size:14px;display: none;color:#adadad">暂无数据</div>
+        </div>
+        </div>
+    </div>
+    <!--endprint-->
+    <div id="printS">
+    	 <div class="row footer text-center navbar-fixed-bottom">
+        杭州羚跑体育&copy;2016
+    </div>
+    </div>
+   
+</div>
+
+<!-- <div class="quit" style="display:block">
+     <div class="user_tip">
+         <div class="img_person"></div>
+         <div class="tip_person">
+             <span class="user_name">张栋</span>
+             <div><div class="img_loct"></div><span class="school_name">远东第一小学</span></div>
+         </div>
+     </div>
+     <hr class="q_hr" />
+     <div class="fn_info">
+         <div class="q_h"><div class="img_change"></div><span>修改密码</span></div>
+         <hr class="q_hr" />
+         <div class="q_h"><div class="img_quit"></div><span>退出</span></div>
+     </div>
+ </div>-->
+<!--<div class="quit" style="display: none">
+    <img src="img/triangle.png" class="tc"/>
+    <div class="img_quit"></div><span>退出</span>
+</div>-->
+
+<script src="js/common/jquery-2.1.4.min.js" type="text/javascript" charset="utf-8"></script>
+
+<script src="js/common/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+<!--<script src="js/My97DatePicker/WdatePicker.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/common/ie10-viewport-bug-workaround.js" type="text/javascript" charset="utf-8"></script>-->
+<script src="js/common/printarea.js?v=1" type="text/javascript" charset="utf-8"></script>
+<script src="js/common/common.js?v=1" type="text/javascript" charset="utf-8"></script>
+<script src="js/common/confirm.js?v=1"  type="text/javascript" charset="utf-8"></script><!--
+        <script src="js/common/jquery.easing.1.3.js" type="text/javascript" charset="utf-8"></script>-->
+<script src="js/content/personhealthyscore.js?v=1" type="text/javascript" charset="utf-8"></script>
+</body>
+
+</html>

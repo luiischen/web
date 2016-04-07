@@ -1,0 +1,23 @@
+@charset "utf-8";
+.outMessage a{ text-decoration:none;}
+.outMessage{ margin:0; padding:0; font-family:"微软雅黑"; font-size:12px; color:#666;}
+.outMessage .table-border{ border-bottom:1px solid #eee;}
+.outMessage .table-border tr.tab-head{ background:#fff9f8; }
+.outMessage .table-border tr.tab-head td{ height:38px; line-height:38px; text-align:left;  padding:0 10px; font-weight:600; color:#333;}
+.outMessage .table-border tr td{ padding:10px;border-top:1px solid #eee;verflow:hidden;white-space:nowrap;text-overflow:ellipsis;-o-text-overflow:ellipsis; }
+.outMessage .table-border tr.tr-hover:hover{ background:#f5f5f5; }
+.outMessage .table-border tr.tr-hover:hover td{color:#061831}
+.outMessage .table-border tr td a{margin-right:10px; color:#fff; display:inline-block; padding:2px 10px; border:1px solid #ff603a; border-radius:3px; background:#ff603a}
+.outMessage .table-border tr td a:hover{ background:#fff; border:1px solid #ddd;color:#000}
+.outMessage .table-border tr.tr-hover td i{ font-style:normal; background:url(../img/icon.png) 0px -650px; width:16px; height:16px; display:inline-block; vertical-align:-2px;}
+.inMessage a{ text-decoration:none;}
+.inMessage{ margin:0; padding:0; font-family:"微软雅黑"; font-size:12px; color:#666;}
+.inMessage .table-border{ border-bottom:1px solid #eee;}
+.inMessage .table-border tr.tab-head{ background:#fff9f8; }
+.inMessage .table-border tr.tab-head td{ height:38px; line-height:38px; text-align:left;  padding:0 10px; font-weight:600; color:#333;}
+.inMessage .table-border tr td{ padding:10px;border-top:1px solid #eee;verflow:hidden;white-space:nowrap;text-overflow:ellipsis;-o-text-overflow:ellipsis; }
+.inMessage .table-border tr.tr-hover:hover{ background:#f5f5f5; }
+.inMessage .table-border tr.tr-hover:hover td{color:#061831}
+.inMessage .table-border tr td a{margin-right:10px; color:#fff; display:inline-block; padding:2px 10px; border:1px solid #ff603a; border-radius:3px; background:#ff603a}
+.inMessage .table-border tr td a:hover{ background:#fff; border:1px solid #ddd;color:#000}
+.inMessage .table-border tr.tr-hover td i{ font-style:normal; background:url(../img/icon.png) 0px -650px; width:16px; height:16px; display:inline-block; vertical-align:-2px;}

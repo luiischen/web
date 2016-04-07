@@ -1,0 +1,123 @@
+html {
+  height: 100%;
+}
+body {
+  padding: 0;
+  margin: 0;
+  background: url(../img/bg.png) center;
+  font: 16px/1.5 arial, "微软雅黑";
+  text-align: center;
+  height: 100%;
+}
+.box {
+  width: 408px;
+  position: absolute;
+  left:50%;
+  top:50%;
+  height:500px;
+  margin-left:-204px;
+  margin-top:-250px;
+  padding: 40px 22px;
+  text-align: center;
+  background-color: #f0f3fc;
+  opacity: 0.92;
+  border-radius: 6px
+
+}
+.box .login .logo img {
+  width: 100px;
+}
+.box .login .logo h5 {
+  margin: 20px auto 40px;
+  font-size: 14px;
+  color: #767676;
+}
+.box .login .input {
+  width: 100%;
+  position: relative;
+}
+.box .login .input input {
+  width: 100%;
+  height: 48px;
+  line-height: 48px;
+  text-indent: 14px;
+  font-size: 14px;
+  border: 1px solid #d7d7dd;
+  background-color: rgba(255, 255, 255, 0);
+}
+.box .login .input span {
+  display: block;
+  background-color: #f0f3fc;
+  position: absolute;
+  top: 16px;
+  left: 14px;
+  font-size: 14px;
+  color: #767676;
+  z-index: -1;
+  opacity: 0;
+}
+.hiddenUser{
+    display: none;
+    background-color: #f0f3fc;
+    position: absolute;
+   top:-8px;
+    font-size:12px;
+    z-index:101;
+    padding:0 6px;
+    color: #767676;
+    opacity: 1;
+    left:14px;
+
+}
+.box .login .check {
+  position: relative;
+  margin-top: 6px;
+  font-size: 12px;
+  text-align: left;
+}
+.box .login .check #img {
+  position: absolute;
+  top: 6px;
+  left: 0;
+  display: block;
+  background-image: url(../img/unselect.png);
+  background-size: cover;
+  width: 12px;
+  height: 12px;
+  z-index: -1;
+}
+.box .login .check input {
+  opacity: 0;
+  margin-right: 3px;
+  cursor: pointer;
+}
+.box .login .check input:checked #img {
+  background-image: url(../img/select.png);
+}
+.box .login #l_in {
+  font-size: 15px;
+  margin-top: 18px;
+  color: #faf0fa;
+  background: -webkit-linear-gradient(left, #ff522a, #f56240);
+  background: -o-linear-gradient(right, #ff522a, #f56240);
+  background: -moz-linear-gradient(right, #ff522a, #f56240);
+  background: linear-gradient(to right, #ff522a, #f56240);
+  letter-spacing: 3px;
+}
+.footer {
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  color: rgba(230, 240, 235, 0.7);
+  font-weight: 600;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+  .box .login .logo img {
+    width: 100px;
+  }
+}
+/*# sourceMappingURL=login.css.map */

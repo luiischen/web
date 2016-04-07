@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="renderer" content="webkit">
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="Keywords" content="体育,成绩,羚跑体育,中小学"/>
+		<title>日常训练 | 羚跑体育</title>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+		<link rel="stylesheet" href="css/mostly.css"  />
+        <link rel="stylesheet" type="text/css" href="css/confirm.css"/>
+	</head>
+	<body>
+		<div class="container-fluid">
+			<div class="row header">
+				<div class="col-xs-8">
+					<div class="logo inline">
+						<img src="img/logomain.png" width="181" class="inline" />
+					</div>
+                    <div class="ul" id="nav_menu">
+                        <ul >
+
+                            <a href="personhealthyscore.html" >成绩报表</a>
+
+
+                            <a href="healthilyrecord.html">健康成长档案</a>
+                            <a href="dailytraining.html" id="current_nav" class="checked">日常训练</a>
+                            <a   id="systemManageInfo" href="systemmanage.html">系统管理</a>
+                            <div class="underline" id="nav_animate_block"></div>
+                        </ul>
+                    </div>
+				</div>
+                <div class="pull-right">
+                    <div class="userInfo text-right">
+                        <div class="userImg">
+                           <!-- <div class="warn" id="messageInfo">
+                                <span class="colse" title="关闭提醒">×</span><span>距离系统到期还有<b>10</b>天</span>
+                            </div>-->
+                            <div style="cursor: pointer">
+                                <img src="img/person.png" width="42" id="quitLogin"/>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+				<div class="clearfix"></div>
+			</div>
+			<div class="clearfix"></div>
+            <div class="row function s_nv">
+
+                <div class="input inline" style="margin-left:41px">
+                    <div id="gradeId">
+                        <span class="h5">年级：</span><span class="cR" id="choiceGrade">请选择</span>
+                        <img src="img/moredown_gray.png" width="7"/>
+                    </div>
+                    <div class="inputList" id="gradeListId">
+                        <div class="list" id="gradeListHtmlId">
+                            <div><span>一年级</span></div>
+                            <div><span>二年级</span></div>
+                            <div><span>三年级</span></div>
+                            <div><span>四年级</span></div>
+                            <div><span>五年级</span></div>
+                            <div><span>六年级</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="input inline">
+                    <div id="classId">
+                        <span class="h5">班级：</span><span class="cR" id="choiceClass">请选择</span>
+                        <img src="img/moredown_gray.png" width="7"/>
+                    </div>
+
+                    <div class="inputList" id="classListId">
+                        <div class="list" id="classListHtmlId">
+                            <!--<div><span>1班</span></div>
+                            <div><span>2班</span></div>
+                            <div><span>3班</span></div>
+                            <div><span>4班</span></div>
+                            <div><span>5班</span></div>
+                            <div><span>6班</span></div>
+                            <div><span>7班</span></div>
+                            <div><span>8班</span></div>
+                            <div><span>9班</span></div>
+                            <div><span>10班</span></div>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="so inline" id="checkDetail">
+                    <a href="javascript:;"><img src="img/search.png" width="14"/>查看</a>
+                </div>
+                </div>
+            </div>
+			<!--startprint-->
+			<div class="row paddingL paddingR day_data">
+				<div class="col-xs-5 day_tr">
+					<div class="vline"></div><div class="day_title";style="float:left"><div style="float:left">日常训练完成率</div><div class="no_data"><img src="img/warning.png"style="width: 19px;height: 19px;margin-left: 6px;margin-top: -3px;"/><span class="no-info">示例图标,暂无真实数据</span></div></div>
+				</div>
+				<div class="col-xs-7 text-right day_tr">
+					<div class="select_box">
+						<span>最近</span>
+						<div class="select_group">
+							<div class="over">7天</div><div class="def">30天</div><div class="def">90天</div><div class="def">半年</div><div class="def">一年</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12">
+					<div id="day_chart"></div><div></div>
+				</div>
+			</div>
+			<!--endprint-->
+			<div class="row footer text-center navbar-fixed-bottom">
+				杭州羚跑体育&copy;2016
+			</div>
+		</div>
+		<script src="js/common/jquery-2.1.4.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/common/bootstrap.min.js" type="text/javascript" charset="utf-8"></script><!--
+		<script src="js/common/ie10-viewport-bug-workaround.js" type="text/javascript" charset="utf-8"></script>-->
+		<script src="js/common/common.js?v=1" type="text/javascript" charset="utf-8"></script>
+        <script src="js/common/confirm.js?v=1"  type="text/javascript" charset="utf-8"></script>
+		<script src="js/common/echarts.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/content/dailycomplete.js?v=1" type="text/javascript" charset="utf-8"></script>
+	</body>
+</html>
