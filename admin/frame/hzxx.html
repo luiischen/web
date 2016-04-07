@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>合作学校管理</title>
+		<link rel="stylesheet" type="text/css" href="../css/bootstrap.css" />
+		<link rel="stylesheet" type="text/css" href="../css/default.css" />
+		<link rel="stylesheet" type="text/css" href="../css/icon.css" />
+		<script src="../js/jquery-2.1.4.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery.easyui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/lang-zhCN.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/app.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery.form.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/My97DatePicker/WdatePicker.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/config.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/hzxx.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<table id="tab" data-options="toolbar:'#search'"></table>
+		<div id="search">
+			<div>
+                                学校名称：
+				<input type="text" id="schoolName" name="schoolName" />
+				省：
+				<select id="schoolProvinceId" name="schoolProvinceId">
+					<option value="">--全部--</option>
+				</select>
+				市：
+				<select id="schoolCityId" name="schoolCityId">
+					<option value="">--全部--</option>
+				</select>
+				区：
+				<select id="schoolCountyId" name="schoolCountyId">
+					<option value="">--全部--</option>
+				</select>
+				<a href="javascript:searchData();" class="easyui-linkbutton"><img src="../css/icons/search.png" style="vertical-align: text-top;padding-right: 5px;" />查询</a>
+			</div>
+			<div>
+				<a href="javascript:void(0)" onclick="setR()" class="easyui-linkbutton" plain="true"><span class="setE"></span>密码重置(123456)</a>
+				<a href="javascript:void(0)" onclick="edit()" class="easyui-linkbutton" plain="true"><span class="edit"></span>编辑</a>
+				<a href="javascript:void(0)" onclick="del()" class="easyui-linkbutton" plain="true"><span class="delE"></span>删除</a>
+			</div>
+		</div>
+		<!--模板-->
+		<div class="mb" data-options="region:'center',border:false" style="padding:10px;background:#fff;border:1px solid #ccc;">
+			<form id="form" name="form">
+				<table class="tk">
+					<!--模板内容-->
+					<tr id="row1"><td style="font-size: 18px;"></td><th></th></tr>
+					<tr id="row4"><th>协议生效日期:</th><td><input name="dateS" id="dateS" type="text" class="req" form="form" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'dateE\')||\'2099-10-01\'}',readOnly:true})" required></td></tr>
+					<tr id="row5"><th>协议失效日期:</th><td><input type="text" name="dateE" id="dateE" value="" class="req" form="form" required onfocus="WdatePicker({minDate:'#F{$dp.$D(\'dateS\')}',maxDate:'2099-10-01',readOnly:true})"/></td></tr>
+					<tr id="row6"><th>是否启用账号:</th>
+						<td>
+						   <select  id="is_do" name="is_cooperate" class="req" form="form">
+								<option value="1">是</option>
+								<option value="0">否</option>
+							</select>
+					    </td>
+					</tr>
+					<tr id="row7"><th>是否属于试用:</th>
+						<td>
+							<select  id="is_test" name="is_cooperate" class="req" form="form">
+								<option value="1">是</option>
+								<option value="0" selected>否</option>
+							</select>
+						</td>
+					</tr>
+					<tr id="row8"><th>到期提醒:</th><td><input id="due" type="text" class="req" form="form" required></td></tr>
+				</table>
+			</form>
+		</div>
+	</body>
+</html>

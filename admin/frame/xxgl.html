@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>学校管理</title>
+		<link rel="stylesheet" type="text/css" href="../css/bootstrap.css" />
+		<link rel="stylesheet" type="text/css" href="../css/default.css" />
+		<link rel="stylesheet" type="text/css" href="../css/icon.css" />
+		<script src="../js/jquery-2.1.4.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery.easyui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/lang-zhCN.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/app.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery.form.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/config.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/xxgl.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<table id="tab" data-options="toolbar:'#search'"></table>
+		<div id="search">
+			<div>
+				学校名称：
+				<input type="text" id="schoolName" name="school.schoolName"/> 
+				省：
+				<select id="school_provinceId">
+					<option value="">--请选择--</option>
+				</select>
+				市：
+				<select id="school_cityId">
+					<option value="">--请选择--</option>
+				</select>
+				区：
+				<select id="school_countyId">
+					<option value="">--请选择--</option>
+				</select>
+
+				<a href="javascript:searchData()" class="easyui-linkbutton"><img src="../css/icons/search.png" style="vertical-align: text-top;padding-right: 5px;" />查询</a>
+			</div>
+			<div>
+				<a href="javascript:void(0)" onclick="add()" class="easyui-linkbutton" plain="true"><span class="addE"></span>增加</a>
+				<a href="javascript:void(0)" onclick="edit()" class="easyui-linkbutton" plain="true"><span class="edit"></span>编辑</a>
+				<a href="javascript:void(0)" onclick="del()" class="easyui-linkbutton" plain="true"><span class="delE"></span>删除</a>
+			</div>
+		</div>
+		<!--模板-->
+		<div class="mb" data-options="region:'center',border:false" style="padding:10px;background:#fff;border:1px solid #ccc;">
+			<form id="form" name="form">
+				<table class="tk">
+					<tr id="row1">
+						<td>省：</td>
+						<td>
+							<select required="true" id="schoolP" name="province" class="req" form="form">
+								<option value="" selected>--请选择--</option>
+							</select>
+						</td>
+					</tr>
+					<tr id="row2">
+						<td>市：</td>
+						<td>
+							<select  required="true" id="schoolC" name="city" class="req" form="form">
+								<option value="">--请选择--</option>
+							</select>
+						</td>
+					</tr>
+					<tr id="row3">
+						<td>区：</td>
+						<td>
+							<select  required="true" id="schoolA" name="district" class="req" form="form">
+								<option value="">--请选择--</option>
+							</select>
+						</td>
+					</tr>
+					<tr id="row4">
+						<td>学校名称：</td>
+						<td>
+							<input  required="true" type="text" id="schoolM" name="school" value="" size="50" maxlength="20" class="req" form="form"/>
+						</td>
+					</tr>
+					<tr id="row5">
+						<td>是否是合作学校：</td>
+						<td>
+							<select  id="schoolW" name="is_cooperate" class="req" form="form">
+								<option value="1">是</option>
+								<option value="0">否</option>
+							</select>
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</body>
+</html>

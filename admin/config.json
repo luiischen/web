@@ -1,0 +1,3 @@
+{"area":{"province":"http://172.16.130.178:3000/get_province","city":"http://172.16.130.178:3000/get_city","district":"http://172.16.130.178:3000/get_district"},
+ "school":{"school":"http://172.16.130.178:3000/get_school","addSchool":"http://172.16.130.178:3000/add_school","delSchool":"http://172.16.130.178:3000/del_school","editSchool":"http://172.16.130.178:3000/mod_school"},
+ "grade":{"grade":"http://172.16.130.178:3000/get_grade","addGrade":"http://172.16.130.178:3000/add_school","delGrade":"http://172.16.130.178:3000/del_grade","editGrade":"http://172.16.130.178:3000/mod_grade"}}

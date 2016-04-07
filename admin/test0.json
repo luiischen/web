@@ -1,0 +1,1 @@
+[{"id":"1","name":"陕西省","description":"陕西省是钥匙形","state":"closed","children":[{"id":"5","name":"西安市","description":"古都"},{"id":"6","name":"宝鸡市","description":"著名的重工业基地"}]},{"id":"2","name":"北京市","description":"中国的首都","state":"closed","children":[{"id":"5","name":"北京市","description":"北平"},{"id":"6","name":"市辖区","description":"beijing"}]}]

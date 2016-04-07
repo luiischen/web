@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>试用学校管理</title>
+		<link rel="stylesheet" type="text/css" href="../css/bootstrap.css" />
+		<link rel="stylesheet" type="text/css" href="../css/default.css" />
+		<link rel="stylesheet" type="text/css" href="../css/icon.css" />
+		<script src="../js/jquery-2.1.4.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery.easyui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/lang-zhCN.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/app.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery.form.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/My97DatePicker/WdatePicker.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/config.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/xtsy.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<table id="tab" data-options="toolbar:'#search'"></table>
+		<div id="search">
+			<div>
+                                学校名称：
+				<input type="text" id="schoolName" name="xtsy.schoolName" />
+				省：
+				<select id="schoolProvinceId" name="xtsy.schoolProvinceId">
+					<option value="00">--全部--</option>
+					<option value="5">直辖市</option>
+					<option value="6">特别行政区</option>
+					<option value="34">安徽</option>
+					<option value="35">福建</option>
+					<option value="62">甘肃</option>
+					<option value="44">广东</option>
+					<option value="45">广西</option>
+					<option value="52">贵州</option>
+					<option value="46">海南</option>
+					<option value="13">河北</option>
+					<option value="41">河南</option>
+					<option value="23">黑龙江</option>
+					<option value="42">湖北</option>
+					<option value="43">湖南</option>
+					<option value="22">吉林</option>
+					<option value="32">江苏</option>
+					<option value="36">江西</option>
+					<option value="21">辽宁</option>
+					<option value="15">内蒙古</option>
+					<option value="64">宁夏</option>
+					<option value="63">青海</option>
+					<option value="37">山东</option>
+					<option value="14">山西</option>
+					<option value="61">陕西</option>
+					<option value="51">四川</option>
+					<option value="71">台湾</option>
+					<option value="54">西藏</option>
+					<option value="65">新疆</option>
+					<option value="53">云南</option>
+					<option value="11">北京</option>
+					<option value="31">上海</option>
+					<option value="33">浙江</option>
+					<option value="12">天津</option>
+					<option value="50">重庆</option>
+					<option value="81">香港</option>
+					<option value="82">澳门</option>
+				</select>
+				市：
+				<select id="schoolCityId" name="xtsy.schoolCityId">
+					<option value="">--全部--</option>
+				</select>
+				区：
+				<select id="schoolCountyId" name="xtsy.schoolCountyId">
+					<option value="">--全部--</option>
+				</select>
+				<a href="javascript:searchData()" class="easyui-linkbutton"><img src="../css/icons/search.png" style="vertical-align: text-top;padding-right: 5px;" />查询</a>
+			</div>
+			<div>
+				<a href="javascript:void(0)" onclick="add()" class="easyui-linkbutton" plain="true"><span class="addE"></span>增加</a>
+				<a href="javascript:void(0)" onclick="edit()" class="easyui-linkbutton" plain="true"><span class="edit"></span>编辑</a>
+				<a href="javascript:void(0)" onclick="del()" class="easyui-linkbutton" plain="true"><span class="delE"></span>删除</a>
+				<a href="javascript:void(0)" onclick="setR()" class="easyui-linkbutton" plain="true"><span class="setE"></span>密码重置(123456)</a>
+				<a href="javascript:void(0)" onclick="use(1)" class="easyui-linkbutton" plain="true"><span class="doE"></span>启用</a>
+				<a href="javascript:void(0)" onclick="use(0)" class="easyui-linkbutton" plain="true"><span class="noE"></span>禁用</a>
+			</div>
+		</div>
+		<!--模板-->
+		<div class="mb" data-options="region:'center',border:false" style="padding:10px;background:#fff;border:1px solid #ccc;">
+			<form id="form" name="form">
+				<table class="tk">
+					<!--模板内容-->
+					<tr><th>学校名称:</th><td><input name="schoolName" type="text" class="req" form="form" required></td></tr>
+					<tr><th>账号:</th><td><input name="account" type="text" class="req" form="form" required></td></tr>
+					<tr><th>协议生效日期:</th><td><input name="dateS" type="text" class="req" form="form" onfocus="WdatePicker({readOnly:true})" required></td></tr>
+					<tr><th>试用天数:</th><td><input type="text" name="days" id="days" value="" class="req" form="form" required/></td></tr>
+					<tr><th>到期提醒:</th><td><input name="due" type="text" class="req" form="form" required></td></tr>
+					<tr><th>地区：</th>
+						<td>
+							省：<select name="provinceName" form="form" class="req" required><option value="">--请选择--</option></select>
+							市：<select name="cityName" form="form" class="req" required><option value="">--请选择--</option></select>
+							区：<select name="countyName" form="form" class="req" required><option value="">--请选择--</option></select>
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</body>
+
+</html>

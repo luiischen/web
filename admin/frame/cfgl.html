@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>建议指导管理</title>
+		<link rel="stylesheet" type="text/css" href="../css/bootstrap.css" />
+		<link rel="stylesheet" type="text/css" href="../css/default.css" />
+		<link rel="stylesheet" type="text/css" href="../css/icon.css" />
+		<script src="../js/jquery-2.1.4.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery.easyui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/lang-zhCN.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/app.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery.form.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/cfgl.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<table id="tab" data-options="toolbar:'#search'"></table>
+		<div id="search">
+			<div>
+				<a href="javascript:searchData()" class="easyui-linkbutton"><img src="../css/icons/search.png" style="vertical-align: text-top;padding-right: 5px;" />查询</a>
+			</div>
+			<div>
+				<a href="javascript:void(0)" onclick="add()" class="easyui-linkbutton" plain="true"><span class="addE"></span>增加</a>
+				<a href="javascript:void(0)" onclick="edit()" class="easyui-linkbutton" plain="true"><span class="edit"></span>编辑</a>
+				<a href="javascript:void(0)" onclick="del()" class="easyui-linkbutton" plain="true"><span class="delE"></span>删除</a>
+			</div>
+		</div>
+		<!--模板-->
+		<div class="mb" data-options="region:'center',border:false" style="padding:10px;background:#fff;border:1px solid #ccc;">
+			<form id="form" name="form">
+				<table class="tk">
+					<tr>
+						<td>问题：</td>
+						<td>
+							<input required="true" type="text" id="question.name" name="question" value="1. 最佳发展项目4以上，身体形态标准，其他指数均在4以上。" style="width:445px" class="req" form="form"/>
+						</td>
+					</tr>
+
+					<tr>
+						<td>分类：</td>
+						<td>
+							最佳发展项目（坐位体前屈）
+							<select name="question.zjType" class="sel">
+								<option value="0" selected> 指数均为4以上</option>
+								<option value="1"> 指数均为3.2.1</option>
+							</select>
+							<br/> 身体形态（身高标准体重）
+							<select name="question.xtType" class="sel">
+								<option value="0" selected> 标准</option>
+								<option value="1"> 肥胖</option>
+								<option value="2"> 营养不良</option>
+							</select>
+							<br/> 其他体能项目（50米跑、1分钟跳绳）
+							<select name="question.tnType" class="sel">
+								<option value="0" selected> 指数均在4以上</option>
+								<option value="1"> 指数50米跑4以上，1分钟跳绳4以下</option>
+								<option value="2"> 指数50米跑4以下，1分钟跳绳4以上</option>
+								<option value="3"> 指数均为3.2.1</option>
+							</select>
+						</td>
+					</tr>
+
+					<tr>
+						<td>建议：</td>
+						<td>
+							<textarea required="true" name="solve" style="width:445px;height:150px" class="req" form="form"> 最佳发展项目指数均为4以上，身体形态标准，其他指数均在4以上。</textarea>
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>学校账号管理</title>
+		<link rel="stylesheet" type="text/css" href="../css/bootstrap.css" />
+		<link rel="stylesheet" type="text/css" href="../css/default.css" />
+		<link rel="stylesheet" type="text/css" href="../css/icon.css" />
+		<script src="../js/jquery-2.1.4.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery.easyui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/lang-zhCN.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/app.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/LoginAjaxService.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+			$(function() {
+				$('#tab').datagrid({
+					url: 'teacher!dataList.action',
+					title: '学校账号列表',
+					fitColumns: true,
+					collapsible: true, //是否可折叠的 
+					fit: true, //自动大小
+					nowrap: false,
+					rownumbers: false,
+					frozenColumns: [
+						[{
+							field: 'id',
+							checkbox: true
+						}, ]
+					],
+					showFooter: true,
+					pagination: true,
+					pageSize: 30,
+					pageList: [10, 20, 30, 40, 50],
+					columns: [
+						[{
+							field: 'userphone',
+							title: '账号',
+							width: 80,
+							align: 'center'
+						}, {
+							field: 'username',
+							title: '姓名',
+							width: 80,
+							align: 'center'
+						}, {
+							field: 'schoolName',
+							title: '所属学校',
+							width: 80,
+							align: 'center'
+						}, {
+							field: 'statusName',
+							title: '状态',
+							width: 80,
+							align: 'center'
+						}, {
+							field: 'manger',
+							title: '主账号',
+							width: 80,
+							align: 'center',
+							formatter: function(v, r) {
+								if (v == '1') {
+									return '是';
+								}
+								if (v == '0') {
+									return '否';
+								}
+							}
+						}, {
+							field: 'cdate',
+							title: '注册时间',
+							width: 80,
+							align: 'center'
+						}]
+					]
+				});
+				$('#tab').datagrid('getPager').pagination({
+					displayMsg: '当前显示{from} - {to}条记录   共{total}条记录',
+					onBeforeRefresh: function(pageNumber, pageSize) {
+						$(this).pagination('loading');
+						$(this).pagination('loaded');
+					}
+				});
+			});
+
+			function searchData() {
+				$("#tab").datagrid('load', {
+					'teacher.provinceId': $("#teacher_provinceId").val(),
+					'teacher.username': $("#username").val(),
+					'teacher.userphone': $("#userphone").val(),
+					'teacher.cityId': $("#teacher_cityId").val(),
+					'teacher.status': $("#teacher_status").val(),
+					'teacher.schoolId': $("#teacher_schoolId").val(),
+					'teacher.countyId': $("#teacher_countyId").val()
+				})
+			}
+
+			function add() {
+				OpenWin('新增学校账号', 'teacher!input.action', 380, 200, true);
+			}
+
+			function edit() {
+				var row = $("#tab").datagrid('getSelected');
+				if (row) {
+					OpenWin('编辑学校账号', 'teacher!input.action?id=' + row.id, 380, 200, true);
+				} else {
+					$.messager.alert('系统提示', '请选中编辑项', 'warning');
+				}
+			}
+
+			function del() {
+				var rows = $("#tab").datagrid('getSelections');
+				if (rows.length) {
+					$.messager.confirm('提示', '是否删除选中数据？', function(s) {
+						if (s) {
+							var parm = [];
+							$.each(rows, function(n, row) {
+								parm.push(row.id);
+							})
+							$.post('teacher!delete.action', "ids=" + parm, function(data) {
+								if (data.result) {
+									$('#tab').datagrid('reload');
+									Message('操作成功!');
+								} else {
+									Message('操作失败!');
+								}
+							}, 'json')
+						}
+					})
+				} else {
+					$.messager.alert('系统提示', '请选中删除项', 'warning');
+				}
+			}
+			$(document).ready(function() {
+				$("#teacher_provinceId").change(function() {
+					var pid = $(this).val();
+					$("#teacher_cityId option").remove();
+					$("#teacher_cityId").append('<option value="">--请选择--</option>');
+					if (!pid) return;
+					AreaAjaxService.selectArea(pid, function(data) {
+						if (data && data.length > 0) {
+							for (i = 0; i < data.length; i++) {
+								var ob = data[i];
+								var option = '<option value="' + ob.id + '"   >' + ob.name + '</option>';
+								$("#teacher_cityId").append(option);
+							}
+						}
+					});
+				});
+				$("#teacher_cityId").change(function() {
+					var pid = $(this).val();
+					$("#teacher_countyId option").remove();
+					$("#teacher_countyId").append('<option value="">--请选择--</option>');
+					if (!pid) return;
+					AreaAjaxService.selectArea(pid, function(data) {
+						if (data && data.length > 0) {
+							for (i = 0; i < data.length; i++) {
+								var ob = data[i];
+								var option = '<option value="' + ob.id + '"   >' + ob.name + '</option>';
+								$("#teacher_countyId").append(option);
+							}
+						}
+					});
+				});
+				$("#teacher_countyId").change(function() {
+					var provinceId = $("#teacher_provinceId").val();
+					var cityId = $("#teacher_cityId").val();
+					var countyId = $("#teacher_countyId").val();
+					$("#teacher_schoolId option").remove();
+					$("#teacher_schoolId").append('<option value="">--请选择--</option>');
+					if (!countyId) return;
+					SchoolAjaxService.queryList(provinceId, cityId, countyId, function(data) {
+						if (data && data.length > 0) {
+							for (i = 0; i < data.length; i++) {
+								var ob = data[i];
+								var option = '<option value="' + ob.id + '"   >' + ob.schoolName + '</option>';
+								$("#teacher_schoolId").append(option);
+							}
+						}
+					});
+				});
+			});
+		</script>
+	</head>
+
+	<body>
+		<table id="tab" data-options="toolbar:'#search'"></table>
+		<div id="search">
+			<div>
+				省：
+				<select id="teacher_provinceId">
+					<option value="">--全部--</option>
+					<option value="5">直辖市</option>
+					<option value="6">特别行政区</option>
+					<option value="7">安徽</option>
+					<option value="8">福建</option>
+					<option value="9">甘肃</option>
+					<option value="10">广东</option>
+					<option value="11">广西</option>
+					<option value="12">贵州</option>
+					<option value="13">海南</option>
+					<option value="14">河北</option>
+					<option value="15">河南</option>
+					<option value="16">黑龙江</option>
+					<option value="17">湖北</option>
+					<option value="18">湖南</option>
+					<option value="19">吉林</option>
+					<option value="20">江苏</option>
+					<option value="21">江西</option>
+					<option value="22">辽宁</option>
+					<option value="23">内蒙古</option>
+					<option value="24">宁夏</option>
+					<option value="25">青海</option>
+					<option value="26">山东</option>
+					<option value="27">山西</option>
+					<option value="28">陕西</option>
+					<option value="29">四川</option>
+					<option value="30">台湾</option>
+					<option value="31">西藏</option>
+					<option value="32">新疆</option>
+					<option value="33">云南</option>
+					<option value="35">北京</option>
+					<option value="36">上海</option>
+					<option value="37">天津</option>
+					<option value="38">重庆</option>
+					<option value="39">香港</option>
+					<option value="40">澳门</option>
+				</select>
+
+				市：
+				<select id="teacher_cityId">
+					<option value="">--全部--</option>
+				</select>
+
+				区：
+				<select id="teacher_countyId">
+					<option value="">--全部--</option>
+				</select>
+
+				学校：
+				<select id="teacher_schoolId">
+					<option value="">--全部--</option>
+				</select>
+
+				状态：
+				<select id="teacher_status">
+					<option value="">--全部--</option>
+					<option value="1">申请中</option>
+					<option value="2">使用中</option>
+					<option value="3">受限</option>
+				</select>
+
+				姓名：
+				<input type="text" id="username" name="teacher.username" /> 账号：
+				<input type="text" id="userphone" name="teacher.userphone" />
+				<a href="javascript:searchData()" class="easyui-linkbutton"><img src="../css/icons/search.png" style="vertical-align: text-top;padding-right: 5px;" />查询</a>
+			</div>
+			<div>
+				<a href="javascript:void(0)" onclick="add()" class="easyui-linkbutton" plain="true"><span class="addE"></span>增加</a>
+				<a href="javascript:void(0)" onclick="edit()" class="easyui-linkbutton" plain="true"><span class="edit"></span>编辑</a>
+				<a href="javascript:void(0)" onclick="del()" class="easyui-linkbutton" plain="true"><span class="delE"></span>删除</a>
+			</div>
+		</div>
+	</body>
+
+</html>

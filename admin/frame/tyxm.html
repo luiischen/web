@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>体育项目管理</title>
+		<link rel="stylesheet" type="text/css" href="../css/bootstrap.css" />
+		<link rel="stylesheet" type="text/css" href="../css/default.css" />
+		<link rel="stylesheet" type="text/css" href="../css/icon.css" />
+		<script src="../js/jquery-2.1.4.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery.easyui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/lang-zhCN.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/app.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery.form.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/config.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/tyxm.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<table id="tab" data-options="toolbar:'#search'"></table>
+		<div id="search">
+			<div>
+				体育项目：
+				<input type="text" id="indexName" name="indexTerm" />
+
+				<a href="javascript:searchData()" class="easyui-linkbutton"><img src="../css/icons/search.png" style="vertical-align: text-top;padding-right: 5px;" />查询</a>
+			</div>
+			<div>
+				<a href="javascript:void(0)" onclick="add()" class="easyui-linkbutton" plain="true"><span class="addE"></span>增加</a>
+				<a href="javascript:void(0)" onclick="edit()" class="easyui-linkbutton" plain="true"><span class="edit"></span>编辑</a>
+				<a href="javascript:void(0)" onclick="del()" class="easyui-linkbutton" plain="true"><span class="delE"></span>删除</a>
+			</div>
+		</div>
+		<!--模板-->
+		<div class="mb" data-options="region:'center',border:false" style="padding:10px;background:#fff;border:1px solid #ccc;">
+			<form id="form" name="form">
+				<div style="width:100%;padding-bottom:49px ">
+					<table class="tk">
+						<tr>
+							<th>
+								类别：
+							</th>
+							<td>
+								<input type="radio" form="form" name="type" class="cc req" value="0" checked /> 国家项目
+								<input type="radio" form="form" name="type" class="cc req" value="1" disabled/> 个性化项目
+							</td>
+						</tr>
+						<tr>
+							<th>
+								选择健康指标：
+							</th>
+							<td>
+								<select class="req" id="healthN" name="hiId" form="form" required>
+									<option value="">
+										--请选择--
+									</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th>
+								项目编号：
+							</th>
+							<td>
+								<input class="req" type="text" id="tryNo" name="indexN" value="" size="50" form="form" required/>
+							</td>
+						</tr>
+						<tr>
+							<th>
+								项目名称：
+							</th>
+							<td>
+								<input class="req" type="text" id="tryCon" name="indexNo" value="" size="50" form="form" required/>
+							</td>
+						</tr>
+						<tr>
+							<th>
+								单位：
+							</th>
+							<td>
+								<input class="req" type="text" id="units" name="units" value="" size="50" form="form" required/>
+							</td>
+						</tr>
+						<tr>
+							<th>
+								训练方向：
+							</th>
+							<td>
+								<input class="req" type="text" id="direction" name="direction" value="" size="50" form="form"/>
+							</td>
+						</tr>
+						<tr>
+							<th>
+								APP图标1：
+							</th>
+							<td>
+								<input class="req" type="text" id="app" size="50" form="form"/>
+							</td>
+						</tr>
+						<tr>
+							<th>
+								APP图标2：
+							</th>
+							<td>
+								<input class="req" type="text" id="app2" size="50" form="form"/>
+							</td>
+						</tr>
+						<tr>
+							<th>
+								运动指导页面：
+							</th>
+							<td>
+								<input class="req" type="text" id="zd" size="50" form="form"/>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</form>
+		</div>
+	</body>
+</html>

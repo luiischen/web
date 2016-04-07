@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>数据库备份</title>
+		<link rel="stylesheet" type="text/css" href="../css/bootstrap.css" />
+		<link rel="stylesheet" type="text/css" href="../css/default.css" />
+		<link rel="stylesheet" type="text/css" href="../css/icon.css" />
+		<script src="../js/jquery-2.1.4.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery.easyui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/lang-zhCN.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/app.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/LoginAjaxService.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+			 $(function(){
+			 $('#tab').datagrid({
+				url: 'bkinfo!dataList.action?bkinfo.type=1',
+				title: '备份任务列表',
+				fitColumns: true,
+				collapsible:true,//是否可折叠的 
+				fit: true,//自动大小
+				nowrap:false,
+				rownumbers:false,
+				frozenColumns:[[ 
+                	{field:'id',checkbox:true}, 
+				]], 
+				showFooter:true,
+				pagination:true,
+				pageSize:30,
+				pageList: [10, 20, 30, 40, 50],
+				columns:[[
+					{field:'title',title:'任务名称',width:80,align:'center'},
+						{field:'name',title:'数据库',width:80,align:'center'},
+				
+					
+					{field:'starttime',title:'执行时间',width:80,align:'center',
+						formatter:function(o,r){
+							if(r.timetype=='0'){
+								return	'每天 '+r.starttime;
+							}else if(r.timetype=='1'){
+								return	'每周一 '+r.starttime;
+							}else if(r.timetype=='2'){
+								return	'每周二 '+r.starttime;
+							}else if(r.timetype=='3'){
+								return	'每周三 '+r.starttime;
+							}else if(r.timetype=='4'){
+								return	'每周四 '+r.starttime;
+							}else if(r.timetype=='5'){
+								return	'每周五 '+r.starttime;
+							}else if(r.timetype=='6'){
+								return	'每周六 '+r.starttime;
+							}else if(r.timetype=='7'){
+								return	'每周日 '+r.starttime;
+							}else{
+								return	r.timetype+' '+r.starttime;
+							}
+						}
+					},
+					{field:'reservesdays',title:'保留记录数',width:80,align:'center'},
+					
+					{field:'bkpath',title:'备份存放路径',width:80,align:'center'},
+					{field:'action',title:'操作',width:80,align:'center',
+						formatter:function(o,r){
+							return '<a href="javascript:void(0)" onclick="detailList('+r.id+')">备份历史</a>&nbsp;'+
+							'<a href="javascript:void(0)" onclick="startBK('+r.id+')">立即备份</a>';
+						}
+					}
+				]]
+			});
+			
+			$('#tab').datagrid('getPager').pagination({
+			    displayMsg:'当前显示{from} - {to}条记录   共{total}条记录',
+			    onBeforeRefresh:function(pageNumber, pageSize){
+			     $(this).pagination('loading');
+			     $(this).pagination('loaded');
+			    }
+			 });
+			
+		});	   
+		function detailList(id){
+			OpenWin('备份历史','bkhistory.action?bkhistory.bkinfoId='+id,700,380,true);
+		}
+		
+		function startBK(id){
+			$.messager.confirm('提示','立即执行？',function(s){
+				$.post('bkinfo!satrtSave.action',"bkinfo.id="+id,function(data){
+					if(data.result){
+						Message('操作成功!');
+					}else{
+						Message('操作失败!');
+					}
+				},'json')
+			})
+		}
+		
+		function searchData(){
+			$("#tab").datagrid('load',{
+				'bkinfo.name':$("#name").val(),
+				'bkinfo.type':$("#type").val()
+			})
+		}
+		
+		function add(){
+			OpenWin('新增备份任务','bkinfo!input.action?bkinfo.type=1',700,380,true);
+		}
+		 
+		function edit(){
+			var row = $("#tab").datagrid('getSelected');
+			if(row){
+				OpenWin('编辑备份任务','bkinfo!input.action?id='+row.id,700,380,true);
+			}else{
+				$.messager.alert('系统提示','请选中编辑项','warning');
+			}
+		}
+		
+		function del(){
+			var rows = $("#tab").datagrid('getSelections');
+			if(rows.length){
+				$.messager.confirm('提示','是否删除选中数据？',function(s){
+					if(s){
+						var parm=[];
+						$.each(rows,function(n,row){
+							parm.push(row.id);
+						})
+						$.post('bkinfo!delete.action',"ids="+parm,function(data){
+							if(data.result){
+								$('#tab').datagrid('reload');
+								Message('操作成功!');
+							}else{
+								Message('操作失败!');
+							}
+						},'json')
+					}
+				})
+			}else{
+				$.messager.alert('系统提示','请选中删除项','warning');
+			}
+		}
+        </script>
+    </head>
+    <body>
+    	<table id="tab" data-options="toolbar:'#search'"></table>
+    	<div id="search">
+			<div>
+				<input type="hidden" id="type" name="bkinfo.type" value="1" />
+					数据库：
+					<select name="bkinfo.name">
+	        	      <option value="">--全部--</option>
+	        	      		<option value="information_schema">information_schema</option>	
+	        	      		<option value="antelope">antelope</option>	
+	        	      		<option value="mysql">mysql</option>	
+	        	     </select>
+				<a href="javascript:searchData()" class="easyui-linkbutton"><img src="../css/icons/search.png" style="vertical-align: text-top;padding-right: 5px;" />查询</a>
+			</div>
+			<div>
+				<a href="javascript:void(0)" onclick="add()" class="easyui-linkbutton" plain="true"><span class="addE"></span>增加</a>
+				<a href="javascript:void(0)" onclick="edit()" class="easyui-linkbutton" plain="true"><span class="edit"></span>编辑</a>
+				<a href="javascript:void(0)" onclick="del()" class="easyui-linkbutton" plain="true"><span class="delE"></span>删除</a>
+			</div>
+		</div>
+	</body>
+
+</html>

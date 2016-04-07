@@ -1,0 +1,9 @@
+{"area":{"province":"http://121.41.47.79:3000/get_province","city":"http://121.41.47.79:3000/get_city","district":"http://121.41.47.79:3000/get_district"},
+ "school":{"school":"http://121.41.47.79:3000/get_school","addSchool":"http://121.41.47.79:3000/add_school","delSchool":"http://121.41.47.79:3000/del_school","editSchool":"http://121.41.47.79:3000/mod_school"},
+ "grade":{"grade":"http://121.41.47.79:3000/get_grade","addGrade":"http://121.41.47.79:3000/add_grade","delGrade":"http://121.41.47.79:3000/del_grade"},
+ "classR":{"classR":"http://121.41.47.79:3000/get_class","addClassR":"http://121.41.47.79:3000/add_class","delClassR":"http://121.41.47.79:3000/del_class"},
+ "contract":{"contract":"http://121.41.47.79:3000/get_contract","addContract":"http://121.41.47.79:3000/add_contract","delContract":"http://121.41.47.79:3000/del_contract","editContract":"http://121.41.47.79:3000/mod_contract","resetC":"http://121.41.47.79:3000/reset_default_password"},
+ "health":{"health":"http://121.41.47.79:3000/get_health_item","addHealth":"http://121.41.47.79:3000/add_health_item","delHealth":"http://121.41.47.79:3000/del_health_item"},
+ "sport":{"sport":"http://121.41.47.79:3000/get_sport_item","addSport":"http://121.41.47.79:3000/add_sport_item","delSport":"http://121.41.47.79:3000/del_sport_item","editSport":"http://121.41.47.79:3000/mod_sport_item"},
+ "level":{"level":"http://121.41.47.79:3000/get_score_level","addLevel":"http://121.41.47.79:3000/add_score_level","delLevel":"http://121.41.47.79:3000/del_score_level","editLevel":"http://121.41.47.79:3000/mod_score_level"}
+ }

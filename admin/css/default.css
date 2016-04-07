@@ -1,0 +1,84 @@
+@charset "utf-8";
+*{font-size:12px; font-family:Tahoma,Verdana,"微软雅黑","黑体"}
+body{background:#D2E0F2; }
+a{ color:Black; text-decoration:none;}
+a:hover{ color:Red; text-decoration:underline;}
+.textbox03 {border: #878787 1px solid;padding: 4px 3px;font:Verdana, Geneva, sans-serif,"微软雅黑";line-height: 14px; background-color: #fff;  height: auto; font-size: 14px;  font-weight: bold; width: 190px; }
+
+.txt01{font:Verdana, Geneva, sans-serif,"微软雅黑";padding:3px 2px 2px 2px; border-width:1px; border-color:#ddd;  color:#000;}
+.txt {border: #878787 1px solid;padding: 4px 3px;font:Verdana, Geneva, sans-serif,"微软雅黑";line-height: 14px; background-color: #fff;  height: auto; font-size: 14px;}
+.footer{text-align:center;color:#15428B; margin:0px; padding:0px;line-height:23px; font-weight:bold;}
+
+.head a{color:White;text-decoration:underline;}
+
+.navlist{list-style-type:none;margin:0px; padding:0px 5px;}
+.navlist li{ padding:0px;}
+.navlist li a{line-height:24px;}
+.navlist li div{margin:2px 0px;padding-left:10px;padding-top:1px; border:1px dashed #ffffff;}
+.navlist li div.hover{border:1px dashed #99BBE8; background:#E0ECFF;cursor:pointer;}
+.navlist li div.hover a{color:#416AA3;}
+.navlist li div.selected{border:1px solid #99BBE8; background:#E0ECFF;cursor:default;}
+.navlist li div.selected a{color:#416AA3; font-weight:bold;}
+
+
+.third_ul{ list-style-type:none;margin:0px; padding:0px; display:none;}
+.third_ul li{ padding-left:20px;}
+
+.icon{ background:url(../icon/tabicons.png) no-repeat;width:18px; line-height:18px; display:inline-block;}
+.icon-sys{ background-position:0px -200px;}
+.icon-set{ background-position:-380px -200px;}
+.icon-add{background-position: -20px 0px;}
+
+.icon-nav{background-position: -100px -20px; }
+.icon-users{background-position: -100px -480px;}
+.icon-role{background-position: -360px -200px;}
+.icon-set{background-position: -380px -200px;}
+.icon-log{background-position: -380px -80px;}
+
+.icon-delete{ background-position:-140px -120px;}
+.icon-edit{ background-position:-380px -320px;}
+.icon-magic{ background-position:0px -500px;}
+.icon-database{ background-position:-20px -140px;}
+
+
+.icon-arrow{ background:url('../icon/arrow.gif') no-repeat right;}
+
+.leadp{
+
+	height: 16px;
+    overflow: hidden;
+	float:right;
+    width: auto;
+}
+
+.leadp a {
+	background: url("../icon/accordion_arrows.png") no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    height: 16px;
+    margin: 0 0 0 2px;
+    opacity: 0.6;
+    vertical-align: top;
+    width: 16px;
+}
+.nav_menu_list .panel-tool{
+right: 18px;
+}
+
+.addE{background: url(icons/tools.gif) no-repeat 0px -1200px !important;display: inline-block;width: 16px;height: 16px;vertical-align: text-bottom;padding-right: 2px;}
+.edit{background: url(icons/tools.gif) no-repeat 0px -1232px !important;display: inline-block;width: 16px;height: 16px;vertical-align: text-bottom;padding-right: 2px;}
+.delE{background: url(icons/tools.gif) no-repeat 0px -1216px !important;display: inline-block;width: 16px;height: 16px;vertical-align: text-bottom;padding-right: 2px;}
+.setE{background: url(icons/tools.gif) no-repeat 0px -336px !important;display: inline-block;width: 16px;height: 16px;vertical-align: text-bottom;padding-right: 2px;}
+.doE{background: url(icons/tools.gif) no-repeat 0px -640px !important;display: inline-block;width: 16px;height: 16px;vertical-align: text-bottom;padding-right: 2px;}
+.noE{background: url(icons/tools.gif) no-repeat 0px -1344px !important;display: inline-block;width: 16px;height: 16px;vertical-align: text-bottom;padding-right: 2px;}
+
+
+.aBtn{border: 1px solid #bbb;color: #444;font-size: 12px;border-radius: 5px;padding: 5px 15px;cursor: pointer;margin:5px 5px 15px;display: inline-block;text-decoration: none;}
+.aBtn:hover{text-decoration: none;background-color:rgba(240,250,250,.5);color:blue;}
+#cl{margin-right: 30px;}
+#qR{position: absolute;bottom: 0;width: 100%;text-align: right;border-top:1px solid #ddd ;background-color: #f1f1f1;}
+
+.mb,.mbb{display: none;}
+.tk{margin: 10px 0 0 10px;}
+.tk tr{margin: 5px 0;}
+.tk th{text-align: right;}
+[type="radio"]{margin: 0 2px 0 5px;vertical-align: text-bottom;}
