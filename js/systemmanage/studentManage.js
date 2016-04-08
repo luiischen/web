@@ -324,7 +324,7 @@ SystemStuManage.prototype.defalutSearchData = function(pageIndex) {
     var url = getURL()+"search_student";
     var schoolId = localStorage.getItem("schoolId");
     var data = {"input":inputVal,"school_id":schoolId,"cls":classRoomId,"grade":gradeRoomId,"page":pageIndex};
-
+    console.log("class:::",data)
     $.ajax({
         data: data,
         type: "post",

@@ -75,8 +75,14 @@ function loginIn(){
                                     var month = nowDate.getMonth()+1;
                                     var date = nowDate.getDate();
                                     var str1 = year+"-"+month+"-"+date;
-                                    $("#numDate").html(DateDiff(data.data.day,str1))
-                                    if(DateDiff(data.data.day,str1)<=0){
+                                   // $("#numDate").html(DateDiff(data.data.day,str1))
+                                    var leftDate = 0;
+                                    if(isNaN(DateDiff(data.data.day,str1))){
+                                        leftDate=10
+                                    }else{
+                                        leftDate=DateDiff(data.data.day,str1);
+                                    }
+                                    if(leftDate<=0){
                                         new  ModelCon("您的合同已经到期,如果您想继续使用,请您续费");
                                         //css("height",175+"px")
                                         $(".mod_wapper").animate({"height" : 175},0);
@@ -139,8 +145,8 @@ $(document).ready(function(){
             })
         }
     }
-
-    localStorage.removeItem("schoolName");
+   // localStorage.clear();
+   localStorage.removeItem("schoolName");
     localStorage.removeItem("userName");
     localStorage.removeItem("schoolId");
     localStorage.removeItem("is_root");

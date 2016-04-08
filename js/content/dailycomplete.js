@@ -3,6 +3,9 @@
  * @author By Lyq
  * @content For 日常训练
  */
+function hideList() {
+    $(".inputList").slideUp(300);
+}
 window.onload = function() {
     var gradeNameModel = [];
     var classNameModel = [];
@@ -22,6 +25,7 @@ window.onload = function() {
         $("#classListHtmlId").html($($("#classListHtmlId div")[0]).text());
     }
     $("#gradeId").on("click", function(e) {
+        hideList();
         if ($("#gradeListId").css("display") != "block") {
             $("#gradeListId").slideDown(500);
             $("#gradeId img").attr("src", "img/moreup_gray.png");
@@ -65,12 +69,13 @@ window.onload = function() {
             })
         }(index)
 
-    })
 
-    $(document).click(function(event) {
-        $("#gradeListId").slideUp(500);
-        $("#gradeId img").attr("src", "img/moredown_gray.png");
     })
+        $(document).click(function(event) {
+            $("#gradeListId").slideUp(500);
+            $("#gradeId img").attr("src", "img/moredown_gray.png");
+        })
+
     }
     //班级
     PersonHealth.prototype.getPersonListClass = function() {
@@ -84,6 +89,7 @@ window.onload = function() {
     }
 
     $("#classId").on("click", function(e) {
+        hideList();
         if ($("#classListId").css("display") != "block") {
             $("#classListId").slideDown(500);
             $("#classId img").attr("src", "img/moreup_gray.png");
@@ -166,63 +172,39 @@ window.onload = function() {
         $("#classListHtmlId").html($($("#classListHtmlId div")[0]).text());
     }*/
     }
-    var url = getURL() + "get_user_class";
-    var school=localStorage.getItem("schoolName");
-    var name = localStorage.getItem("userName")
-    var is_root = localStorage.getItem("is_root")
-    var dataSchoolInfo ={"name":name,"schoolName":school,"is_root":is_root};
-    var data = {
-        "account": name
-    };
+    $(document).ready(function(){
+        var url = getURL() + "get_user_class";
+        var school=localStorage.getItem("schoolName");
+        var name = localStorage.getItem("userName")
+        var is_root = localStorage.getItem("is_root")
+        var dataSchoolInfo ={"name":name,"schoolName":school,"is_root":is_root};
+        var data = {
+            "account": name
+        };
 
-    getStuInfo(dataSchoolInfo)
-    $.ajax({
-        data: data,
-        type: "post",
-        url: url,
-        success: function (dataRes) {
-            if(dataRes.header.code=="200"){
+        getStuInfo(dataSchoolInfo)
+        $.ajax({
+            data: data,
+            type: "post",
+            url: url,
+            success: function (dataRes) {
+                if(dataRes.header.code=="200"){
 
-                if($.trim(dataRes.data.user_class[0])!=""){
-                    classAndGrade(dataRes.data.user_class);
-                    //alert("获取数据失败")
-                }else {
-                    // new Notice("获取数据失败");
-                    new ModelCon("获取数据失败，请刷新重试");
-                    $(".isCancleOk").hide();
-                    $(".isSure").off().on("click", function () {
-                        window.location.href = "dailytraining.html";
-                    })
-                    return;
-                }
-                var detail = new PersonHealth();
-                detail.getPersonListGrade();
-                detail.getPersonListClass();
-                var grade = $("#choiceGrade").text();
-                var classRoom = $("#choiceClass").text();
-                var classId="";
-
-                if($.trim(grade)=="全部年级" && $.trim(classRoom)=="全部班级"){
-                    classId="";
-
-                }
-                if($.trim(grade)!="全部年级" && $.trim(classRoom)=="全部班级"){
-                    classId = gradeBrrClass[$.trim(grade)];
-                }else{
-                    classId = grade + "," + classRoom;
-
-                    classId = dataBrr[classId];
-                }
-
-
-                new Daily(document.getElementById("day_chart"),classId);
-
-                /*var comp = $("#complate")
-                 console.log(comp)
-                 if(comp=="undefined%"){
-                 $("#complate").html("暂无数据")
-                 }*/
-                $("#checkDetail").on("click",function(){
+                    if($.trim(dataRes.data.user_class[0])!=""){
+                        classAndGrade(dataRes.data.user_class);
+                        //alert("获取数据失败")
+                    }else {
+                        // new Notice("获取数据失败");
+                        new ModelCon("获取数据失败，请刷新重试");
+                        $(".isCancleOk").hide();
+                        $(".isSure").off().on("click", function () {
+                            window.location.href = "dailytraining.html";
+                        })
+                        return;
+                    }
+                    var detail = new PersonHealth();
+                    detail.getPersonListGrade();
+                    detail.getPersonListClass();
                     var grade = $("#choiceGrade").text();
                     var classRoom = $("#choiceClass").text();
                     var classId="";
@@ -233,55 +215,54 @@ window.onload = function() {
                     }
                     if($.trim(grade)!="全部年级" && $.trim(classRoom)=="全部班级"){
                         classId = gradeBrrClass[$.trim(grade)];
-                    }else{
+                    }else if($.trim(grade)!="全部年级" && $.trim(classRoom)!="全部班级"){
                         classId = grade + "," + classRoom;
 
                         classId = dataBrr[classId];
                     }
-                    new Daily(document.getElementById("day_chart"),classId);
-                });
-                $(document).keydown(function(e){
-	if (!e) {
-    	     e = window.event; 
-    	    }
-    if ((e.keyCode || e.which) == 13) {
-        var grade = $("#choiceGrade").text();
-        var classRoom = $("#choiceClass").text();
-        var classId="";
+                    //new Daily(document.getElementById("day_chart"),classId);
+                    getDefaultChart(classId)
+                    $("#checkDetail").on("click",function(){
+                        var grade = $("#choiceGrade").text();
+                        var classRoom = $("#choiceClass").text();
+                        var classIdClick="";
 
-        if($.trim(grade)=="全部年级" && $.trim(classRoom)=="全部班级"){
-            classId="";
+                        if($.trim(grade)=="全部年级" && $.trim(classRoom)=="全部班级"){
+                            classIdClick="";
 
-        }
-        if($.trim(grade)!="全部年级" && $.trim(classRoom)=="全部班级"){
-            classId = gradeBrrClass[$.trim(grade)];
-        }else{
-            classId = grade + "," + classRoom;
+                        }
+                        if($.trim(grade)!="全部年级" && $.trim(classRoom)=="全部班级"){
+                            classIdClick = gradeBrrClass[$.trim(grade)];
+                        }else if($.trim(grade)!="全部年级" && $.trim(classRoom)!="全部班级"){
+                            classIdClick = grade + "," + classRoom;
 
-            classId = dataBrr[classId];
-        }
-                    new Daily(document.getElementById("day_chart"),classId);
-                    console.log("copm111::",$("#complate").html())
-    }
-   
-})
-            }else{
-                new  ModelCon("获取数据失败，请刷新重试");
-                $(".isCancleOk").hide();
-                $(".isSure").off().on("click",function(){
+                            classIdClick = dataBrr[classIdClick];
+                        }
+                          //  new Daily(document.getElementById("day_chart"),classIdClick);
+                        getDefaultChart(classIdClick)
+
+
+                    });
+
+                }else{
+                    new  ModelCon("获取数据失败，请刷新重试");
                     $(".isCancleOk").hide();
-                    $(".mod_wapper").hide();
-                    window.location.href = "dailytraining.html";
+                    $(".isSure").off().on("click",function(){
+                        $(".isCancleOk").hide();
+                        $(".mod_wapper").hide();
+                        window.location.href = "dailytraining.html";
 
-                })
-                return;
+                    })
+                    return;
+                }
+
+
+
+
             }
+        });
+    })
 
-
-
-
-        }
-    });
     ////日期时间的计算
     function getDuringDate(num,num1){
         var date = new Date();
@@ -323,13 +304,239 @@ window.onload = function() {
            }
 
         }
-        console.log(dataFort)
         return dataFort;
         
     }
+    var DayChart = function (){
 
 
+    }
+    DayChart.prototype.days_one = function(){
+        this.days= 7;
+        var grade = $("#choiceGrade").text();
+        var classRoom = $("#choiceClass").text();
+        var classId="";
 
+        if($.trim(grade)=="全部年级" && $.trim(classRoom)=="全部班级"){
+            classId="";
+
+        }
+        if($.trim(grade)!="全部年级" && $.trim(classRoom)=="全部班级"){
+            classId = gradeBrrClass[$.trim(grade)];
+        }else if($.trim(grade)!="全部年级" && $.trim(classRoom)!="全部班级"){
+            classId = grade + "," + classRoom;
+
+            classId = dataBrr[classId];
+        }
+        var defaultChart =  new Daily(document.getElementById("day_chart"),classId);
+        defaultChart.get_ajax(classId,this.days);
+        defaultChart.sbool = true;
+        defaultChart.smooth = false;
+
+        setInterval(function(){
+            if("undefined%" == $(".day_ty").html()){
+                $(".day_ty").html("暂无数据")
+            }
+        },100)
+    }
+    DayChart.prototype.days_one = function(){
+        this.days= 7;
+        var grade = $("#choiceGrade").text();
+        var classRoom = $("#choiceClass").text();
+        var classId="";
+
+        if($.trim(grade)=="全部年级" && $.trim(classRoom)=="全部班级"){
+            classId="";
+
+        }
+        if($.trim(grade)!="全部年级" && $.trim(classRoom)=="全部班级"){
+            classId = gradeBrrClass[$.trim(grade)];
+        }else if($.trim(grade)!="全部年级" && $.trim(classRoom)!="全部班级"){
+            classId = grade + "," + classRoom;
+
+            classId = dataBrr[classId];
+        }
+        var defaultChart =  new Daily(document.getElementById("day_chart"),classId);
+        defaultChart.get_ajax(classId,this.days);
+        defaultChart.sbool = true;
+        defaultChart.smooth = false;
+
+        setInterval(function(){
+            if("undefined%" == $(".day_ty").html()){
+                $(".day_ty").html("暂无数据")
+            }
+        },100)
+    }
+    DayChart.prototype.days_four = function(){
+        this.days= 180;
+        var grade = $("#choiceGrade").text();
+        var classRoom = $("#choiceClass").text();
+        var classId="";
+
+        if($.trim(grade)=="全部年级" && $.trim(classRoom)=="全部班级"){
+            classId="";
+
+        }
+        if($.trim(grade)!="全部年级" && $.trim(classRoom)=="全部班级"){
+            classId = gradeBrrClass[$.trim(grade)];
+        }else if($.trim(grade)!="全部年级" && $.trim(classRoom)!="全部班级"){
+            classId = grade + "," + classRoom;
+
+            classId = dataBrr[classId];
+        }
+        var defaultChart =  new Daily(document.getElementById("day_chart"),classId);
+        defaultChart.get_ajax(classId,this.days);
+        defaultChart.sbool = true;
+        defaultChart.smooth = false;
+
+        setInterval(function(){
+            if("undefined%" == $(".day_ty").html()){
+                $(".day_ty").html("暂无数据")
+            }
+        },100)
+    }
+    DayChart.prototype.days_two = function(){
+        this.days= 30;
+        var grade = $("#choiceGrade").text();
+        var classRoom = $("#choiceClass").text();
+        var classId="";
+
+        if($.trim(grade)=="全部年级" && $.trim(classRoom)=="全部班级"){
+            classId="";
+
+        }
+        if($.trim(grade)!="全部年级" && $.trim(classRoom)=="全部班级"){
+            classId = gradeBrrClass[$.trim(grade)];
+        }else if($.trim(grade)!="全部年级" && $.trim(classRoom)!="全部班级"){
+            classId = grade + "," + classRoom;
+
+            classId = dataBrr[classId];
+        }
+        var defaultChart =  new Daily(document.getElementById("day_chart"),classId);
+        defaultChart.get_ajax(classId,this.days);
+        defaultChart.sbool = true;
+        defaultChart.smooth = false;
+        setInterval(function(){
+            if("undefined%" == $(".day_ty").html()){
+                $(".day_ty").html("暂无数据")
+            }
+        },100)
+    }
+    DayChart.prototype.days_three = function(){
+        this.days= 90;
+        var grade = $("#choiceGrade").text();
+        var classRoom = $("#choiceClass").text();
+        var classId="";
+
+        if($.trim(grade)=="全部年级" && $.trim(classRoom)=="全部班级"){
+            classId="";
+
+        }
+        if($.trim(grade)!="全部年级" && $.trim(classRoom)=="全部班级"){
+            classId = gradeBrrClass[$.trim(grade)];
+        }else if($.trim(grade)!="全部年级" && $.trim(classRoom)!="全部班级"){
+            classId = grade + "," + classRoom;
+
+            classId = dataBrr[classId];
+        }
+        var defaultChart =  new Daily(document.getElementById("day_chart"),classId);
+        defaultChart.get_ajax(classId,this.days);
+        defaultChart.sbool = true;
+        defaultChart.smooth = false;
+        setInterval(function(){
+            if("undefined%" == $(".day_ty").html()){
+                $(".day_ty").html("暂无数据")
+            }
+        },100)
+    }
+    DayChart.prototype.days_five = function(){
+        this.days=365;
+        var grade = $("#choiceGrade").text();
+        var classRoom = $("#choiceClass").text();
+        var classId="";
+
+        if($.trim(grade)=="全部年级" && $.trim(classRoom)=="全部班级"){
+            classId="";
+
+        }
+        if($.trim(grade)!="全部年级" && $.trim(classRoom)=="全部班级"){
+            classId = gradeBrrClass[$.trim(grade)];
+        }else if($.trim(grade)!="全部年级" && $.trim(classRoom)!="全部班级"){
+            classId = grade + "," + classRoom;
+
+            classId = dataBrr[classId];
+        }
+        var defaultChart =  new Daily(document.getElementById("day_chart"),classId);
+        defaultChart.get_ajax(classId,this.days);
+        defaultChart.sbool = true;
+        defaultChart.smooth = false;
+
+        setInterval(function(){
+            if("undefined%" == $(".day_ty").html()){
+                $(".day_ty").html("暂无数据")
+            }
+        },100)
+    }
+
+    function getDefaultChart(classIdClick){
+        //var defaultChart =  new Daily(document.getElementById("day_chart"),classIdClick);
+        //defaultChart.days_one();
+        var defaultChart = new DayChart();
+        $(".select_group div").each(function(index){
+            return function(){
+                if($($(".select_group div")[index]).hasClass("over")){
+                    switch (index){
+                        case 0:
+                            defaultChart.days_one();
+                            break;
+                        case 1:
+                            defaultChart.days_two();
+                            break;
+                        case 2:
+                            defaultChart.days_three();
+                            break;
+                        case 3:
+                            defaultChart.days_four();
+                            break;
+                        case 4:
+                            defaultChart.days_five();
+                            break;
+                        default:
+                            //new Notice("数据出错，请联系管理员！")
+                            // alert("数据出错，请联系管理员！")
+                            break;
+                    }
+                }
+            }(index)
+        })
+        $("div",".select_group").each(function(i,r){
+
+            $(this).click(function(){
+                $(this).removeClass("def").addClass("over").siblings("div").removeClass("over").addClass("def");
+                switch (i){
+                    case 0:
+                        defaultChart.days_one();
+                        break;
+                    case 1:
+                        defaultChart.days_two();
+                        break;
+                    case 2:
+                        defaultChart.days_three();
+                        break;
+                    case 3:
+                        defaultChart.days_four();
+                        break;
+                    case 4:
+                        defaultChart.days_five();
+                        break;
+                    default:
+                       // new Notice("数据出错，请联系管理员！")
+                        // alert("数据出错，请联系管理员！")
+                        break;
+                }
+            })
+        })
+    }
 
     function Daily(ele,classId) {
 		this.ele = ele;
@@ -339,17 +546,11 @@ window.onload = function() {
 		this.arr = [];
 		this.arr_x = [];
         this.class_id = classId;
-		this.init();
-		this.something();
 		
 	}
 
 	Daily.prototype = {
 		constructor: Daily,
-
-		init: function() {
-			this.days_one();
-		},
 		ops: function() {
 			var that=this;
 			var opt = {
@@ -492,7 +693,6 @@ window.onload = function() {
             if(arr.length==1){
                 arr=["暂无数据"]
             }
-             console.log(arr.length)
 			return arr;
 		},
 		format: function (a,n){
@@ -517,15 +717,12 @@ window.onload = function() {
              type: "post",
              url: getURL()+"get_daily_training_rate",
             success: function(dataRes) {
-                console.log("data:",dataRes)
 				if (dataRes.header.code == 200) {
-                    console.log("rate:",dataRes)
                     if(dataRes.data.training_rate.length==0){
                         //没有训练数据的时候
                         $(".no_data").show();
                         if(days==7){
                             that.key_arr = getDuringDate(7,7);
-                            console.log("error::",that.key_arr.length)
                             that.data = [70,90,20,60,30,80,10];
                             that.arr_x = that.arr_eg(that.key_arr);
                             that.chart = echarts.init(that.ele);
@@ -556,11 +753,11 @@ window.onload = function() {
                         that.key_arr=[]; that.value_arr=[];
                         for(var i in dataRes.data.training_rate){
                             that.key_arr[i]=dataRes.data.training_rate[i].ds;
-                            that.value_arr[i]=result.data.training_rate[i].rate*100;
+                            that.value_arr[i]=dataRes.data.training_rate[i].rate*100;
                         }
                         that.chart = echarts.init(that.ele);
                         that.data = that.value_arr;
-                        if(that.data.length > '8'){
+                        if(that.data.length > 8){
                             that.a = parseInt(that.data.length/4);
                         }else{
                             that.a = 1;
@@ -593,9 +790,9 @@ window.onload = function() {
 			 
 		}
 			)},
-		something: function(){
+	/*	something: function(){
 			var that=this;
-            $(".select_group div").each(function(index){
+           $(".select_group div").each(function(index){
                 return function(){
                     if($($(".select_group div")[index]).hasClass("over")){
                         switch (index){
@@ -649,45 +846,15 @@ window.onload = function() {
 						}
 					})
 				})
-		},
+		},*/
 
-		days_one: function(){
-            //如果没有数据
-            /*this.days= 7;
-            this.key_arr = getDuringDate(7,7);
-            this.data = [70,90,20,60,30,80,10];
-            this.arr_x = this.arr_eg(this.key_arr);
-            this.chart = echarts.init(this.ele);
-            this.sbool = true;
-            this.smooth = false;
-            this.fsyle = null;
-            this.chart.setOption(this.ops());*/
+		/*days_one: function(){
 
-
-            //如果有数据
             this.days= 7;
             this.get_ajax(this.class_id,this.days);
             this.sbool = true;
             this.smooth = false;
-			/*this.days= 7;
-		//this.get_ajax(this.class_id,this.days);
-			this.key_arr = ["2015-11-11","2015-11-12","2015-11-13","2015-11-14","2015-11-15","2015-11-16","2015-11-17"];
-            this.data = [70,90,100,100,90,70,80];
-            this.arr_x = this.arr_eg(this.key_arr);
-            this.chart = echarts.init(this.ele);
-            //上面是假数据
-			this.sbool = true;
-			this.smooth = false;
-            setInterval(function(){
-                if("undefined%" == $(".day_ty").html()){
-                    $(".day_ty").html("暂无数据")
-                }
-            },100)*/
 
-
-
-
-          // console.log(getDuringDate(7))
          setInterval(function(){
              if("undefined%" == $(".day_ty").html()){
                 $(".day_ty").html("暂无数据")
@@ -696,22 +863,9 @@ window.onload = function() {
 
 		},
 		days_two: function(){
-			//以前的数据
-			/*this.days=30;
-			this.get_ajax(this.class_id,this.days);
-			this.sbool = true;
-			this.smooth = true;*/
+
 			this.days=30;
-           /* this.key_arr = getDuringDate(31,31);
-			//this.key_arr = ["2015-11-11","2015-11-12","2015-11-13","2015-11-14","2015-11-15","2015-11-16","2015-11-17","2015-11-18","2015-11-19","2015-11-20","2015-11-21","2015-11-22","2015-11-23","2015-11-24","2015-11-25","2015-11-26","2015-11-27","2015-11-28","2015-11-29","2015-11-30","2015-12-01","2015-12-02","2015-12-03","2015-12-04","2015-12-05","2015-12-06","2015-12-07","2015-12-08","2015-12-09","2015-12-10","2015-12-11"];
-            this.data = [70,90,100,100,90,70,80,58,100,0,60,60,70,80,90,100,100,100,90,80,80,50,80,100,90,100,80,90,100,30,70];
-            this.arr_x = this.arr_eg(this.key_arr);
-            this.chart = echarts.init(this.ele);
-//			this.get_ajax(this.class_id,this.days);
-			this.sbool = true;
-			this.smooth = true;
-			this.fsyle = this.format(6,31);
-			this.chart.setOption(this.ops())*/
+
             this.get_ajax(this.class_id,this.days);
             this.sbool = true;
             this.smooth = false;
@@ -723,19 +877,7 @@ window.onload = function() {
 		},
 		days_three: function(){
 			this.days= 90;
-			/*this.get_ajax(this.class_id,this.days);
-			this.sbool = true;
-			this.smooth = true;*/
-           /* this.key_arr = getDuringDate(90,90);
-			//this.key_arr = ["2015-11-11","2015-11-12","2015-11-13","2015-11-14","2015-11-15","2015-11-16","2015-11-17","2015-11-18","2015-11-19","2015-11-20","2015-11-21","2015-11-22","2015-11-23","2015-11-24","2015-11-25","2015-11-26","2015-11-27","2015-11-28","2015-11-29","2015-11-30","2015-12-01","2015-12-02","2015-12-03","2015-12-04","2015-12-05","2015-12-06","2015-12-07","2015-12-08","2015-12-09","2015-12-10","2015-12-11"];
-            this.data = [70,90,100,100,90,70,80,58,100,40,70,90,100,100,90,70,80,58,100,40,70,90,100,100,90,70,80,58,100,50,70,90,10,10,90,70,80,58,100,50,70,90,100,100,90,70,80,58,100,60,70,90,100,100,90,70,80,58,100,60,70,90,100,100,90,70,80,58,100,70,70,90,100,100,90,70,80,58,100,80,70,90,100,100,90,70,80,58,100,80];
-            this.arr_x = this.arr_eg(this.key_arr);
-            this.chart = echarts.init(this.ele);
-//			this.get_ajax(this.class_id,this.days);
-			this.sbool = true;
-			this.smooth = true;
-			this.fsyle = this.format(14,90);
-			this.chart.setOption(this.ops())*/
+
             this.get_ajax(this.class_id,this.days);
             this.sbool = true;
             this.smooth = false;
@@ -747,19 +889,7 @@ window.onload = function() {
 		},
 		days_four: function(){
 			this.days= 180;
-			/*this.get_ajax(this.class_id,this.days);
-			this.sbool = true;
-			this.smooth = true;*/
-          /*  this.key_arr = getDuringDate(180,180);
-			//this.key_arr = ["2015-11-11","2015-11-12","2015-11-13","2015-11-14","2015-11-15","2015-11-16","2015-11-17","2015-11-18","2015-11-19","2015-11-20","2015-11-21","2015-11-22","2015-11-23","2015-11-24","2015-11-25","2015-11-26","2015-11-27","2015-11-28","2015-11-29","2015-11-30","2015-12-01","2015-12-02","2015-12-03","2015-12-04","2015-12-05","2015-12-06","2015-12-07","2015-12-08","2015-12-09","2015-12-10","2015-12-11"];
-            this.data = [70,90,100,100,90,70,80,100,80,50,60,60,70,80,90,100,100,100,90,80,80,50,80,100,90,100,80,90,100,100,100];
-            this.arr_x = this.arr_eg(this.key_arr);
-            this.chart = echarts.init(this.ele);
-//			this.get_ajax(this.class_id,this.days);
-			this.sbool = true;
-			this.smooth = true;
-			this.fsyle = this.format(6,31);
-			this.chart.setOption(this.ops())*/
+
             this.get_ajax(this.class_id,this.days);
             this.sbool = true;
             this.smooth = false;
@@ -771,18 +901,7 @@ window.onload = function() {
 		},
 		days_five: function(){
 			this.days= 365;
-			/*this.get_ajax(this.class_id,this.days);
-			this.sbool = true;
-			this.smooth = true;*/
-			/*this.key_arr = ["2015-11-11","2015-11-12","2015-11-13","2015-11-14","2015-11-15","2015-11-16","2015-11-17","2015-11-18","2015-11-19","2015-11-20","2015-11-21","2015-11-22","2015-11-23","2015-11-24","2015-11-25","2015-11-26","2015-11-27","2015-11-28","2015-11-29","2015-11-30","2015-12-01","2015-12-02","2015-12-03","2015-12-04","2015-12-05","2015-12-06","2015-12-07","2015-12-08","2015-12-09","2015-12-10","2015-12-11"];
-            this.data = [70,90,100,100,90,70,80,100,80,50,60,60,70,80,90,100,100,100,90,80,80,50,80,100,90,100,80,90,100,100,100];
-            this.arr_x = this.arr_eg(this.key_arr);
-            this.chart = echarts.init(this.ele);
-//			this.get_ajax(this.class_id,this.days);
-			this.sbool = true;
-			this.smooth = true;
-			this.fsyle = this.format(6,31);
-			this.chart.setOption(this.ops())*/
+
 
             this.get_ajax(this.class_id,this.days);
             this.sbool = true;
@@ -793,7 +912,7 @@ window.onload = function() {
                 }
             },100)
 
-		}
+		}*/
 
 	}
 

@@ -1,9 +1,9 @@
-﻿/*
+/*
  autohr:lizhihu
  公共方法
  */
-//var url = "http://121.41.47.79:3000/";
-var url = "http://csh.linpoo.cn:3000/";
+var url = "http://121.41.47.79:3000/";
+//var url = "http://csh.linpoo.cn:3000/";
 //var url="http://172.16.170.69:3000/"
 var COOKIE_NAME = 'userNameLogin';  
 var COOKIE_PASS = 'passWDLogin';
@@ -654,7 +654,13 @@ function contractEnd(schoolName){
                     var month = nowDate.getMonth()+1;
                     var date = nowDate.getDate();
                     var str1 = year+"-"+month+"-"+date;
-                    $("#numDate").html("距离合同到期还有<b>"+DateDiff(data.data.day,str1)+"</b>天")
+                    var leftDate = 0;
+                    if(isNaN(DateDiff(data.data.day,str1))){
+                        leftDate="10"
+                    }else{
+                        leftDate=DateDiff(data.data.day,str1);
+                    }
+                    $("#numDate").html("距离合同到期还有<b>"+leftDate+"</b>天")
                     if(DateDiff(data.data.day,str1)<=0){
                         new  ModelCon("您的合同已经到期,如果您想继续使用,请您续费");
                         $(".mod_wapper").animate({"height" : 175},0);
@@ -693,16 +699,19 @@ function  DateDiff(sDate1,  sDate2){    //sDate1和sDate2是2006-12-18格式
 }
 function printArea(){
 	$("#aPrint").on("click",function(){
-		$("#aPrint").hide();
+		            $("#aPrint").hide();
+                    $("#aPrintAll").hide();
                 	$("#printChildF").hide();
                 	$("#printF").hide();
                 	$("#printS").hide();
+                    $("#printArea").css("height","98%")
                 	window.print()
                 	setTimeout(function(){
                 	$("#printF").show();
                 	$("#printS").show();
                 		$("#printChildF").show();
                 			$("#aPrint").show();
+                        $("#aPrintAll").show ();
                 	},100)
 	})
 }

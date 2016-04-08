@@ -225,6 +225,12 @@ function getHistoryContent(term,year){
         }
     })
 }
+function timeFort(second){
+    var m = parseInt(second/60);
+    var s = second%60;
+    return m+":"+s;
+
+}
 function getChildHtml(childDataList){
     var stu_name = ""
     var class_name = "";
@@ -280,7 +286,7 @@ function getChildHtml(childDataList){
     for (var a = 0; a < td.form.length; a++) {
         var isZero="/"
         var BMIlevalCountry="";
-        if(td.form[a].score=="0"){
+        if(td.form[a].score=="0" || td.form[a].score==""){
             isZero="/"
         }else{
             isZero=td.form[a].score;
@@ -298,7 +304,7 @@ function getChildHtml(childDataList){
 
         else {
             if(allItem[a].item=="BMI"){
-                student_infoList += '<tr><td colspan="1">' + allItem[a].item + '</td><td colspan="1">' + allItem[a].record + '</td><td colspan="1">' + allItem[a].score + '</td></tr>';
+                student_infoList += '<tr><td colspan="1">' + allItem[a].item + '(千克/平方米)</td><td colspan="1">' + allItem[a].record + '</td><td colspan="1">' + allItem[a].score + '</td></tr>';
             }else{
                 student_infoList += '<tr><td colspan="1">' + allItem[a].item + '(' + allItem[a].unit + ')</td><td colspan="1">' + allItem[a].record + '</td><td colspan="1">' + isZero + '</td></tr>';
             }
@@ -336,17 +342,22 @@ function getChildHtml(childDataList){
                 var isNormalRight = "";
                 if(parseInt(left)>=5.0){
                     isNormalLeft ="正常"
+                }else if(left==""){
+                    isNormalLeft ="/"
                 }else{
-                    isNormalLeft ="不正常"
+                    isNormalLeft ="正常"
                 }
                 if(parseInt(right)>=5.0){
                     isNormalRight ="正常"
+                }else if(right==""){
+                    isNormalRight ="/"
                 }else{
                     isNormalRight ="不正常"
                 }
 
-                student_infoList += '<tr  ><td rowspan="2" style="padding:0 "><div style="float:left;line-height:61px;padding-left:12px">'+td.enginery[a].item+'</div><div style="float:right;    float: right; height: 105px;border-left: 1px solid #ababab;"><p style="width:100px;height:50%;border-bottom:1px solid #ababab;text-align: center;line-height:49px;">左眼</p><p style="width:100px;height:50%;border-bottom:1px solid #eeeeee;text-align: center;line-height:49px;">右眼</p></div></td><td>'+left+'</td><td>/</td><td>'+isNormalLeft+'</td><td>/</td>/</td></tr><tr ><td>'+right+'</td><td>/</td><td>'+isNormalRight+'</td><td>/</td></tr>'
+                student_infoList += '<tr  ><td rowspan="2" style="padding:0 "><div style="float:left;line-height:61px;padding-left:12px">'+td.enginery[a].item+'</div><div style="float:right;    float: right; height: 97px;border-left: 1px solid #ababab;"><p style="width:100px;height:50%;border-bottom:1px solid #ababab;text-align: center;line-height:49px;">左眼</p><p style="width:100px;height:50%;border-bottom:1px solid #eeeeee;text-align: center;line-height:49px;">右眼</p></div></td><td>'+left+'</td><td>/</td><td>'+isNormalLeft+'</td><td>/</td>/</td></tr><tr ><td>'+right+'</td><td>/</td><td>'+isNormalRight+'</td><td>/</td></tr>'
             }else{
+
                 student_infoList += '<tr><td colspan="1">' + td.enginery[a].item + '(' + td.enginery[a].unit + ')</td><td colspan="1">' + td.enginery[a].record + '</td><td colspan="1">' + isZero + '</td><td rowspan="" colspan="1">'+ScoreType[td.enginery[a].level]+'</td><td rowspan="" colspan="1">'+areaType[td.enginery[a].area]+'</td></tr>';
             }
 
@@ -355,17 +366,22 @@ function getChildHtml(childDataList){
 
     }
     for (var a = 0; a < td.stamina.length; a++) {
+        var scoreFormat = "";
         var isZero="/"
         if(td.stamina[a].score=="0"){
             isZero="/"
         }else{
             isZero=td.stamina[a].score;
         }
-
+        if("50*8往返跑" == td.stamina[a].item){
+            scoreFormat = timeFort(td.stamina[a].record)
+        }else{
+            scoreFormat = td.stamina[a].record;
+        }
         if (a == 0) {
-            student_infoList += '<tr><td rowspan="' + td.stamina.length + '" colspan="1">身体体能</td><td colspan="1">' + td.stamina[a].item + '(' + td.stamina[a].unit + ')</td><td colspan="1">' + td.stamina[a].record + '</td><td colspan="1">' + isZero + '</td><td rowspan="" colspan="1">'+ScoreType[td.stamina[a].level]+'</td><td rowspan="" colspan="1">'+td.stamina[a].area+'级</td></tr>';
+            student_infoList += '<tr><td rowspan="' + td.stamina.length + '" colspan="1">身体体能</td><td colspan="1">' + td.stamina[a].item + '(' + td.stamina[a].unit + ')</td><td colspan="1">' + scoreFormat + '</td><td colspan="1">' + isZero + '</td><td rowspan="" colspan="1">'+ScoreType[td.stamina[a].level]+'</td><td rowspan="" colspan="1">'+td.stamina[a].area+'级</td></tr>';
         } else {
-            student_infoList += '<tr><td colspan="1">' + td.stamina[a].item + '(' + td.stamina[a].unit + ')</td><td colspan="1">' + td.stamina[a].record + '</td><td colspan="1">' + isZero + '</td><td rowspan="" colspan="1">'+ScoreType[td.stamina[a].level]+'</td><td rowspan="" colspan="1">'+td.stamina[a].area+'级</td></tr>';
+            student_infoList += '<tr><td colspan="1">' + td.stamina[a].item + '(' + td.stamina[a].unit + ')</td><td colspan="1">' + scoreFormat + '</td><td colspan="1">' + isZero + '</td><td rowspan="" colspan="1">'+ScoreType[td.stamina[a].level]+'</td><td rowspan="" colspan="1">'+td.stamina[a].area+'级</td></tr>';
 
         }
     }
@@ -485,7 +501,7 @@ function getChildPrintHtml(childDataList) {
                     student_infoList += '<tr><td rowspan="' + td.form.length + '" colspan="1">身体形态</td><td colspan="1">' + td.form[a].item + '(' + td.form[a].unit + ')</td><td colspan="1">' + td.form[a].record + '</td><td colspan="1">' + isZero + '</td><td rowspan="' + td.form.length + '" colspan="1">'+BMIlevalCountry+'</td><td rowspan="' + td.form.length + '" colspan="1">/</td></tr>';
                 } else {
                     if(td.form[a].item=="BMI"){
-                        student_infoList += '<tr><td colspan="1">' + td.form[a].item + '</td><td colspan="1">' + td.form[a].record + '</td><td colspan="1">' + td.form[a].score + '</td></tr>';
+                        student_infoList += '<tr><td colspan="1">' + td.form[a].item + '(千克/平方米)</td><td colspan="1">' + td.form[a].record + '</td><td colspan="1">' + td.form[a].score + '</td></tr>';
                     }else{
                         student_infoList += '<tr><td colspan="1">' + td.form[a].item + '(' + td.form[a].unit + ')</td><td colspan="1">' + td.form[a].record + '</td><td colspan="1">' + isZero + '</td></tr>';
                     }
@@ -510,11 +526,15 @@ function getChildPrintHtml(childDataList) {
                         var isNormalRight = "";
                         if(parseInt(left)>=5.0){
                             isNormalLeft ="正常"
+                        }else if(left==""){
+                            isNormalLeft ="/"
                         }else{
-                            isNormalLeft ="不正常"
+                            isNormalLeft ="正常"
                         }
                         if(parseInt(right)>=5.0){
                             isNormalRight ="正常"
+                        }else if(right==""){
+                            isNormalRight ="/"
                         }else{
                             isNormalRight ="不正常"
                         }
