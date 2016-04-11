@@ -27,8 +27,10 @@ FileUp.prototype.getYear = function(){
     }
 
     $("#yearListId .t_list").html(yearHtml)
-    console.log(parseInt($("#choiceTermList").text()))
     setInterval(function(){
+        /*if(isNaN(parseInt($("#choiceYear").text()))){
+            return;
+        }*/
         if(month>=7 && (year==parseInt($("#choiceYear").text()))){
             $("#secondTermFileIn").hide();
         }else{
