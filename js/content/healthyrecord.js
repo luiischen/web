@@ -228,7 +228,15 @@ function getHistoryContent(term,year){
 function timeFort(second){
     var m = parseInt(second/60);
     var s = second%60;
-    return m+":"+s;
+    if(s<10){
+        if(s==0 || s=="0"){
+            s = "00";
+        }else{
+            s = "0"+s;
+        }
+
+    }
+    return m+"\' "+s+"\" ";
 
 }
 function getChildHtml(childDataList){
@@ -619,7 +627,7 @@ function getChildPrintHtml(childDataList) {
             } ////$("#healthItemList").html(student_infoList);
             stu_table += student_infoList;
             stu_table += '</table></div>';
-            //$("#stuTabePrint").append(stu_table);
+            $("#stuTabePrint").append(stu_table);
         }
     }
 
@@ -713,7 +721,6 @@ PersonHealth.prototype.defalutData = function () {
                     $("#stuInfoAddrNoData").hide();
                     $("#healthItemList").show();
                     $("#healthItemListNoData").hide();
-                   //getChildPrintHtml(dataRes.data.all_student);
                     getChild(dataRes);
                 }else{
                     $("#childList").html("");

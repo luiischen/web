@@ -9,6 +9,20 @@ function hideList() {
 function imgChange() {
 	$($(".biaoNow").find("img")[1])
 }
+function timeFort(second){
+    var m = parseInt(second/60);
+    var s = second%60;
+    if(s<10){
+        if(s==0 || s=="0"){
+            s = "00";
+        }else{
+            s = "0"+s;
+        }
+
+    }
+    return m+"\' "+s+"\" ";
+
+}
 var gradeNameModel = [];
 var classNameModel = [];
 var tableHtml = ""
@@ -346,6 +360,10 @@ PersonHealth.prototype.getDefault = function(){
                         for(var j=0;j<dataRes.data.report_list.length;j++){
                             var heigh="";
                             var wait="";
+                            var stu_num = dataRes.data.report_list[j].student_number;
+                            if(stu_num==0 || stu_num=="0"){
+                                stu_num="";
+                            }
                             for(var i=0;i<dataRes.data.report_list[j].item_list.length;i++){
                                 if(dataRes.data.report_list[j].item_list[i].item=="身高" ){
                                     heigh=i;
@@ -356,14 +374,14 @@ PersonHealth.prototype.getDefault = function(){
                             }
 
                             if(wait=="" && heigh==""){
-                                tableHtml+='<tr><td>'+dataRes.data.report_list[j].student_number+'</td><td>'+dataRes.data.report_list[j].student_name+'</td><td>'+sexChange[dataRes.data.report_list[j].sex]+'</td>';
+                                tableHtml+='<tr><td>'+stu_num+'</td><td>'+dataRes.data.report_list[j].student_name+'</td><td>'+sexChange[dataRes.data.report_list[j].sex]+'</td>';
                             }else if(wait=="" && heigh!="" ){
-                                tableHtml+='<tr><td>'+dataRes.data.report_list[j].student_number+'</td><td>'+dataRes.data.report_list[j].student_name+'</td><td>'+sexChange[dataRes.data.report_list[j].sex]+'</td>'+'<td>'+dataRes.data.report_list[j].item_list[heigh].record+'</td>';
+                                tableHtml+='<tr><td>'+stu_num+'</td><td>'+dataRes.data.report_list[j].student_name+'</td><td>'+sexChange[dataRes.data.report_list[j].sex]+'</td>'+'<td>'+dataRes.data.report_list[j].item_list[heigh].record+'</td>';
                             }else if(wait!="" && heigh==""){
-                                tableHtml+='<tr><td>'+dataRes.data.report_list[j].student_number+'</td><td>'+dataRes.data.report_list[j].student_name+'</td><td>'+sexChange[dataRes.data.report_list[j].sex]+'</td>'+'<td>'+dataRes.data.report_list[j].item_list[wait].record+'</td>';
+                                tableHtml+='<tr><td>'+stu_num+'</td><td>'+dataRes.data.report_list[j].student_name+'</td><td>'+sexChange[dataRes.data.report_list[j].sex]+'</td>'+'<td>'+dataRes.data.report_list[j].item_list[wait].record+'</td>';
                             }
                             else if(wait!="" && heigh!=""){
-                                tableHtml+='<tr><td>'+dataRes.data.report_list[j].student_number+'</td><td>'+dataRes.data.report_list[j].student_name+'</td><td>'+sexChange[dataRes.data.report_list[j].sex]+'</td>'+'<td>'+dataRes.data.report_list[j].item_list[heigh].record+'</td><td>'+dataRes.data.report_list[j].item_list[wait].record+'</td>';
+                                tableHtml+='<tr><td>'+stu_num+'</td><td>'+dataRes.data.report_list[j].student_name+'</td><td>'+sexChange[dataRes.data.report_list[j].sex]+'</td>'+'<td>'+dataRes.data.report_list[j].item_list[heigh].record+'</td><td>'+dataRes.data.report_list[j].item_list[wait].record+'</td>';
                             }
                             for(var k=0;k<dataRes.data.report_list[j].item_list.length;k++){
                                 if(dataRes.data.report_list[j].item_list[k].item=="身高" || dataRes.data.report_list[j].item_list[k].item=="体重" ){
@@ -371,7 +389,10 @@ PersonHealth.prototype.getDefault = function(){
                                 }else{
                                     if(dataRes.data.report_list[j].item_list[k].item=="BMI"){
                                         tableHtml+='<td>'+dataRes.data.report_list[j].item_list[k].record+'</td><td>'+dataRes.data.report_list[j].item_list[k].score+'</td><td>'+fatAndThin[dataRes.data.report_list[j].item_list[k].level]+'</td>'
-                                    }else{
+                                    }else if($.trim(dataRes.data.report_list[j].item_list[k].item)=="50*8往返跑"){
+                                        tableHtml+='<td><span>'+timeFort(dataRes.data.report_list[j].item_list[k].record)+'</span></td><td>'+dataRes.data.report_list[j].item_list[k].score+'</td><td><span>'+ScoreType[dataRes.data.report_list[j].item_list[k].level]+'</span></td>'
+                                    }
+                                    else{
                                         tableHtml+='<td><span>'+dataRes.data.report_list[j].item_list[k].record+'</span></td><td>'+dataRes.data.report_list[j].item_list[k].score+'</td><td><span>'+ScoreType[dataRes.data.report_list[j].item_list[k].level]+'</span></td>'
                                     }
 

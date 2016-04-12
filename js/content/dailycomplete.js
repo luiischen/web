@@ -311,7 +311,7 @@ window.onload = function() {
 
 
     }
-    DayChart.prototype.days_one = function(){
+ /*   DayChart.prototype.days_one = function(){
         this.days= 7;
         var grade = $("#choiceGrade").text();
         var classRoom = $("#choiceClass").text();
@@ -338,7 +338,7 @@ window.onload = function() {
                 $(".day_ty").html("暂无数据")
             }
         },100)
-    }
+    }*/
     DayChart.prototype.days_one = function(){
         this.days= 7;
         var grade = $("#choiceGrade").text();

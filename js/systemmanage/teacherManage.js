@@ -732,7 +732,7 @@ TeacherManage.prototype.createAccount = function(){
          	return;
         
         }else if($.trim(labelNameList)==""){
-            addTeaInfoModel("请选择关联班级1");
+            addTeaInfoModel("请选择关联班级");
             return;
         }
          /*   
@@ -802,6 +802,7 @@ TeacherManage.prototype.createAccount = function(){
 }
 
 $(document).ready(function(){
+
     //判断是否登陆过
     if(!localStorage.getItem("userName")){
         window.location.href="index.html"
@@ -851,6 +852,7 @@ $(document).ready(function(){
                     $("#popId").hide();
                 })
                 teacher.createAccount();
+
               /* teacher.recetPass();*/
                 $("#accountMod img").on("click",function(){
                     $("#addTeaInfoModel").hide();

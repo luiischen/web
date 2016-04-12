@@ -768,6 +768,7 @@ $(function() {
 				width: "100%",
 				zIndex: 100
 			});
+            $('.scoll.mCustomScrollbar._mCS_1').width(156);
 			$(".s_top").css("margin-top", "40px");
 		} else {
 			$(".s_nv").css({
