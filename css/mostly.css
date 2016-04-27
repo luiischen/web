@@ -366,7 +366,6 @@ body .tabT #title {
     color: #404040;
     margin-bottom: 28px;
     font-weight: bold;
-    margin-left: 95px;
 }
 body .tabT .aPrint {
     padding: 5px 7px 5px 25px;
@@ -392,13 +391,18 @@ body .footer {
     background-color: #f0f1f2;
     display: table-cell;
     vertical-align: inherit !important;
+    overflow:hidden;
+    white-space:nowrap;
+    font-size:12px;
 }
 .table td {
     text-align: center;
     display: table-cell;
     vertical-align: inherit !important;
     background-color: #f9f9f9 !important;
-    font: 14px/16px tahoma, helvetica, arial, '\5FAE\8F6F\96C5\9ED1';
+    font: 12px tahoma, helvetica, arial, '\5FAE\8F6F\96C5\9ED1';
+    overflow:hidden;
+    white-space:nowrap;
 }
 .quit {
     position: absolute;
@@ -652,7 +656,7 @@ body .footer {
 }
 .s_score{
     padding: 36px 3%;
-    height: 100%;
+    height: auto;
     min-height: 1400px;
     overflow: hidden;
 }
@@ -757,6 +761,8 @@ body .footer {
     float: left;
     color: #767676;
     font-size: inherit;
+    height:91px;
+    overflow-y:hidden;
 }
 #assigned .guanli .right-content .items:hover {
     box-shadow: 0px 0px 15px #D7D7DD;
@@ -1054,6 +1060,7 @@ body .footer {
     max-height: 327px;
     overflow-y:auto;
     background: inherit;
+    height:100%;
 }
 #assigned .change-alert ul .class-box .class-list .right-item .checkbox-ico {
     display: block;
@@ -1085,6 +1092,11 @@ body .footer {
     font-size: 18px;
     margin-bottom: 15px;
     color: #404040;
+}
+#assigned .chengji .title-out {
+    font-size: 15px;
+    margin-bottom: 15px;
+    color: #767676;
 }
 #assigned .chengji .title:before {
     display: inline-block;
@@ -1836,6 +1848,7 @@ body .footer {
     -moz-border-radius: 5px;
     border-radius: 5px;
     overflow: hidden;
+    display: none;
 }
 .warn span{
     float: left;

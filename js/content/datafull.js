@@ -17,10 +17,26 @@ var PersonHealth = function() {
 	//$.easing.def = "easeInBack";
 
 }
+function termAndYear(){
+	var newYear = new Date();
+	var year = newYear.getFullYear();
+	var month = newYear.getMonth();
+	var yearName = $("#choiceYear").text().substring(0,4);
+	var termName = $("#choiceYear").text().substring(4,8);
+	//alert(termName)
+	if((month>7 || month<2 )&& yearName==year){
+		$($("#yearListId .list div")[0]).remove();
+		$("#choiceYear").html($($("#yearListId .list div")[0]).context.innerText);
+
+	}else{
+		$("#choiceYear").html($($("#yearListId .list div")[0]).context.innerText);
+	}
+	// return yearName+","+termName;
+}
 PersonHealth.prototype.getPersonListYear = function() {
 	//默认第一个
 	$("#choiceYear").html($($("#yearListId .list div")[0]).context.innerText);
-	console.log($($("#yearListId .list div")[0]).context.innerText)
+	termAndYear();
 		//学年
 	$("#yearId").on("click", function(e) {
 		hideList();
@@ -44,18 +60,20 @@ PersonHealth.prototype.getPersonListYear = function() {
 							$("#choiceTerm").html("第一学期");
 						}
 					},10)
-					$("#yearListId").slideUp(300);
-					var year = $("#choiceYear").text();
-					var term = dataTerm[$("#choiceTerm").text()];
-					//获取历史数据
+
+					var termAndYear = $("#choiceYear").text();
+					var year = termAndYear.substring(0,4);
+					var termName = termAndYear.substring(4,8);
+					var term = dataTerm[termName];
 					getHistoryContent(term,year);
+					$("#yearListId").slideUp(300);
 					$("#yearId img").attr("src", "img/moredown_gray.png");
 				})
 			}(index)
 
 		})
 		//点击现在
-	$("#nowYear").click(function() {
+	/*$("#nowYear").click(function() {
 		$("#choiceYear").html($($("#yearListId .list div")[0]).context.innerText);
 		var year = $("#choiceYear").text();
 		var term = dataTerm[$("#choiceTerm").text()];
@@ -63,7 +81,7 @@ PersonHealth.prototype.getPersonListYear = function() {
 		getHistoryContent(term,year);
 		$("#yearListId").slideUp(300);
 		$("#yearId img").attr("src", "img/moredown_gray.png");
-	})
+	})*/
 	$(document).click(function(event) {
 		$("#yearListId").slideUp(300);
 	})
@@ -98,7 +116,7 @@ PersonHealth.prototype.bindEvent = function() {
 	})
 
 }
-PersonHealth.prototype.getPersonListTerm = function() {
+/*PersonHealth.prototype.getPersonListTerm = function() {
 	$("#termId").on("click", function(e) {
 		hideList();
 		if ($("#termListId").css("display") != "block") {
@@ -135,7 +153,7 @@ PersonHealth.prototype.getPersonListTerm = function() {
 		$("#termListId").slideUp(300);
 		$("#termId img").attr("src", "img/moredown_gray.png");
 	})
-}
+}*/
 PersonHealth.prototype.getPersonListGrade = function() {
 
 		$("#choiceGrade").html($($("#gradeListId .list div")[0]).context.innerText);
@@ -223,20 +241,119 @@ PersonHealth.prototype.getPersonListClass = function() {
 	})
 }
 function getHealthTable(data){
+	console.log("shili",data)
+	var shiliHtml = ""
+	var dataDetail1 = data.data.sport_item_rate;
+	for(var i=0;i<dataDetail1.length;i++){
+		if(dataDetail1[i].item=="视力"){
+            var navigate = false;
+			var allCountPerson = dataDetail1[i].total;
+			var noShili = dataDetail1[i].negative;
+			if(noShili == allCountPerson){
+				navigate = true;
+				$("#shili").html();
+				$("#shili").hide();
+				$("#shiliInfo").html("(暂无测试人数)")
+			}else{
+				var hasShili = +dataDetail1[i].three+dataDetail1[i].zero;
+				$("#shiliInfo").html("已测试:"+hasShili+"人","为测试"+navigate+"人");
+				shiliHtml+='<tr><th rowspan="2" style="width:15%">视力</th><th colspan="2">正常</th><th colspan="2">正常率</th><th colspan="2">不良</th><th colspan="2">不良率</th><th>体测人数</th></tr>'
+				shiliHtml+='<tr><td colspan="2">'+dataDetail1[i].three+'</td><td colspan="2">'+dataDetail1[i].three_rate.toFixed(2)+"%"+'</td><td colspan="2">'+dataDetail1[i].zero+'</td><td colspan="2">'+dataDetail1[i].zero_rate.toFixed(2)+"%"+'</td><td colspan="2">'+allCountPerson+'</td></tr>';
+
+			}
+
+		}else{
+			continue;
+		}
+	}
+   if(!navigate){
+	   $("#shili").html(shiliHtml);
+
+   }
+
+
     var tableHtml = "";
     var dataDetail = data.data.sport_item_rate;
-    for(var i=0;i<dataDetail.length;i++){
-		if(dataDetail[i].item=="身高"||dataDetail[i].item=="体重" || dataDetail[i].item=="BMI"){
+
+    /*for(var i=0;i<dataDetail.length;i++){
+		if(dataDetail[i].item=="身高"||dataDetail[i].item=="体重" || dataDetail[i].item=="BMI" || dataDetail[i].item=="视力"|| dataDetail[i].item=="总分"){
 			continue;
 		}else{
-			tableHtml+='<tr><td>'+dataDetail[i].item+'</td><td>'+dataDetail[i].one+'</td><td>'+dataDetail[i].one_rate.toFixed(2)+"%"+'</td><td>'+dataDetail[i].two+'</td><td>'+dataDetail[i].two_rate.toFixed(2)+"%"+'</td><td>'+dataDetail[i].three+'</td><td>'+dataDetail[i].three_rate.toFixed(2)+"%"+'</td><td>'+dataDetail[i].zero+'</td><td>'+dataDetail[i].zero_rate.toFixed(2)+"%"+'</td></tr>';
+			var allCountPerson = dataDetail[i].one+dataDetail[i].two+dataDetail[i].three+dataDetail[i].zero;
+			tableHtml+='<tr><td>'+dataDetail[i].item+'</td><td>'+dataDetail[i].one+'</td><td>'+dataDetail[i].one_rate.toFixed(2)+"%"+'</td><td>'+dataDetail[i].two+'</td><td>'+dataDetail[i].two_rate.toFixed(2)+"%"+'</td><td>'+dataDetail[i].three+'</td><td>'+dataDetail[i].three_rate.toFixed(2)+"%"+'</td><td>'+dataDetail[i].zero+'</td><td>'+dataDetail[i].zero_rate.toFixed(2)+"%"+'</td><td>'+allCountPerson+'</td></tr>';
 		}
 
-    }
+    }*/
+	for(var i=0;i<dataDetail.length;i++){
+		if(dataDetail[i].item=="肺活量"){
+
+			var allCountPerson = dataDetail[i].one+dataDetail[i].two+dataDetail[i].three+dataDetail[i].zero;
+			tableHtml+='<tr><td>'+unitTeam[dataDetail[i].item]+'</td><td>'+dataDetail[i].one+'</td><td>'+dataDetail[i].one_rate.toFixed(2)+"%"+'</td><td>'+dataDetail[i].two+'</td><td>'+dataDetail[i].two_rate.toFixed(2)+"%"+'</td><td>'+dataDetail[i].three+'</td><td>'+dataDetail[i].three_rate.toFixed(2)+"%"+'</td><td>'+dataDetail[i].zero+'</td><td>'+dataDetail[i].zero_rate.toFixed(2)+"%"+'</td><td>'+allCountPerson+'</td></tr>';
+		}
+
+	}
+	for(var i=0;i<dataDetail.length;i++){
+		if(dataDetail[i].item=="50米跑"){
+
+			var allCountPerson = dataDetail[i].one+dataDetail[i].two+dataDetail[i].three+dataDetail[i].zero;
+			tableHtml+='<tr><td>'+unitTeam[dataDetail[i].item]+'</td><td>'+dataDetail[i].one+'</td><td>'+dataDetail[i].one_rate.toFixed(2)+"%"+'</td><td>'+dataDetail[i].two+'</td><td>'+dataDetail[i].two_rate.toFixed(2)+"%"+'</td><td>'+dataDetail[i].three+'</td><td>'+dataDetail[i].three_rate.toFixed(2)+"%"+'</td><td>'+dataDetail[i].zero+'</td><td>'+dataDetail[i].zero_rate.toFixed(2)+"%"+'</td><td>'+allCountPerson+'</td></tr>';
+		}
+
+	}
+	for(var i=0;i<dataDetail.length;i++){
+		if(dataDetail[i].item=="坐位体前屈"){
+
+			var allCountPerson = dataDetail[i].one+dataDetail[i].two+dataDetail[i].three+dataDetail[i].zero;
+			tableHtml+='<tr><td>'+unitTeam[dataDetail[i].item]+'</td><td>'+dataDetail[i].one+'</td><td>'+dataDetail[i].one_rate.toFixed(2)+"%"+'</td><td>'+dataDetail[i].two+'</td><td>'+dataDetail[i].two_rate.toFixed(2)+"%"+'</td><td>'+dataDetail[i].three+'</td><td>'+dataDetail[i].three_rate.toFixed(2)+"%"+'</td><td>'+dataDetail[i].zero+'</td><td>'+dataDetail[i].zero_rate.toFixed(2)+"%"+'</td><td>'+allCountPerson+'</td></tr>';
+		}
+
+	}
+	for(var i=0;i<dataDetail.length;i++){
+		if(dataDetail[i].item=="一分钟跳绳"){
+
+			var allCountPerson = dataDetail[i].one+dataDetail[i].two+dataDetail[i].three+dataDetail[i].zero;
+			tableHtml+='<tr><td>'+unitTeam[dataDetail[i].item]+'</td><td>'+dataDetail[i].one+'</td><td>'+dataDetail[i].one_rate.toFixed(2)+"%"+'</td><td>'+dataDetail[i].two+'</td><td>'+dataDetail[i].two_rate.toFixed(2)+"%"+'</td><td>'+dataDetail[i].three+'</td><td>'+dataDetail[i].three_rate.toFixed(2)+"%"+'</td><td>'+dataDetail[i].zero+'</td><td>'+dataDetail[i].zero_rate.toFixed(2)+"%"+'</td><td>'+allCountPerson+'</td></tr>';
+		}
+
+	}
+	for(var i=0;i<dataDetail.length;i++){
+		if(dataDetail[i].item=="一分钟仰卧起坐"){
+
+			var allCountPerson = dataDetail[i].one+dataDetail[i].two+dataDetail[i].three+dataDetail[i].zero;
+			tableHtml+='<tr><td>'+unitTeam[dataDetail[i].item]+'</td><td>'+dataDetail[i].one+'</td><td>'+dataDetail[i].one_rate.toFixed(2)+"%"+'</td><td>'+dataDetail[i].two+'</td><td>'+dataDetail[i].two_rate.toFixed(2)+"%"+'</td><td>'+dataDetail[i].three+'</td><td>'+dataDetail[i].three_rate.toFixed(2)+"%"+'</td><td>'+dataDetail[i].zero+'</td><td>'+dataDetail[i].zero_rate.toFixed(2)+"%"+'</td><td>'+allCountPerson+'</td></tr>';
+		}
+
+	}
+	for(var i=0;i<dataDetail.length;i++){
+		if(dataDetail[i].item=="50*8往返跑"){
+
+			var allCountPerson = dataDetail[i].one+dataDetail[i].two+dataDetail[i].three+dataDetail[i].zero;
+			tableHtml+='<tr><td>'+unitTeam[dataDetail[i].item]+'</td><td>'+dataDetail[i].one+'</td><td>'+dataDetail[i].one_rate.toFixed(2)+"%"+'</td><td>'+dataDetail[i].two+'</td><td>'+dataDetail[i].two_rate.toFixed(2)+"%"+'</td><td>'+dataDetail[i].three+'</td><td>'+dataDetail[i].three_rate.toFixed(2)+"%"+'</td><td>'+dataDetail[i].zero+'</td><td>'+dataDetail[i].zero_rate.toFixed(2)+"%"+'</td><td>'+allCountPerson+'</td></tr>';
+		}
+
+	}
+	for(var i=0;i<dataDetail.length;i++){
+		if(dataDetail[i].item=="跳绳加分项"){
+
+			var allCountPerson = dataDetail[i].one+dataDetail[i].two+dataDetail[i].three+dataDetail[i].zero;
+			tableHtml+='<tr><td>'+unitTeam[dataDetail[i].item]+'</td><td>'+dataDetail[i].one+'</td><td>'+dataDetail[i].one_rate.toFixed(2)+"%"+'</td><td>'+dataDetail[i].two+'</td><td>'+dataDetail[i].two_rate.toFixed(2)+"%"+'</td><td>'+dataDetail[i].three+'</td><td>'+dataDetail[i].three_rate.toFixed(2)+"%"+'</td><td>'+dataDetail[i].zero+'</td><td>'+dataDetail[i].zero_rate.toFixed(2)+"%"+'</td><td>'+allCountPerson+'</td></tr>';
+		}
+
+	}
+	for(var i=0;i<dataDetail.length;i++){
+		if(dataDetail[i].item=="总分"){
+
+			var allCountPerson = dataDetail[i].one+dataDetail[i].two+dataDetail[i].three+dataDetail[i].zero;
+			tableHtml+='<tr><td>总评</td><td>'+dataDetail[i].one+'</td><td>'+dataDetail[i].one_rate.toFixed(2)+"%"+'</td><td>'+dataDetail[i].two+'</td><td>'+dataDetail[i].two_rate.toFixed(2)+"%"+'</td><td>'+dataDetail[i].three+'</td><td>'+dataDetail[i].three_rate.toFixed(2)+"%"+'</td><td>'+dataDetail[i].zero+'</td><td>'+dataDetail[i].zero_rate.toFixed(2)+"%"+'</td><td>'+allCountPerson+'</td></tr>';
+		}
+
+	}
     $("#hasData").append(tableHtml);
 }
 PersonHealth.prototype.defalutData = function() {
-	this.year = $("#choiceYear").text();
+	var termAndYear = $("#choiceYear").text();
+	this.year = termAndYear.substring(0,4);
+	this.term = termAndYear.substring(4,8);
 	this.grade = $("#choiceGrade").text();
 	this.classRoom = $("#choiceClass").text();
 	if($.trim(this.grade)=="暂无年级"){
@@ -262,23 +379,15 @@ PersonHealth.prototype.defalutData = function() {
     }else{
 	   classId = dataBrr[this.grade + "," + this.classRoom];
    }
-	/*if($.trim(this.grade)=="全部年级"){
 
-	}else{
-
-		classId = dataBrr[this.grade + "," + this.classRoom];
-	}*/
-    //classId = this.grade + "," + this.classRoom;
-    //classId = dataBrr[classId];
 	var school_id = localStorage.getItem("schoolId");
-	var classTerm = dataTerm[$("#choiceTerm").text()];
+	var classTerm = dataTerm[this.term];
     var data1 = {
         "year": this.year,
 		"term":classTerm,
         "class_id":classId,
 		"school_id":school_id
     };
-    console.log("data111",data1)
     $.ajax({
         data: data1,
         type: "post",
@@ -289,7 +398,10 @@ PersonHealth.prototype.defalutData = function() {
                 $("#noData").show();
                 $("#hasNoData").show();
                 $("#hasData").hide();
-              setWidth(".thin-pro",0,".thin-per");
+				$("#shili").hide();
+				$("#noDataShili").hide();
+				//视力在这里显示
+                setWidth(".thin-pro",0,".thin-per");
                 setWidth(".normal-pro",0,".normal-per");
                 setWidth(".overweight-pro",0,".overweight-per");
                 setWidth(".fat-pro",0,".fat-per");
@@ -302,6 +414,8 @@ PersonHealth.prototype.defalutData = function() {
                 $("#noData").hide();
                 $("#hasNoData").hide();
                 $("#hasData").show();
+				$("#shili").show();
+				$("#noDataShili").hide();
                 getHealthTable(dataRes);
                 getFirstData(dataRes)
 
@@ -500,6 +614,11 @@ function setWidth(sel,pro,sel1){
 	$(sel).css("width",pro+"%");
 }
 $(document).ready(function() {
+	if(localStorage.getItem("clickNum")%2!=0){
+		$("#numDate").hide();
+	}else {
+		$("#numDate").show();
+	}
 	//判断是否登陆过
 	if(!localStorage.getItem("userName")){
 		window.location.href="index.html"
@@ -507,11 +626,13 @@ $(document).ready(function() {
 	//鼠标滑动动画
 	headerMove();
     var school=localStorage.getItem("schoolName");
+	contractEnd(school);
     //var name = localStorage.getItem("userName");
 	var name = localStorage.getItem("account")
     var is_root = localStorage.getItem("is_root")
-    var dataSchoolInfo ={"name":name,"schoolName":school,"is_root":is_root};
-    getStuInfo(dataSchoolInfo)
+	var nick = localStorage.getItem("nick")
+	var dataSchoolInfo ={"name":nick,"schoolName":school,"is_root":is_root};
+	getStuInfo(dataSchoolInfo)
     var url = getURL() + "get_user_class";
 	var data = {
 		"account": name
@@ -541,7 +662,7 @@ $(document).ready(function() {
                 dataHeal.bindEvent();
                 //学年
                 dataHeal.getPersonListYear();
-				dataHeal.getPersonListTerm();
+				//dataHeal.getPersonListTerm();
                 //学期
                 dataHeal.getPersonListGrade();
                 //班级

@@ -5,6 +5,13 @@
 function hideList() {
     $(".inputList").slideUp(500);
 }
+function getYearPrint(){
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = date.getMonth()+1;
+    var date = date.getDate();
+    return year+"-"+month+"-"+date;
+}
 var gradeNameModel = [];
 var classNameModel = [];
 //默认班级
@@ -18,9 +25,26 @@ var PersonHealth = function () {
     this.stuName = "";
 
 }
+function termAndYear(){
+    var newYear = new Date();
+    var year = newYear.getFullYear();
+    var month = newYear.getMonth();
+    var yearName = $("#choiceYear").text().substring(0,4);
+    var termName = $("#choiceYear").text().substring(4,8);
+    //alert(termName)
+    if((month>7 || month<2 )&& yearName==year){
+        $($("#yearListId .list div")[0]).remove();
+        $("#choiceYear").html($($("#yearListId .list div")[0]).context.innerText);
+
+    }else{
+        $("#choiceYear").html($($("#yearListId .list div")[0]).context.innerText);
+    }
+    // return yearName+","+termName;
+}
 PersonHealth.prototype.getPersonListYear = function () {
     $("#choiceYear").html($($("#yearListId .list div")[0]).context.innerText);
     //学年
+    termAndYear();
     $("#yearId").on("click", function (e) {
         hideList();
         if ($("#yearListId").css("display") != "block") {
@@ -38,14 +62,12 @@ PersonHealth.prototype.getPersonListYear = function () {
             $($("#yearListId .list div")[index]).click(function () {
                 var _this = this;
                 $("#choiceYear").html($(_this).context.innerText);
-                setInterval(function () {
-                    if ($("#secondTerm").css("display") == "none") {
-                        $("#choiceTerm").html("第一学期");
-                    }
-                }, 10)
-                var year = $("#choiceYear").text();
-                var term = dataTerm[$("#choiceTerm").text()];
-                getHistoryContent(term,year)
+
+                var termAndYear = $("#choiceYear").text();
+                var year = termAndYear.substring(0,4);
+                var termName = termAndYear.substring(4,8);
+                var term = dataTerm[termName];
+                getHistoryContent(term,year);
                 $("#yearListId").slideUp(300);
                 $("#yearId img").attr("src", "img/moredown_gray.png");
             })
@@ -53,20 +75,20 @@ PersonHealth.prototype.getPersonListYear = function () {
 
     })
     //点击现在
-    $("#nowYear").click(function () {
+   /* $("#nowYear").click(function () {
         $("#choiceYear").html($($("#yearListId .list div")[0]).context.innerText);
         var year = $("#choiceYear").text();
         var term = dataTerm[$("#choiceTerm").text()];
         getHistoryContent(term,year)
         $("#yearListId").slideUp(300);
         $("#yearId img").attr("src", "img/moredown_gray.png");
-    })
+    })*/
     $(document).click(function (event) {
         $("#yearListId").slideUp(300);
         $("#yearId img").attr("src", "img/moredown_gray.png");
     })
 };
-PersonHealth.prototype.getPersonListTerm = function () {
+/*PersonHealth.prototype.getPersonListTerm = function () {
     $("#choiceTerm").html($($("#termListId .list div")[0]).context.innerText);
     $("#termId").on("click", function (e) {
         hideList();
@@ -99,7 +121,7 @@ PersonHealth.prototype.getPersonListTerm = function () {
         $("#termListId").slideUp(300);
         $("#termId img").attr("src", "img/moredown_gray.png");
     })
-}
+}*/
 PersonHealth.prototype.getPersonListGrade = function () {
 
     $("#gradeId").on("click", function (e) {
@@ -252,12 +274,18 @@ function getChildHtml(childDataList){
     var student_infoList = "";
     stu_name = childDataList[0].student_name;
     class_name = dataArr[childDataList[0].class_id];
+    class_name = class_name.split(",").join("");
     sex_name = sexChange[childDataList[0].sex];
     stu_id = childDataList[0].student_id;
     year_name = childDataList[0].year;
     stu_age = childDataList[0].birth;
     stu_nation = NationArr[childDataList[0].nationality];
     term_name = dataTermBrr[childDataList[0].term];
+    if(term_name=="第一学期"){
+        term_name = "上学期";
+    }else if(term_name=="第二学期"){
+        term_name = "下学期";
+    }
     student_infoAddr += '<tr><td>姓名</td><td>' + stu_name + '</td><td>班级</td><td>' + class_name + '</td></tr>';
     student_infoAddr += '<tr><td>性别</td><td>' + sex_name + '</td><td>出生日期</td><td>' + stu_age + '</td></tr>';
     student_infoAddr += '<tr><td>学籍号</td><td>' + stu_id + '</td><td>民族</td><td>' + stu_nation + '</td></tr>';
@@ -307,7 +335,7 @@ function getChildHtml(childDataList){
 
         }
         if (a == 0 ) {
-            student_infoList += '<tr><td rowspan="' + td.form.length + '" colspan="1">身体形态</td><td colspan="1">' + allItem[a].item + '(' + allItem[a].unit + ')</td><td colspan="1">' + allItem[a].record + '</td><td colspan="1">' + isZero + '</td><td rowspan="' + td.form.length + '" colspan="1">'+BMIlevalCountry+'</td><td rowspan="' + td.form.length + '" colspan="1">/</td></tr>';
+            student_infoList += '<tr><td rowspan="' + td.form.length + '" colspan="1">身体形态</td><td colspan="1">' + allItem[a].item + '(' + allItem[a].unit + ')</td><td colspan="1">' + allItem[a].record + '</td><td colspan="1">/</td><td rowspan="' + td.form.length + '" colspan="1">'+BMIlevalCountry+'</td><td rowspan="' + td.form.length + '" colspan="1">/</td></tr>';
         }
 
         else {
@@ -339,13 +367,21 @@ function getChildHtml(childDataList){
         }else{
             isZero=td.enginery[a].score;
         }
-
-        if (a == 0) {
+       /* student_infoList += '<tr><td rowspan="' + 3 + '" colspan="1">身体机能</td></tr>";*/
+        if (a == 0 && td.enginery[a].item!="视力") {
             student_infoList += '<tr><td rowspan="' + 3 + '" colspan="1">身体机能</td><td colspan="1">' + td.enginery[a].item + '(' + td.enginery[a].unit + ')</td><td colspan="1">' + td.enginery[a].record + '</td><td colspan="1">' + isZero+ '</td><td rowspan="" colspan="1">'+ScoreType[td.enginery[a].level]+'</td><td rowspan="" colspan="1">'+td.enginery[a].area+'级</td></tr>';
         } else {
             if(td.enginery[a].item=="视力"){
-                var left = td.enginery[a].record.split(",")[0];
-                var right = td.enginery[a].record.split(",")[1];
+                var left ="";
+                var right ="";
+                if(td.enginery[a].record == ""){
+                    left = "";
+                    right=""
+                }else{
+                     left = td.enginery[a].record.split(",")[0];
+                     right = td.enginery[a].record.split(",")[1];
+                }
+
                 var isNormalLeft = "";
                 var isNormalRight = "";
                 if(parseInt(left)>=5.0){
@@ -363,12 +399,11 @@ function getChildHtml(childDataList){
                     isNormalRight ="不正常"
                 }
 
-                student_infoList += '<tr  ><td rowspan="2" style="padding:0 "><div style="float:left;line-height:61px;padding-left:12px">'+td.enginery[a].item+'</div><div style="float:right;    float: right; height: 97px;border-left: 1px solid #ababab;"><p style="width:100px;height:50%;border-bottom:1px solid #ababab;text-align: center;line-height:49px;">左眼</p><p style="width:100px;height:50%;border-bottom:1px solid #eeeeee;text-align: center;line-height:49px;">右眼</p></div></td><td>'+left+'</td><td>/</td><td>'+isNormalLeft+'</td><td>/</td>/</td></tr><tr ><td>'+right+'</td><td>/</td><td>'+isNormalRight+'</td><td>/</td></tr>'
+                student_infoList += '<tr  ><td rowspan="2" style="padding:0 "><div style="float:left;line-height:91px;padding-left:12px"><span>'+td.enginery[a].item+'</span></div><div style="float:right;    float: right; height: 97px;border-left: 1px solid #ababab;"><p style="width:100px;height:50%;border-bottom:1px solid #ababab;text-align: center;line-height:49px;">左眼</p><p style="width:100px;height:50%;border-bottom:1px solid #eeeeee;text-align: center;line-height:49px;">右眼</p></div></td><td>'+left+'</td><td>/</td><td>'+isNormalLeft+'</td><td>/</td>/</td></tr><tr ><td>'+right+'</td><td>/</td><td>'+isNormalRight+'</td><td>/</td></tr>'
             }else{
 
                 student_infoList += '<tr><td colspan="1">' + td.enginery[a].item + '(' + td.enginery[a].unit + ')</td><td colspan="1">' + td.enginery[a].record + '</td><td colspan="1">' + isZero + '</td><td rowspan="" colspan="1">'+ScoreType[td.enginery[a].level]+'</td><td rowspan="" colspan="1">'+areaType[td.enginery[a].area]+'</td></tr>';
             }
-
 
         }
 
@@ -439,12 +474,12 @@ function getChildHtml(childDataList){
         }
     }
    if(childDataList[0].total_score==""|| childDataList[0].total_score==null){
-       student_infoList += '<tr><td colspan="6">总评:<span>分</span></td></td></tr><tr><th colspan="6" style="text-align:center"><span>运动建议</span></th></tr>';
-       student_infoList += '<tr><td colspan="6" > <div class="imgCode"> <img src="img/code.png" style="float:left"/><div style="float:left;margin-left:100px;margin-top:15px">'+suggestHtml+'</div><div></div>  <div style="width: 100%;padding: 20px;"><p align="left" style="color: red;text-indent: 15px;clear:both">建议扫描安装“运动指导”手机客户端，可以科学有效的协助孩子的日常训练。</p><p align="right";color:rgba(50,20,30,.8);">签名：<span style="display:inline-block;width: 120px;border-bottom: 1px solid #ccc;"></span></p></div> </td></tr>'
+       student_infoList += '<tr><td colspan="1">加分指标</td><td>一分钟跳绳(个)</td><td></td><td></td><td>/</td><td>/</td></tr><tr><td colspan="4">总评:<span>分</td><td></td><td></td></tr><tr><th colspan="6" style="text-align:center"><span>运动建议</span></th></tr>';
+       student_infoList += '<tr><td colspan="6" > <div class="imgCode"> <img src="img/code.png" style="float:left"/><div style="float:left;margin-left:100px;margin-top:15px">'+suggestHtml+'</div><div></div>  <div style="width: 100%;padding: 20px;"><p align="left" style="color: red;text-indent: 15px;clear:both">建议扫描安装“运动指导”手机客户端，可以科学有效的协助孩子的日常训练。</p><p align="right";color:rgba(50,20,30,.8);">签名：<span style="display:inline-block;width: 120px;border-bottom: 1px solid #ccc;"></span></p><p align="right";color:rgba(50,20,30,.8);">签名：<span style="display:inline-block;width: 120px;border-bottom: 1px solid #ccc;"></span></p><p style="float:right;margin-top:12px;margin-right:10px">打印日期：<span>'+getYearPrint()+'</span></p></div> </td></tr>'
 
    }else{
-       student_infoList += '<tr><td colspan="6">总评:<span>'+childDataList[0].total_score.toFixed(2)+'分</span></td></td></tr><tr><th colspan="6" style="text-align:center"><span>运动建议</span></th></tr>';
-       student_infoList += '<tr><td colspan="6" > <div class="imgCode"> <img src="img/code.png" style="float:left"/><div style="float:left;margin-left:100px;margin-top:15px">'+suggestHtml+'</div><div></div>  <div style="width: 100%;padding: 20px;"><p align="left" style="color: red;text-indent: 15px;clear:both">建议扫描安装“运动指导”手机客户端，可以科学有效的协助孩子的日常训练。</p><p align="right";color:rgba(50,20,30,.8);">签名：<span style="display:inline-block;width: 120px;border-bottom: 1px solid #ccc;"></span></p></div> </td></tr>'
+       student_infoList += '<tr><td colspan="1">加分指标</td><td>一分钟跳绳(个)</td><td>'+childDataList[0].addition[0].record+'</td><td>'+childDataList[0].addition[0].score+'</td><td>/</td><td>/</td></tr><tr><td colspan="3">总评</td><td><span>'+childDataList[0].total_score.toFixed(2)+'分</span></td><td>'+ScoreType[childDataList[0].total_level]+'</td><td>'+childDataList[0].total_area+'级</td></tr><tr><th colspan="6" style="text-align:center"><span>运动建议</span></th></tr>';
+       student_infoList += '<tr><td colspan="6" > <div class="imgCode"> <img src="img/code.png" style="float:left"/><div style="float:left;margin-left:100px;margin-top:15px">'+suggestHtml+'</div><div></div>  <div style="width: 100%;padding: 20px;"><p align="left" style="color: red;text-indent: 15px;clear:both">建议扫描安装“运动指导”手机客户端，可以科学有效的协助孩子的日常训练。</p><p align="right";color:rgba(50,20,30,.8);">签名：<span style="display:inline-block;width: 120px;border-bottom: 1px solid #ccc;"></span></p><p style="float:right;margin-top:12px;margin-right:10px">打印日期：<span>'+getYearPrint()+'</span></p></div> </td></tr>'
 
    }
     $("#healthItemList").html(student_infoList);
@@ -668,13 +703,15 @@ function getChild(data) {
 
 }
 PersonHealth.prototype.defalutData = function () {
-    this.year = $("#choiceYear").text();
-    this.term = $("#choiceTerm").text();
+    var schoolName = localStorage.getItem("schoolName");
+    var termAndYear = $("#choiceYear").text();
+    this.year = termAndYear.substring(0,4);
+    this.term = termAndYear.substring(4,8);
     this.grade = $("#choiceGrade").text();
     this.classRoom = $("#choiceClass").text();
     this.sex = $('#checkSex input[type="radio"]:checked ').val();
     if(this.grade=="暂无年级"){
-        $("#title").html(this.year + "学年体质健康评分表暂无数据");
+        $("#title").html(schoolName+ "健康成长档案");
         $("#childList").html("");
         $("#studentListId").show();
         $("#stuInfoAddr").hide();
@@ -684,7 +721,7 @@ PersonHealth.prototype.defalutData = function () {
         return;
         return;
     }else{
-        $("#title").html(this.year + "学年" + this.term + this.grade + this.classRoom + "体质健康评分表");
+        $("#title").html(schoolName+ "健康成长档案")
     }
 
 
@@ -839,6 +876,11 @@ function classAndGrade(data) {
 }
 
 $(document).ready(function () {
+    if(localStorage.getItem("clickNum")%2!=0){
+        $("#numDate").hide();
+    }else {
+        $("#numDate").show();
+    }
     //判断是否登陆过
     if (!localStorage.getItem("userName")) {
         window.location.href = "index.html"
@@ -846,10 +888,12 @@ $(document).ready(function () {
     //鼠标滑动动画
     headerMove();
     var school = localStorage.getItem("schoolName");
+    contractEnd(school);
     //var name = localStorage.getItem("userName")
     var name = localStorage.getItem("account")
     var is_root = localStorage.getItem("is_root")
-    var dataSchoolInfo = {"name": name, "schoolName": school, "is_root": is_root};
+    var nick = localStorage.getItem("nick")
+    var dataSchoolInfo ={"name":nick,"schoolName":school,"is_root":is_root};
     getStuInfo(dataSchoolInfo)
     var url = getURL() + "get_user_class";
     var data = {
@@ -886,7 +930,7 @@ $(document).ready(function () {
                 //学年
                 personList.getPersonListYear();
                 //学期
-                personList.getPersonListTerm();
+               // personList.getPersonListTerm();
                 //年级
                 personList.getPersonListGrade();
                 //班级

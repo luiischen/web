@@ -8,9 +8,9 @@
 		<meta name="Keywords" content="体育,成绩,羚跑体育,中小学"/>
 		<title>健康成长档案 | 羚跑体育</title>
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
-		<link rel="stylesheet" type="text/css" href="css/mostly.css"/>
+		<link rel="stylesheet" type="text/css" href="css/mostly.css?v=1.01"/>
 		<link rel="stylesheet" type="text/css" href="css/jquery.mCustomScrollbar.css"/>
-        <link rel="stylesheet" type="text/css" href="css/confirm.css" />
+        <link rel="stylesheet" type="text/css" href="css/confirm.css?v=1.01" />
 	</head>
 	<body>
 		<div class="container-fluid" id="health">
@@ -47,9 +47,9 @@
                 <div class="pull-right">
                     <div class="userInfo text-right">
                         <div class="userImg" style="padding-top: 16px;">
-                           <!-- <div class="warn" id="messageInfo">
-                                <span class="colse" title="关闭提醒">×</span><span>距离系统到期还有<b>10</b>天</span>
-                            </div>-->
+                           <div class="warn" id="messageInfo">
+                                <span class="colse" title="关闭提醒">×</span><span id="numDate"></span>
+                            </div>
                             <div style="cursor: pointer">
                                 <img src="img/person.png" width="42" id="quitLogin"/>
                             </div>
@@ -102,10 +102,10 @@
 	                		<div><span>2008</span></div>
 	                		<div><span>2007</span></div>-->
                 		</div>
-                		<span class="now" id="nowYear">现在</span>
+                		<!--<span class="now" id="nowYear">现在</span>-->
                 	</div>
                 </div>
-                <div class="input inline">
+                <!--<div class="input inline">
                 	<div id="termId">
                 		<span class="h5">学期：</span><span class="cR" id="choiceTerm"></span>
                 	    <img src="img/moredown_gray.png" width="7"/>  
@@ -117,7 +117,7 @@
                             <div id="secondTerm"><span>第二学期</span></div>
                 		</div>
                 	</div>
-                </div>
+                </div>-->
                 <div class="input inline">
                 	<div id="gradeId">
                 		<span class="h5">年级：</span><span class="cR" id="choiceGrade"></span>
@@ -342,11 +342,11 @@
 		<script src="js/common/jquery-2.1.4.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/common/bootstrap.min.js" type="text/javascript" charset="utf-8"></script><!--
 		<script src="js/common/ie10-viewport-bug-workaround.js" type="text/javascript" charset="utf-8"></script>-->
-        <script src="js/common/printarea.js?v=1" type="text/javascript" charset="utf-8"></script>
-		<script src="js/common/common.js?v=1" type="text/javascript" charset="utf-8"></script>
+        <script src="js/common/printarea.js?v=1.01" type="text/javascript" charset="utf-8"></script>
+		<script src="js/common/common.js?v=1.01" type="text/javascript" charset="utf-8"></script>
 		<script src="js/common/jquery.mCustomScrollbar.concat.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/common/confirm.js?v=1"  type="text/javascript" charset="utf-8"></script>
-        <script src="js/content/healthyrecord.js?v=1" type="text/javascript" charset="utf-8"></script>
+        <script src="js/common/confirm.js?v=1.01"  type="text/javascript" charset="utf-8"></script>
+        <script src="js/content/healthyrecord.js?v=1.01" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			(function($){
 				$(window).load(function(){

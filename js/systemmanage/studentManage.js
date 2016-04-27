@@ -808,7 +808,8 @@ $(document).ready(function() {
     //var name = localStorage.getItem("userName")
     var name = localStorage.getItem("account");
     var is_root = localStorage.getItem("is_root")
-    var dataSchoolInfo ={"name":name,"schoolName":school,"is_root":is_root};
+    var nick = localStorage.getItem("nick")
+    var dataSchoolInfo ={"name":nick,"schoolName":school,"is_root":is_root};
     getStuInfo(dataSchoolInfo)
 
     $("#dt").on("click",function(){

@@ -17,9 +17,9 @@ ModelCon.prototype = {
 
 	},
 	ment : function() {
-		this.mask = $("<div class='markHide'></div>");
+		this.mask = $("<div class='markHide' style='z-index:2'></div>");
 		this.mask.css({
-			"position" : "absolute",
+			"position" : "fixed",
 			"top" : 0,
 			"left" : 0,
 			"width" : $(document).width(),
@@ -28,7 +28,7 @@ ModelCon.prototype = {
 		});
 		this.wapper = $("<div class='mod_wapper' style='z-index:10'></div>");
 		this.modcon = $("<div></div>");
-		this.modcon.css({"color" : "#404040","font-size":"17px"});
+		this.modcon.css({"color" : "#767676","font-size":"14px"});
 		this.modcon.text(this.msg);
 		this.modoperate = $("<div class='mod_operate'></div>");
 		this.ok = $("<div class='isSure'>确定</div>");

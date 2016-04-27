@@ -173,15 +173,23 @@ window.onload = function() {
     }*/
     }
     $(document).ready(function(){
+        if(localStorage.getItem("clickNum")%2!=0){
+            $("#numDate").hide();
+        }else {
+            $("#numDate").show();
+        }
         var url = getURL() + "get_user_class";
         var school=localStorage.getItem("schoolName");
+        contractEnd(school);
         var name = localStorage.getItem("userName")
         var is_root = localStorage.getItem("is_root")
-        var dataSchoolInfo ={"name":name,"schoolName":school,"is_root":is_root};
+       // var dataSchoolInfo ={"name":name,"schoolName":school,"is_root":is_root};
         var data = {
             "account": name
         };
 
+        var nick = localStorage.getItem("nick")
+        var dataSchoolInfo ={"name":nick,"schoolName":school,"is_root":is_root};
         getStuInfo(dataSchoolInfo)
         $.ajax({
             data: data,

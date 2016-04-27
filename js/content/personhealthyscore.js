@@ -34,8 +34,25 @@ var PersonHealth = function() {
 	this.sex = "";
 
 }
-PersonHealth.prototype.getPersonListYear = function() {
+function termAndYear(){
+    var newYear = new Date();
+    var year = newYear.getFullYear();
+    var month = newYear.getMonth();
+    var yearName = $("#choiceYear").text().substring(0,4);
+    var termName = $("#choiceYear").text().substring(4,8);
+    //alert(termName)
+    if((month>7 || month<2 )&& yearName==year){
+        $($("#yearListId .list div")[0]).remove();
+        $("#choiceYear").html($($("#yearListId .list div")[0]).context.innerText);
 
+    }else{
+        $("#choiceYear").html($($("#yearListId .list div")[0]).context.innerText);
+    }
+  // return yearName+","+termName;
+}
+PersonHealth.prototype.getPersonListYear = function() {
+    $("#choiceYear").html($($("#yearListId .list div")[0]).context.innerText);
+    termAndYear();
 	//学年
 	$("#yearId").on("click", function(e) {
 		hideList();
@@ -50,79 +67,33 @@ PersonHealth.prototype.getPersonListYear = function() {
 		//event.stopPropagation();
 	});
 	$("#yearListId .list div").each(function(index, val) {
-        $("#choiceYear").html($($("#yearListId .list div")[0]).context.innerText);
+
 			return function() {
 				$($("#yearListId .list div")[index]).click(function() {
 					var _this = this;
                     $("#gradeListHtmlId").html("");
                     $("#classListHtmlId").html("");
 					$("#choiceYear").html($(_this).context.innerText);
-
-                    //学期学年
-                    setInterval(function(){
-                        if($("#secondTerm").css("display")=="none"){
-                            $("#choiceTerm").html("第一学期");
-                        }
-                    },10)
-                    var year = $("#choiceYear").text();
-                    var term = dataTerm[$("#choiceTerm").text()];
+                    var termAndYear = $("#choiceYear").text();
+                    var year = termAndYear.substring(0,4);
+                    var termName = termAndYear.substring(4,8);
+                    var term = dataTerm[termName];
                     getHistoryContent(term,year);
+                    localStorage.setItem("term",term);
+                    localStorage.setItem("year",year);
+                    localStorage.setItem()
 					$("#yearListId").slideUp(300);
 				})
 			}(index)
 
 		})
-		//点击现在
-	$("#nowYear").click(function() {
-		$("#choiceYear").html($($("#yearListId .list div")[0]).context.innerText);
-        var year = $("#choiceYear").text();
-        var term = dataTerm[$("#choiceTerm").text()];
-        getHistoryContent(term,year);
-		$("#yearListId").slideUp(300);
-		$("#yearId img").attr("src", "img/moredown_gray.png");
-	})
+
 	$(document).click(function(event) {
 		$("#yearListId").slideUp(300);
 		$("#yearId img").attr("src", "img/moredown_gray.png");
 	})
 };
-PersonHealth.prototype.getPersonListTerm = function() {
-	$("#termId").on("click", function(e) {
-			hideList();
-			if ($("#termListId").css("display") != "block") {
-				$("#termListId").slideDown(300);
 
-				$("#termId img").attr("src", "img/moreup_gray.png");
-			} else {
-				$("#termListId").slideUp(300);
-				$("#termId img").attr("src", "img/moredown_gray.png");
-			}
-        stopBubble(e)
-
-		})
-		//选择学期
-	$("#termListId .list div").each(function(index, val) {
-        $("#choiceTerm").html($($("#termListId .list div")[0]).context.innerText);
-		return function() {
-			$($("#termListId .list div")[index]).click(function() {
-               // alert(123)
-				var _this = this;
-				$("#choiceTerm").html($(_this).context.innerText);
-                var year = $("#choiceYear").text();
-                var term = dataTerm[$("#choiceTerm").text()];
-                getHistoryContent(term,year);
-				$("#termListId").slideUp(300);
-				$("#termId img").attr("src", "img/moredown_gray.png");
-
-			})
-		}(index)
-
-	})
-	$(document).click(function(event) {
-		$("#termListId").slideUp(300);
-		$("#termId img").attr("src", "img/moredown_gray.png");
-	})
-}
 PersonHealth.prototype.getPersonListGrade = function() {
     $("#choiceGrade").html($($("#gradeListId .list div")[0]).context.innerText);
 		$("#gradeId").on("click", function(e) {
@@ -135,6 +106,7 @@ PersonHealth.prototype.getPersonListGrade = function() {
 					$("#gradeId img").attr("src", "img/moredown.png");
 				}
             stopBubble(e)
+            gradeSort(gradeNameModel)
             $("#gradeListId .list div").each(function(index, val) {
                 return function() {
                     $($("#gradeListId .list div")[index]).click(function() {
@@ -249,10 +221,10 @@ function getHistoryContent(term,year){
         type: "post",
         url: url,
         success: function(dataRes) {
-            if(dataRes.data.user_class.length!=0){
+            if(dataRes.data.user_class.length!=0 ){
                 classAndGrade(dataRes.data.user_class)
             }else{
-                classAndGrade(dataRes.data.user_class)
+                //classAndGrade(dataRes.data.user_class)
                 $("#gradeListHtmlId").html("")
                 $("#classListHtmlId").html("")
                $("#choiceGrade").html("暂无年级");
@@ -262,23 +234,368 @@ function getHistoryContent(term,year){
         }
     })
 }
+function compare(propertyName) {
+
+}
+function getDefalutDataRes(dataRes){
+    $("#noDataList").hide();
+    $("#hasNoData").hide();
+    $("#hasData").show();
+    $("#fixedThree").show()
+    $("#hasData  tr:not(:first)").empty();
+    $("#isPrint").html("");
+    $("#fixedThree  tr:not(:first)").empty();
+    var htmlPrintArea = '<tr id="printTitle"></tr>';
+    var htmlPrintContent = '<tr id="printContent"></tr>'
+    $("#isPrint").append(htmlPrintArea)
+    $("#isPrint").append(htmlPrintContent)
+    var newCrease = dataRes.data.report_list[0].item_list.length;
+    var itemAll = dataRes.data.report_list[0].item_list;
+    itemAll = itemAll.sort(
+        function(a, b)
+        {
+            return a.sort - b.sort;
+        }
+    )
+    console.log("left:",itemAll)
+    var creaseHtml = "";
+    var scoreHtml = "";
+    var infoHtml = "";
+
+    //左边固定
+    var fixed = '<th >序号</th><th >姓名</th><th >性别</th>';
+    //打印的东西;
+    var print = '';
+    var printHtml='<th rowspan="2">学籍名单</th><th rowspan="2">性别</th>';
+    var printContent="";
+    //var isHasHandW = 0;
+    for(var i=0;i<newCrease;i++){
+        switch(itemAll[i].item){
+            case "身高":
+            {
+                creaseHtml+='<th rowspan="2">身高(厘米)</th>';
+                break;
+            }
+            case "体重":
+            {
+                creaseHtml+='<th rowspan="2" >体重(千克)</th>';
+                break;
+            }
+            case "BMI":
+            {
+                creaseHtml += ' <th colspan = "3" >体重指数</th>';
+                printHtml+= ' <th colspan = "3" >体重指数</th>';
+                break;
+            }
+            case "视力":
+            {
+                creaseHtml += ' <th colspan = "2" >' + unitTeam[itemAll[i].item] + '</th>';
+                printHtml += ' <th colspan = "2" >' + unitTeam[itemAll[i].item] + '</th>';
+                break;
+            }
+            case "肺活量":
+            {
+                creaseHtml += ' <th colspan = "3" >' + unitTeam[itemAll[i].item] + '</th>';
+                printHtml += ' <th colspan = "3" >' + unitTeam[itemAll[i].item] + '</th>';
+                break;
+            }
+            case "50米跑":
+            {
+                creaseHtml += ' <th colspan = "3" >' + unitTeam[itemAll[i].item] + '</th>';
+                printHtml += ' <th colspan = "3" >' + unitTeam[itemAll[i].item] + '</th>';
+                break;
+            }
+            case "坐位体前屈":
+            {
+                creaseHtml += ' <th colspan = "3" >' + unitTeam[itemAll[i].item] + '</th>';
+                printHtml += ' <th colspan = "3" >' + unitTeam[itemAll[i].item] + '</th>';
+                break;
+            }
+            case "一分钟跳绳":
+            {
+                creaseHtml += ' <th colspan = "3" >' + unitTeam[itemAll[i].item] + '</th>';
+                printHtml += ' <th colspan = "3" >' + unitTeam[itemAll[i].item] + '</th>';
+                break;
+            }
+            case "一分钟仰卧起坐":
+            {
+                creaseHtml += ' <th colspan = "3" >' + unitTeam[itemAll[i].item] + '</th>';
+                printHtml += ' <th colspan = "3" >' + unitTeam[itemAll[i].item] + '</th>';
+                break;
+            }
+            case "50*8往返跑":
+            {
+                creaseHtml += ' <th colspan = "3" >' + unitTeam[itemAll[i].item] + '</th>';
+                printHtml += ' <th colspan = "3" >' + unitTeam[itemAll[i].item] + '</th>';
+                break;
+            }
+
+            case "跳绳加分项":
+            {
+                creaseHtml += ' <th colspan = "2" style="width:90px">' + unitTeam[itemAll[i].item] + '</th>';
+                printHtml += ' <th colspan = "2" style="width:90px">' + unitTeam[itemAll[i].item] + '</th>';
+                break;
+            }
+            case "总分":
+            {
+                creaseHtml += ' <th colspan = "2" >' + unitTeam[itemAll[i].item] + '</th>';
+                printHtml += ' <th colspan = "2" >' + unitTeam[itemAll[i].item] + '</th>';
+                break;
+            }
+
+            default:
+                break;
+        }
+    }
+
+    $("#personHealthTable").html(creaseHtml);
+    $("#printTitle").html(printHtml);
+    $("#leftThree").html(fixed);
+
+    for(var j=0;j<newCrease;j++){
+        switch(itemAll[j].item){
+
+            case "BMI":
+            {
+                scoreHtml+='<td>BMI</td><td>得分</td><td>等级</td>';
+                printContent+='<td>BMI</td><td>得分</td><td>等级</td>';
+                break;
+            }
+            case "视力":
+            {
+                scoreHtml+='<td>左</td><td>右</td>';
+                printContent+='<td>左</td><td>右</td>';
+                break;
+            }
+            case "肺活量":
+            {
+                scoreHtml+='<td>成绩</td><td>得分</td><td>等级</td>';
+                printContent+='<td>成绩</td><td>得分</td><td>等级</td>';
+                break;
+            }
+            case "50米跑":
+            {
+                scoreHtml+='<td>成绩</td><td>得分</td><td>等级</td>';
+                printContent+='<td>成绩</td><td>得分</td><td>等级</td>';
+                break;
+            }
+            case "坐位体前屈":
+            {
+                scoreHtml+='<td>成绩</td><td>得分</td><td>等级</td>';
+                printContent+='<td>成绩</td><td>得分</td><td>等级</td>';
+                break;
+            }
+            case "一分钟跳绳":
+            {
+                scoreHtml+='<td>成绩</td><td>得分</td><td>等级</td>';
+                printContent+='<td>成绩</td><td>得分</td><td>等级</td>';
+                break;
+            }
+            case "一分钟仰卧起坐":
+            {
+                scoreHtml+='<td>成绩</td><td>得分</td><td>等级</td>';
+                printContent+='<td>成绩</td><td>得分</td><td>等级</td>';
+                break;
+            }
+            case "50*8往返跑":
+            {
+                scoreHtml+='<td>成绩</td><td>得分</td><td>等级</td>';
+                printContent+='<td>成绩</td><td>得分</td><td>等级</td>';
+                break;
+            }
+
+            case "跳绳加分项":
+            {
+                scoreHtml+='<td>成绩</td><td>得分</td>';
+                printContent+='<td>成绩</td><td>得分</td>';
+                break;
+            }
+            case "总分":
+            {
+                scoreHtml+='<td>总分</td><td>等级</td>';
+                printContent+='<td>总分</td><td>等级</td>';
+                break;
+            }
+
+            default:
+                break;
+        }
+
+    }
+
+    $("#personHealthScore").html(scoreHtml);
+    $("#printContent").html(printContent);
+    var heightLeft = ($("#personHealthScore").height())*2;
+    $("#leftThree").height(heightLeft)
+
+    //得到学生的信息
+    var  tableHtml="";
+    //计算BMI指数
+    var leftHtml = "";
+    var printAll = "";
+    for(var j=0;j<dataRes.data.report_list.length;j++){
+        printAll+='<tr>'
+        var allData = dataRes.data.report_list[j].item_list;
+        var stuInfo = dataRes.data.report_list[j];
+        allData = allData.sort(
+            function(a, b)
+            {
+                return a.sort - b.sort;
+            }
+        )
+        console.log("allData:",allData)
+        var heigh="FUCK";
+        var wait="";
+        var allCount = ""
+        var jumpCount = ""
+        var stu_num = stuInfo.student_number;
+        if(stu_num==0 || stu_num=="0"){
+            stu_num="";
+        }
+        for(var i=0;i<allData.length;i++){
+            if(allData[i].item=="身高" ){
+                heigh=i;
+            }
+            else if(allData[i].item=="体重" ){
+                wait=i;
+            }
+        }
+
+        if(wait=="FUCK" && heigh=="FUCK"){
+            tableHtml+='<tr>';
+        }else if(wait=="FUCK" && heigh!="FUCK" ){
+            tableHtml+='<tr>'+'<td>'+allData[heigh].record+'</td>';
+        }else if(wait!="FUCK" && heigh=="FUCK"){
+            tableHtml+='<tr>'+'<td>'+allData[wait].record+'</td>';
+        }
+        else if(wait!="FUCK" && heigh!="FUCK"){
+            tableHtml+='<tr>'+'<td>'+allData[heigh].record+'</td><td>'+allData[wait].record+'</td>';
+        }
+        printAll+='<td>'+stuInfo.student_name+'</td><td>'+sexChange[stuInfo.sex]+'</td>'
+        //BMI
+        for(var k=0;k<allData.length;k++){
+            switch(allData[k].item){
+
+                case "BMI":
+                {
+                    tableHtml+='<td>'+allData[k].record+'</td><td>'+allData[k].score+'</td><td>'+fatAndThin[allData[k].level]+'</td>'
+                    printAll+='<td>'+allData[k].record+'</td><td>'+allData[k].score+'</td><td>'+fatAndThin[allData[k].level]+'</td>'
+
+                    break;
+                }
+                case "视力":
+                {
+                    var left ="";
+                    var right ="";
+                    if(allData[k].record == ""){
+                        left = "";
+                        right=""
+                    }else{
+                        left = allData[k].record.split(",")[0];
+                        right = allData[k].record.split(",")[1];
+                    }
+
+                    tableHtml+='<td><span>'+left+'</span></td><td>'+right+'</td>';
+                    printAll+='<td><span>'+left+'</span></td><td>'+right+'</td>';
+                    break;
+                }
+                case "肺活量":
+                {
+                    tableHtml+='<td><span>'+allData[k].record+'</span></td><td>'+allData[k].score+'</td><td><span>'+ScoreType[allData[k].level]+'</span></td>';
+                    printAll+='<td><span>'+allData[k].record+'</span></td><td>'+allData[k].score+'</td><td><span>'+ScoreType[allData[k].level]+'</span></td>'
+                    break;
+                }
+                case "50米跑":
+                {
+
+                    tableHtml+='<td><span>'+allData[k].record+'</span></td><td>'+allData[k].score+'</td><td><span>'+ScoreType[allData[k].level]+'</span></td>';
+                    printAll+='<td><span>'+allData[k].record+'</span></td><td>'+allData[k].score+'</td><td><span>'+ScoreType[allData[k].level]+'</span></td>';
+                    break;
+                }
+                case "坐位体前屈":
+                {
+                    tableHtml+='<td><span>'+allData[k].record+'</span></td><td>'+allData[k].score+'</td><td><span>'+ScoreType[allData[k].level]+'</span></td>'
+                    printAll+='<td><span>'+allData[k].record+'</span></td><td>'+allData[k].score+'</td><td><span>'+ScoreType[allData[k].level]+'</span></td>'
+
+                    break;
+                }
+                case "一分钟跳绳":
+                {   tableHtml+='<td><span>'+allData[k].record+'</span></td><td>'+allData[k].score+'</td><td><span>'+ScoreType[allData[k].level]+'</span></td>';
+                    printAll+='<td><span>'+allData[k].record+'</span></td><td>'+allData[k].score+'</td><td><span>'+ScoreType[allData[k].level]+'</span></td>';
+                    break;
+                }
+                case "一分钟仰卧起坐":
+                {
+                    tableHtml+='<td><span>'+allData[k].record+'</span></td><td>'+allData[k].score+'</td><td><span>'+ScoreType[allData[k].level]+'</span></td>';
+                    printAll+='<td><span>'+allData[k].record+'</span></td><td>'+allData[k].score+'</td><td><span>'+ScoreType[allData[k].level]+'</span></td>';
+                    break;
+                }
+                case "50*8往返跑":
+                {
+                    tableHtml+='<td><span>'+timeFort(allData[k].record)+'</span></td><td>'+allData[k].score+'</td><td><span>'+ScoreType[allData[k].level]+'</span></td>';
+                    printAll+='<td><span>'+timeFort(allData[k].record)+'</span></td><td>'+allData[k].score+'</td><td><span>'+ScoreType[allData[k].level]+'</span></td>';
+                    break;
+                }
+
+                case "跳绳加分项":
+                {
+                    tableHtml+='<td><span>'+allData[k].record+'</span></td><td>'+allData[k].score+'</td>';
+                    printAll+='<td><span>'+allData[k].record+'</span></td><td>'+allData[k].score+'</td>';
+                    break;
+                }
+                case "总分":
+                {
+                    tableHtml+='<td><span>'+allData[k].record+'</span></td><td><span>'+ScoreType[allData[k].level]+'</span></td>';
+                    printAll+='<td><span>'+allData[k].record+'</span></td><td><span>'+ScoreType[allData[k].level]+'</span></td>';
+                    break;
+                }
+
+                default:
+                    break;
+            }
+        }
+
+
+        leftHtml+='<tr><td>'+stu_num+'</td><td>'+stuInfo.student_name+'</td><td>'+sexChange[stuInfo.sex]+'</td></tr>'
+
+        tableHtml+='</tr>'
+        printAll+='</tr>'
+
+    }
+
+    // $("#hasData  tr:not(:first)").empty();
+
+    $("#hasData").append(tableHtml);
+    $("#fixedThree").append(leftHtml);
+    $("#isPrint").append(printAll)
+}
 PersonHealth.prototype.getDefault = function(){
 
     //$("#hasData").html("");
    $("#hasData  tr:not(:first)").html("");
-    //$("table tr").empty();
-    this.year = $("#choiceYear").text();
-    this.term = $("#choiceTerm").text();
+    $("#isPrint").html("");
+    var termAndYear = $("#choiceYear").text();
+    this.year = termAndYear.substring(0,4);
+    this.term = termAndYear.substring(4,8);
     this.grade = $("#choiceGrade").text();
     this.classRoom = $("#choiceClass").text();
     this.sex = $('#checkSex input[type="radio"]:checked ').val();
     var sexId = ""
     var classId = this.grade + "," + this.classRoom;
-    if(this.grade!="暂无年级"){
-        $("#title").html(this.year + "学年" + this.term + this.grade + this.classRoom + "体质健康评分表")
+    if($.trim(this.grade)!="暂无年级"){
+        $("#title").html(this.year + "学年" + this.term + this.grade + this.classRoom + "体质健康评分表");
+        $("#noDataList").hide();
+        $("#hasNoData").hide();
     }else{
-        $("#title").html(this.year + this.term +  "体质健康评分表暂无数据");
-        //return;
+        $("#title").html(this.year + "学年" + this.term + "体质健康评分表");
+
+        $("#noDataList").show();
+        $("#hasNoData").show();
+
+        //$("#title").html(this.year + this.term +  "体质健康评分表暂无数据");
+        $("#personHealthTable").html("");
+        $("#fixedThree").hide()
+        return;
     }
     classId = dataArr[classId];
     if (this.sex == 3) {
@@ -309,106 +626,20 @@ PersonHealth.prototype.getDefault = function(){
             type: "post",
             url: url + "student_sport_report",
             success: function(dataRes) {
+                 console.log(dataRes)
 
                 if (dataRes.header.code = "200") {
-                    //f(dataRes.data.report_list)
-                    console.log("dataRes",dataRes)
                     if(dataRes.data.report_list.length==0){
                         $("#hasNoData").show();
                         $("#hasData").hide();
                         $("#noDataList").show();
+                        $("#fixedThree").hide()
 
-                    }else{
-                        $("#noDataList").hide();
-                        $("#hasNoData").hide();
-                        $("#hasData").show();
-                        $("#hasData  tr:not(:first)").empty();
-                        var newCrease = dataRes.data.report_list[0].item_list.length;
-                        var creaseHtml = "";
-                        var scoreHtml = "";
-                        var infoHtml = "";
-                         creaseHtml += '<th rowspan="2">学号</th><th rowspan="2">姓名</th><th rowspan="2">性别</th>';
-                       var isHasHandW = 0;
-                        for (var i = 0; i < newCrease; i++) {
-                        	if(dataRes.data.report_list[0].item_list[i].item=="身高" ){
-                                creaseHtml+='<th rowspan="2">身高(厘米)</th>';
-                                isHasHandW++;
-                        		continue;
-                        	}else if(dataRes.data.report_list[0].item_list[i].item=="体重"){
-                                creaseHtml+='<th rowspan="2">体重(千克)</th>';
-                                isHasHandW++;
-                                continue;
-                            }
-                        }
-                         for (var i = 0; i < newCrease; i++) {
-                         if(dataRes.data.report_list[0].item_list[i].item!="身高" && dataRes.data.report_list[0].item_list[i].item!="体重"){
-
-                           creaseHtml += ' <th colspan = "3" >' + unitTeam[dataRes.data.report_list[0].item_list[i].item] + '</th>';
-                         }else{
-                             continue;
-                         }
-                         }
-                        //creaseHtml+='<th colspan = "3" >BMI</th>'
-                        $($("#personHealthTable")).html(creaseHtml);
-                        for(var j=0;j<newCrease-isHasHandW;j++){
-                            scoreHtml+='<td>成绩</td><td>得分</td><td>等级</td>';
-                        }
-                        $($("#personHealthScore")).html(scoreHtml);
-                        //得到学生的信息
-                        var  tableHtml="";
-                           //计算BMI指数
-                        for(var j=0;j<dataRes.data.report_list.length;j++){
-                            var heigh="";
-                            var wait="";
-                            var stu_num = dataRes.data.report_list[j].student_number;
-                            if(stu_num==0 || stu_num=="0"){
-                                stu_num="";
-                            }
-                            for(var i=0;i<dataRes.data.report_list[j].item_list.length;i++){
-                                if(dataRes.data.report_list[j].item_list[i].item=="身高" ){
-                                    heigh=i;
-                                }
-                                else if(dataRes.data.report_list[j].item_list[i].item=="体重" ){
-                                    wait=i;
-                                }
-                            }
-
-                            if(wait=="" && heigh==""){
-                                tableHtml+='<tr><td>'+stu_num+'</td><td>'+dataRes.data.report_list[j].student_name+'</td><td>'+sexChange[dataRes.data.report_list[j].sex]+'</td>';
-                            }else if(wait=="" && heigh!="" ){
-                                tableHtml+='<tr><td>'+stu_num+'</td><td>'+dataRes.data.report_list[j].student_name+'</td><td>'+sexChange[dataRes.data.report_list[j].sex]+'</td>'+'<td>'+dataRes.data.report_list[j].item_list[heigh].record+'</td>';
-                            }else if(wait!="" && heigh==""){
-                                tableHtml+='<tr><td>'+stu_num+'</td><td>'+dataRes.data.report_list[j].student_name+'</td><td>'+sexChange[dataRes.data.report_list[j].sex]+'</td>'+'<td>'+dataRes.data.report_list[j].item_list[wait].record+'</td>';
-                            }
-                            else if(wait!="" && heigh!=""){
-                                tableHtml+='<tr><td>'+stu_num+'</td><td>'+dataRes.data.report_list[j].student_name+'</td><td>'+sexChange[dataRes.data.report_list[j].sex]+'</td>'+'<td>'+dataRes.data.report_list[j].item_list[heigh].record+'</td><td>'+dataRes.data.report_list[j].item_list[wait].record+'</td>';
-                            }
-                            for(var k=0;k<dataRes.data.report_list[j].item_list.length;k++){
-                                if(dataRes.data.report_list[j].item_list[k].item=="身高" || dataRes.data.report_list[j].item_list[k].item=="体重" ){
-                                    continue;
-                                }else{
-                                    if(dataRes.data.report_list[j].item_list[k].item=="BMI"){
-                                        tableHtml+='<td>'+dataRes.data.report_list[j].item_list[k].record+'</td><td>'+dataRes.data.report_list[j].item_list[k].score+'</td><td>'+fatAndThin[dataRes.data.report_list[j].item_list[k].level]+'</td>'
-                                    }else if($.trim(dataRes.data.report_list[j].item_list[k].item)=="50*8往返跑"){
-                                        tableHtml+='<td><span>'+timeFort(dataRes.data.report_list[j].item_list[k].record)+'</span></td><td>'+dataRes.data.report_list[j].item_list[k].score+'</td><td><span>'+ScoreType[dataRes.data.report_list[j].item_list[k].level]+'</span></td>'
-                                    }
-                                    else{
-                                        tableHtml+='<td><span>'+dataRes.data.report_list[j].item_list[k].record+'</span></td><td>'+dataRes.data.report_list[j].item_list[k].score+'</td><td><span>'+ScoreType[dataRes.data.report_list[j].item_list[k].level]+'</span></td>'
-                                    }
-
-                                }
-
-
-                            }
-                            tableHtml+='</tr>'
-                        }
-
-                       // $("#hasData  tr:not(:first)").empty();
-                        $("#hasData").append(tableHtml);
+                     }else{
+                        getDefalutDataRes(dataRes)
                         //$("#contentTable").html(tableHtml)
                     }
 
-                    //console.log(dataRes.data.report_list[0].item_list[0].item)
                 } else {
                     new  ModelCon("数据获取失败,请刷新重试");
                 $(".isCancleOk").hide();
@@ -440,6 +671,12 @@ PersonHealth.prototype.getAllData = function() {
       var _this = this;
       // _this.getDefault();
 	$("#personHealthLook").on("click", function() {
+        $("#leftThree").html("");
+        $("#fixedThree  tr:not(:first)").empty();
+        $("#personHealthTable").html("");
+        //$("#fixedThree").html("");
+       // $("#printArea").html("");
+
         _this.getDefault();
 	})
 	$(document).keydown(function(e){
@@ -505,16 +742,28 @@ function classAndGrade(data) {/*
     $("#choiceClass").html($($("#classListHtmlId div")[0]).text());
     defalutClassText = $($("#classListHtmlId div")[0]).text();
 }
+function reSize(){
+    var width = $('#printArea').width();
+    $("#allDiv").css('width',width-15);
+    //$("#allDiv").css("max-width",width-15)
+    $("#rightDiv").css({'width':width-179});
+
+    //$("#rightDiv").find('#hasData').css('display','block');
+    //$("#rightDiv").css("max-width",width-179)
+}
 
 $(document).ready(function() {
-    /*var url = "http://121.41.47.79:3000/get_sport_item_resource";
-    $.ajax({
-        type: "post",
-        url: url,
-        success:function(data){
-            console.log("金泰资源",data)
-        }
-    })*/
+
+    reSize();
+    $(window).resize(function() {
+        reSize();
+    });
+    if(localStorage.getItem("clickNum")%2!=0){
+        $("#numDate").hide();
+    }else {
+        $("#numDate").show();
+    }
+
     //鼠标滑动动画
     if(!localStorage.getItem("userName")){
         window.location.href="index.html"
@@ -522,16 +771,18 @@ $(document).ready(function() {
     headerMove();
 	var url = getURL() + "get_user_class";
     var school=localStorage.getItem("schoolName");
+    contractEnd(school);
     //var name = localStorage.getItem("userName");
     var name = localStorage.getItem("account")
     var is_root = localStorage.getItem("is_root")
     var school_id = localStorage.getItem("schoolId");
-    console.log("school_id",school_id)
-    var dataSchoolInfo ={"name":name,"schoolName":school,"is_root":is_root};
-	var data = {
-		"account":name
-	};
+    var nick = localStorage.getItem("nick")
+    var dataSchoolInfo ={"name":nick,"schoolName":school,"is_root":is_root};
     getStuInfo(dataSchoolInfo)
+    contractEnd(school)
+    var data = {
+        "account":name
+    };
 	$.ajax({
 		data: data,
 		type: "post",
@@ -560,12 +811,15 @@ $(document).ready(function() {
                 //学年
                 personList.getPersonListYear();
                 //学期
-                personList.getPersonListTerm();
+               // personList.getPersonListTerm();
                 //年级
                 personList.getPersonListGrade();
                 //班级
                 personList.getPersonListClass();
                 //获取默认的数据
+                //var width = $("#printArea").width();
+
+
                 personList.getDefault();
                 //获取数据
                 personList.getAllData();

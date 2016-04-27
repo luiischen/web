@@ -55,6 +55,12 @@ function loginIn(){
                     localStorage.setItem("userName",userNum);
                     localStorage.setItem("schoolId",data.data.school_id);
                     localStorage.setItem("is_root",data.data.is_root);
+                    localStorage.setItem("nick",data.data.nick)
+                    var clickNum = 0;
+                    localStorage.setItem("clickNum",clickNum)
+                    //var dataSchoolInfo ={"name":data.data.nick,"schoolName":data.data.school,"is_root":data.data.is_root};
+
+                    //getStuInfo(dataSchoolInfo)
                     //window.location.href="personhealthyscore.html"
                     //contractEnd(localStorage.getItem("schoolName"))
                     var url = getURL()+"get_remind_day";
@@ -170,6 +176,16 @@ $(document).ready(function(){
     $("#l_in").click(function(){
         if(check()){
             loginIn();
+        }
+    });
+    $(document).keydown(function(e) {
+        if (!e) {
+            e = window.event;
+        }
+        if ((e.keyCode || e.which) == 13) {
+            if (check()) {
+                loginIn();
+            }
         }
     });
     if($("#user").val()!=""){

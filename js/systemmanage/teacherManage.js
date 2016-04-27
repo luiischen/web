@@ -776,7 +776,7 @@ TeacherManage.prototype.createAccount = function(){
                     else{
                         $("#accountAlter").css("display","none");
                         $("#popId").hide();
-                        new  ModelCon("数据获取失败,请刷新重试");
+                        new  ModelCon(dataRes.header.msg);
                 $(".isCancleOk").hide();
                 $(".isSure").off().on("click",function(){
                     $(".mod_wapper").hide();
@@ -824,8 +824,9 @@ $(document).ready(function(){
     //var name = localStorage.getItem("userName");
     var name = localStorage.getItem("account");
     var is_root = localStorage.getItem("is_root")
-    var dataSchoolInfo ={"name":name,"schoolName":school,"is_root":is_root};
-    getStuInfo(dataSchoolInfo)
+    var nick = localStorage.getItem("nick")
+    var dataSchoolInfo ={"name":nick,"schoolName":school,"is_root":is_root};
+    getStuInfo(dataSchoolInfo);
     var url = getURL() + "get_user_class";
     var data = {
         "account": name

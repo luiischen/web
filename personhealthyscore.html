@@ -9,12 +9,20 @@
     <meta name="Keywords" content="体育,成绩,羚跑体育,中小学" />
     <title>成绩报表 | 羚跑体育</title>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="css/mostly.css" />
-    <link rel="stylesheet" type="text/css" href="css/confirm.css" />
-    <link rel="stylesheet" type="text/css" href="css/mostly.css" />
-    <link rel="stylesheet" media="print" type="text/css"  href="css/mostly.css" />
+    <link rel="stylesheet" type="text/css" href="css/mostly.css?v=1.01" />
+    <link rel="stylesheet" type="text/css" href="css/confirm.css?v=1.01" />
+    <link rel="stylesheet" type="text/css" href="css/mostly.css?v=1.01" />
+    <link rel="stylesheet" media="print" type="text/css"  href="css/mostly.css?v=1.01" />
 
-        <style type="text/css" media="print">
+        <style type="text/css">
+           #isPrint>thead>tr>th, #isPrint>tbody>tr>th, #isPrint>tfoot>tr>th, #isPrint>thead>tr>td, #isPrint>tbody>tr>td, #isPrint>tfoot>tr>td
+            {
+               padding: 0;
+            }
+
+            #isPrint tr{
+                height:30px;
+            }
             </style>
 
 </head>
@@ -43,7 +51,7 @@
                     <div class="underline" id="nav_animate_block"></div>
                 </ul>
             </div>
-          <!--  <div class="pull-right warn" id="messageInfo">
+        <!-- <div class="pull-right warn" id="messageInfo">
                 <span class="colse" title="关闭提醒">×</span><span>距离系统到期还有<b>10</b>天</span>
             </div>-->
         </div>
@@ -51,9 +59,9 @@
         <div class="pull-right">
             <div class="userInfo text-right">
                 <div class="userImg">
-                    <!--<div class="warn" id="messageInfo">
-                        <span class="colse" title="关闭提醒">×</span><span>距离系统到期还有<b>10</b>天</span>
-                    </div>-->
+                    <div class="warn" id="messageInfo">
+                        <span class="colse" title="关闭提醒">×</span><span id="numDate"></span>
+                    </div>
                     <div style="cursor: pointer">
                         <img src="img/person.png" width="42" id="quitLogin"/>
                     </div>
@@ -106,22 +114,22 @@
                     <div><span>2008</span></div>
                     <div><span>2007</span></div>-->
                 </div>
-                <span class="now" id="nowYear">现在</span>
+                <!--<span class="now" id="nowYear">现在</span>-->
             </div>
         </div>
-        <div class="input inline">
+        <!--<div class="input inline" style="display:none">
             <div id="termId">
                 <span class="h5">学期：</span><span class="cR" id="choiceTerm">请选择</span>
                 <img src="img/moredown_gray.png" width="7"/>
             </div>
 
             <div class="inputList" id="termListId">
-                <div class="list" >
+                &lt;!&ndash;<div class="list" >
                    <div id="firstTerm"><span>第一学期</span></div>
                     <div id="secondTerm"><span>第二学期</span></div>
-                </div>
+                </div>&ndash;&gt;
             </div>
-        </div>
+        </div>-->
         <div class="input inline">
             <div id="gradeId">
                 <span class="h5">年级：</span><span class="cR" id="choiceGrade"></span>
@@ -185,39 +193,55 @@
     <div class="row paddingL paddingR tabT " id="printArea">
         <div class="print">
         <div class="col-xs-11">
-            <h2 id="title">XXX学年XXX学期XXX年级XX班级体质健康评分表</h2>
+            <h2 id="title"></h2>
         </div>
         <div class="col-xs-1 aRight">
             <a id="aPrint"  class="aPrint" target="_blank">打印</a>
         </div>
         <div class="col-xs-12">
-            <table class="table table-bordered" id="hasData" style="display:none;width: 100%;
-     margin: 0px auto;">
-                <tr id="personHealthTable">
-                   <!-- <th rowspan="2">学号</th>
+
+            <div style="" id="allDiv">
+            <table class="table table-bordered" style="width:164px;float:left;" id="fixedThree">
+                <tr id="leftThree">
+                   <!-- <th rowspan="2">序号</th>
                     <th rowspan="2">姓名</th>
-                    <th rowspan="2">性别</th>
-                    <th colspan="3">一分钟跳绳( 分/个 )</th>
-                    <th colspan="3">坐立体前屈(厘米)</th>
-                    <th colspan="3">50米跑(秒)</th>-->
-                </tr>
-                <tr id='personHealthScore'>
-                   <!-- <td>成绩</td>
-                    <td>得分</td>
-                    <td>等级</td>
-                    <td>成绩</td>
-                    <td>得分</td>
-                    <td>等级</td>
-                    <td>成绩</td>
-                    <td>得分</td>
-                    <td>等级</td>-->
+                    <th rowspan="2">性别</th>-->
                 </tr>
 
 
             </table>
-            <table class="table table-bordered" id="hasNoData" >
+            <div style="float:right;" id="rightDiv">
+                <div style="width:100%;overflow: auto">
+                <table class="table table-bordered" id="hasData" ">
+                    <tr id="personHealthTable">
+                        <!-- <th rowspan="2">学号</th>
+                         <th rowspan="2">姓名</th>
+                         <th rowspan="2">性别</th>
+                         <th colspan="3">一分钟跳绳( 分/个 )</th>
+                         <th colspan="3">坐立体前屈(厘米)</th>
+                         <th colspan="3">50米跑(秒)</th>-->
+                    </tr>
+                    <tr id='personHealthScore'>
+                        <!-- <td>成绩</td>
+                         <td>得分</td>
+                         <td>等级</td>
+                         <td>成绩</td>
+                         <td>得分</td>
+                         <td>等级</td>
+                         <td>成绩</td>
+                         <td>得分</td>
+                         <td>等级</td>-->
+                    </tr>
+
+
+                </table>
+                </div>
+            </div>
+                <div class="clearfix" style="clear:both"></div>
+            </div>
+            <table class="table table-bordered" id="hasNoData" style="display:none">
                 <tr >
-                    <th rowspan="2">学号</th>
+                    <th rowspan="2">序号</th>
                     <th rowspan="2">姓名</th>
                     <th rowspan="2">性别</th>
                     <th colspan="3">一分钟跳绳( 分/个 )</th>
@@ -238,7 +262,32 @@
 
             </table>
             <div id="noDataList" style="text-align:center;font-size:14px;display: none;color:#adadad">暂无数据</div>
+            <div style="width:981px;overflow:auto; display:none" id="isPrintRight";>
+                <table class="table table-bordered" id="isPrint" >
+                    <tr id="printTitle">
+                        <!-- <th rowspan="2">学号</th>
+                         <th rowspan="2">姓名</th>
+                         <th rowspan="2">性别</th>
+                         <th colspan="3">一分钟跳绳( 分/个 )</th>
+                         <th colspan="3">坐立体前屈(厘米)</th>
+                         <th colspan="3">50米跑(秒)</th>-->
+                    </tr>
+                    <tr id='printContent'>
+                        <!-- <td>成绩</td>
+                         <td>得分</td>
+                         <td>等级</td>
+                         <td>成绩</td>
+                         <td>得分</td>
+                         <td>等级</td>
+                         <td>成绩</td>
+                         <td>得分</td>
+                         <td>等级</td>-->
+                    </tr>
+                </table>
+            </div>
+
         </div>
+
         </div>
     </div>
     <!--endprint-->
@@ -275,11 +324,11 @@
 <script src="js/common/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
 <!--<script src="js/My97DatePicker/WdatePicker.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/common/ie10-viewport-bug-workaround.js" type="text/javascript" charset="utf-8"></script>-->
-<script src="js/common/printarea.js?v=1" type="text/javascript" charset="utf-8"></script>
-<script src="js/common/common.js?v=1" type="text/javascript" charset="utf-8"></script>
-<script src="js/common/confirm.js?v=1"  type="text/javascript" charset="utf-8"></script><!--
+<script src="js/common/printarea.js?v=1.01" type="text/javascript" charset="utf-8"></script>
+<script src="js/common/common.js?v=1.01" type="text/javascript" charset="utf-8"></script>
+<script src="js/common/confirm.js?v=1.01"  type="text/javascript" charset="utf-8"></script><!--
         <script src="js/common/jquery.easing.1.3.js" type="text/javascript" charset="utf-8"></script>-->
-<script src="js/content/personhealthyscore.js?v=1" type="text/javascript" charset="utf-8"></script>
+<script src="js/content/personhealthyscore.js?v=1.01" type="text/javascript" charset="utf-8"></script>
 </body>
 
 </html>

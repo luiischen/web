@@ -1,10 +1,11 @@
-/*
+﻿/*
  autohr:lizhihu
  公共方法
  */
-var url = "http://121.41.47.79:3000/";
+var url = "http://csh.linpoo.cn:3000/";
 //var url = "http://csh.linpoo.cn:3000/";
 //var url="http://172.16.170.69:3000/"
+var isScoreIn = false;
 var COOKIE_NAME = 'userNameLogin';  
 var COOKIE_PASS = 'passWDLogin';
     function getURL(){
@@ -23,12 +24,14 @@ var unitTeam = {
     "身高":"身高(厘米)",
     "俯卧撑":"俯卧撑(个)",
     "坐位体前屈":"坐位体前屈(厘米)",
-    "仰卧起坐":"仰卧起坐(个)",
+    "一分钟仰卧起坐":"一分钟仰卧起坐(个)",
     "肺活量":"肺活量(毫升)",
     "体重":"体重(千克)",
     "一分钟跳绳":"1分钟跳绳(个)",
     "50*8往返跑":"50米*8往返跑(分·秒)",
-    "视力":"视力"
+    "视力":"视力",
+    "总分":"总评",
+    "跳绳加分项":"跳绳(加分项)"
 }
 var dataTermBrr = {
     "1":"第一学期",
@@ -385,7 +388,8 @@ var product ={
     "11":"引体向上",
     "12":"800米",
     "13":"1000米",
-    "14":"视力"
+    "14":"视力",
+    "16":"总分"
 }
 
 var productArr = {
@@ -404,7 +408,8 @@ var productArr = {
     "引体向上":"11",
     "800米":"12",
     "1000米":"13",
-    "视力":"14"
+    "视力":"14",
+    "总分":"16"
 }
 var NationArr = {
     "1":"汉族",
@@ -494,6 +499,7 @@ var areaType={
 }
 
 function getStuInfo(data){
+    console.log("data____",data)
     if(data.is_root=="0"){
         $("#systemManageInfo").hide();
     }
@@ -539,7 +545,7 @@ function getStuInfo(data){
 }
 function gradeSort(gradeNameModel){
     var gradeModel = new Array();
-    gradeNameModel = $.unique(gradeNameModel)
+    gradeNameModel = $.unique(gradeNameModel);
     for(var i=0;i<gradeNameModel.length;i++){
         gradeModel[i]=gradeBrr[gradeNameModel[i]];
     }
@@ -576,6 +582,7 @@ function stopBubble(e){
 }
 var isClick=false;
 //消息到期提醒
+
 function messageInfo(){
     /*if(1){
         $("#messageInfo").slideDown(300);
@@ -583,15 +590,19 @@ function messageInfo(){
             $("#messageInfo").slideUp(300);
         })
     }*/
+
     $(".colse").click(function(){
-        isClick = true;
+        var clickNum = localStorage.getItem("clickNum")
+        clickNum++;
+        localStorage.setItem("clickNum",clickNum);
         var _this = this;
         var $marginlefty = $(_this).next();
         $("#messageInfo").animate({
-            right: 87+'px',
-            opacity:0
-        },'100',function(){
-            $marginlefty.toggle(110);
+            right: 89+'px',
+            opacity:1
+        },'1',function(){
+
+            $marginlefty.toggle(100);
             opacity:1
         });
     });
@@ -656,9 +667,13 @@ function contractEnd(schoolName){
                     var str1 = year+"-"+month+"-"+date;
                     var leftDate = 0;
                     if(isNaN(DateDiff(data.data.day,str1))){
-                        leftDate="10"
+                        //leftDate="10"
                     }else{
+
                         leftDate=DateDiff(data.data.day,str1);
+                        if(leftDate<=30 || leftDate<="30"){
+                            $(".warn").show();
+                        }
                     }
                     $("#numDate").html("距离合同到期还有<b>"+leftDate+"</b>天")
                     if(DateDiff(data.data.day,str1)<=0){
@@ -704,7 +719,10 @@ function printArea(){
                 	$("#printChildF").hide();
                 	$("#printF").hide();
                 	$("#printS").hide();
-                    $("#printArea").css("height","98%")
+                    $("#printArea").css("height","98%");
+                     $("#isPrintRight").show ();
+                     $("#isPrintRight").css("height","98%")
+                    $("#allDiv").hide ();
                 	window.print()
                 	setTimeout(function(){
                 	$("#printF").show();
@@ -712,6 +730,10 @@ function printArea(){
                 		$("#printChildF").show();
                 			$("#aPrint").show();
                         $("#aPrintAll").show ();
+                        $("#isPrintRight").hide ();
+                        $("#allDiv").show ();
+                        $("#isPrintRight").css("height","100%")
+                        $("#printArea").css("height","100%");
                 	},100)
 	})
 }
@@ -724,21 +746,46 @@ $(document).ready(function(){
     var year = newYear.getFullYear();
     var month = newYear.getMonth();
     var yearArr = new Array();
+    var termFirst = "第一学期";
+    var termSecond = "第二学期";
     for(var i=0;i<5;i++){
-        if(month<7){
-            yearArr.push(year-i-1);
+        if(month>=2 && month<=7){
+            yearArr.push(year-i-1+'<span style="display:-moz-inline-box; display:inline-block; width:25px;"></span>'+termSecond);
+            yearArr.push(year-i-1+'<span style="display:-moz-inline-box; display:inline-block; width:25px;"></span>'+termFirst );
         }else{
-            yearArr.push(year-i);
+            yearArr.push(year-i+'<span style="display:-moz-inline-box; display:inline-block; width:25px;"></span>'+termSecond);
+            yearArr.push(year-i+'<span style="display:-moz-inline-box; display:inline-block; width:25px;"></span>'+termFirst );
         }
 
     };
 
     var yearHtml="";
     for(var i=0;i<yearArr.length;i++){
-        yearHtml+='<div><span>'+yearArr[i]+'</span></div>'
+        yearHtml+='<div><span style="margin-left:20px;">'+yearArr[i]+'</span></div>'
     }
+    $("#yearListId .list").html(yearHtml);
+    //setInterval(function(){
+       /* if(month>=7 && (year==$("#choiceYear").text())){
+            $("#secondTerm").hide();
+        }else{
+            $("#secondTerm").show();
+        }*/
+    //},1)
 
-    $("#yearListId .list").html(yearHtml)
+
+    if(month>=2 && month<=7){
+        var htmlTerm = "";
+        htmlTerm+='<div class="list" >';
+        htmlTerm+='<div id="secondTerm"><span>第二学期</span></div>';
+        htmlTerm+='<div id="firstTerm"><span>第一学期</span></div></div>';
+        $("#termListId").html(htmlTerm);
+    }else{
+        var htmlTerm = "";
+        htmlTerm+='<div class="list" >';
+        htmlTerm+='<div id="firstTerm"><span>第一学期</span></div>';
+        htmlTerm+='<div id="secondTerm"><span>第二学期</span></div>';
+        $("#termListId").html(htmlTerm);
+    }
     setInterval(function(){
         if(month>=7 && (year==$("#choiceYear").text())){
             $("#secondTerm").hide();
