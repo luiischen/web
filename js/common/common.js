@@ -2,7 +2,7 @@
  autohr:lizhihu
  公共方法
  */
-var url = "http://csh.linpoo.cn:3000/";
+var url = "http://120.26.97.139:3000/";
 //var url = "http://csh.linpoo.cn:3000/";
 //var url="http://172.16.170.69:3000/"
 var isScoreIn = false;
