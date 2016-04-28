@@ -22,17 +22,28 @@ function termAndYear(){
     var yearName = $("#choiceYear").text().substring(0,4);
     var termName = $("#choiceYear").text().substring(4,8);
     //alert(termName)
+    var newYear = localStorage.getItem("year");
+    var oldYear = localStorage.getItem("term");
     if((month>7 || month<2 )&& yearName==year){
         $($("#yearListId .list div")[0]).remove();
-        $("#choiceYear").html($($("#yearListId .list div")[0]).context.innerText);
+        if(newYear==null || newYear =="" || newYear==undefined){
+            $("#choiceYear").html($($("#yearListId .list div")[0]).context.innerText);
+        }else{
+            $("#choiceYear").html(newYear+oldYear)
+        }
+
 
     }else{
-        $("#choiceYear").html($($("#yearListId .list div")[0]).context.innerText);
+        if(newYear==null || newYear =="" || newYear==undefined){
+            $("#choiceYear").html($($("#yearListId .list div")[0]).context.innerText);
+        }else{
+            $("#choiceYear").html(newYear+oldYear)
+        }
+        //$("#choiceYear").html($($("#yearListId .list div")[0]).context.innerText);
     }
-    // return yearName+","+termName;
 }
 PersonHealth.prototype.getPersonListYear = function(){
-	$("#choiceYear").html($($("#yearListId .list div")[0]).context.innerText);
+	//$("#choiceYear").html($($("#yearListId .list div")[0]).context.innerText);
 	//学年
     termAndYear();
 	$("#yearId").on("click",function(e){
@@ -74,9 +85,9 @@ PersonHealth.prototype.getPersonListYear = function(){
 
 PersonHealth.prototype.getPersonListGrade = function() {
 
-    $("#choiceGrade").html($($("#gradeListId .list div")[0]).context.innerText);
-    getProjectItem(gradeBrr[$($("#gradeListId .list div")[0]).context.innerText]);
-
+   // $("#choiceGrade").html($($("#gradeListId .list div")[0]).context.innerText);
+    //getProjectItem(gradeBrr[$($("#gradeListId .list div")[0]).context.innerText]);
+    getProjectItem(gradeBrr[localStorage.getItem("grade")]);
     $("#gradeId").on("click", function(e) {
         hideList();
         if ($("#gradeListId").css("display") != "block") {
@@ -94,7 +105,8 @@ PersonHealth.prototype.getPersonListGrade = function() {
                     var _this = this;
                     $("#choiceGrade").html($(_this).context.innerText);
                     $("#gradeListId").slideUp(300);
-                    getProjectItem(gradeBrr[$(_this).context.innerText])
+                   getProjectItem(gradeBrr[$(_this).context.innerText])
+                   // getProjectItem(gradeBrr[localStorage.getItem("grade")]);
                     $("#gradeId img").attr("src", "img/moredown_gray.png");
                     var _this = this;
                     $("#choiceGrade").html($(_this).context.innerText);
@@ -128,7 +140,7 @@ PersonHealth.prototype.getPersonListGrade = function() {
     })
 }
 PersonHealth.prototype.getPersonListClass = function() {
-    $("#choiceClass").html($($("#classListId .list div")[0]).context.innerText);
+    //$("#choiceClass").html($($("#classListId .list div")[0]).context.innerText);
     $("#classId").on("click", function(e) {
         hideList();
         if ($("#classListId").css("display") != "block") {
@@ -219,6 +231,7 @@ PersonHealth.prototype.bindEvent = function(){
 		})
 
 }
+var flagIsTrue=false;
 function getHistoryContent(term,year){
     var url = getURL() + "get_default_class";
     var name = localStorage.getItem("account")
@@ -237,17 +250,20 @@ function getHistoryContent(term,year){
         url: url,
         success: function(dataRes) {
             if(dataRes.data.user_class.length!=0){
+                flagIsTrue = true;
                 classAndGrade(dataRes.data.user_class);
                 $("#choiceProduct").html("50米跑");
             }else{
-                classAndGrade(dataRes.data.user_class)
-                $("#gradeListHtmlId").html("")
-                $("#classListHtmlId").html("")
+                //classAndGrade(dataRes.data.user_class)
+                flagIsTrue = false;
+                $("#gradeListHtmlId").html("");
+                $("#classListHtmlId").html("");
                 $("#choiceGrade").html("暂无年级");
                 $("#choiceClass").html("暂无班级");
                 if($.trim($("#choiceGrade").text()) == "暂无年级"){
                     $("#choiceProduct").html("暂无项目");
-
+                    $("#productListIdHtml").html("");
+                    //$("#productListId").html("");
                 }
             }
         }
@@ -428,7 +444,7 @@ PersonHealth.prototype.defalutData = function(){
 
 }
 //班级分割
-function classAndGrade(data) {
+/*function classAndGrade(data) {
     var arrGradeAndClass = new Array();
     var commonData = dataArr;
     var temp = ""
@@ -473,15 +489,106 @@ function classAndGrade(data) {
     $("#classListHtmlId").html(classHtml);
     $("#choiceClass").html($($("#classListHtmlId div")[0]).text());
     defalutClassText = $($("#classListHtmlId div")[0]).text();
+}*/
+
+
+function classAndGrade(data) {
+    var arrGradeAndClass = new Array();
+    var commonData = dataArr;
+    var temp = ""
+    var gradeHtml = "";
+    var classHtml = "";
+    var classIdNum;
+    for (var i = 0; i < data.length; i++) {
+        var gradeName = commonData[data[i]].split(",")[0];
+        var className = commonData[data[i]].split(",")[1];
+        if (temp != gradeName) {
+            gradeNameModel.push(gradeName);
+            temp = gradeName;
+        }
+    }
+    //年级排序
+    gradeSort(gradeNameModel)
+    for (var j = 0; j < gradeNameModel.length; j++) {
+        gradeHtml += '<div><span>' + gradeNameModel[j] + '</span></div>'
+
+    }
+    $("#gradeListHtmlId").html(gradeHtml);
+    var newGrade = localStorage.getItem("grade");
+    var newClass = localStorage.getItem("class");
+    if(newGrade==null || newGrade=="" || newGrade==undefined ){
+        $("#choiceGrade").html($($("#gradeListHtmlId div")[0]).text());
+    }else if(newGrade=="暂无年级"){
+        if(flagIsTrue){
+            $("#choiceGrade").html($($("#gradeListHtmlId div")[0]).text());
+        }else{
+            $("#choiceGrade").html(newGrade);
+            $("#choiceClass").html("暂无班级");
+            $("#gradeListHtmlId").html("")
+            $("#classListHtmlId").html("")
+            return;
+        }
+    }
+    else{
+        $("#choiceGrade").html(newGrade);
+    }
+    getProjectItem(gradeBrr[$("#choiceGrade").text()]);
+    /*if($("#choiceGrade").text()=="暂无年级"){
+     $("#choiceClass").html("暂无班级");
+     return;
+     }*/
+    for (var k = 0; k < gradeNameModel.length; k++) {
+        classNameModel[k] = new Array();
+        for (var j = 0; j < data.length; j++) {
+            if (gradeNameModel[k] == commonData[data[j]].split(",")[0]) {
+
+                classNameModel[k].push(commonData[data[j]].split(",")[1])
+            }
+        }
+        classSort(classNameModel[k])
+    }
+
+    for (var i = 0; i < gradeNameModel.length; i++) {
+
+        if ($("#choiceGrade").text() == gradeNameModel[i]) {
+            classIdNum = i;
+        }
+    }
+    var classHtml = "";
+    for (var j = 0; j < classNameModel[classIdNum].length; j++) {
+        classHtml += '<div><span>' + classNameModel[classIdNum][j] + '</span></div>';
+    }
+    $("#classListHtmlId").html(classHtml);
+    if(newClass==null || newClass=="" || newClass==undefined ){
+        $("#choiceClass").html($($("#classListHtmlId div")[0]).text());
+    }else if(newClass=="暂无班级"){
+        if(flagIsTrue){
+            $("#choiceClass").html($($("#classListHtmlId div")[0]).text());
+        }else{
+            $("#choiceClass").html(newClass);
+        }
+    }else if(newClass=="全部班级"){
+        localStorage.setItem("class",$($("#classListHtmlId div")[0]).text());
+        $("#choiceClass").html($($("#classListHtmlId div")[0]).text());
+    }
+    else{
+        $("#choiceClass").html(newClass);
+    }
+
+    //$("#choiceClass").html($($("#classListHtmlId div")[0]).text());
+    //defalutClassText = $($("#classListHtmlId div")[0]).text();
 }
-
-
 PersonHealth.prototype.getAllData = function(){
 	
 	var _this = this;
 	_this.defalutData();
 	$("#charCheck").on("click",function(){
-
+        var year = $("#choiceYear").text().substring(0,4);
+        var term = $("#choiceYear").text().substring(4,8);
+        localStorage.setItem("year",year);
+        localStorage.setItem("term",term);
+        localStorage.setItem("grade",$("#choiceGrade").text());
+        localStorage.setItem("class",$("#choiceClass").text());
 		_this.defalutData();
 	})
 	$(document).keydown(function(e){
@@ -503,6 +610,9 @@ PersonHealth.prototype.getAllData = function(){
 function getProjectItem(grade){
     if($.trim(grade) == "暂无年级" || $.trim(grade) == undefined){
         $("#choiceProduct").html("暂无项目");
+        $("#productListIdHtml").html("");
+
+        //$("#productListId").html("");
     }else{
         var url = getURL() + "get_grade_sport_item";
         $.ajax({
@@ -521,7 +631,7 @@ function getProjectItem(grade){
                         }
 
                     }
-                    $("#productListId .list").html(htmlItem)
+                    $("#productListIdHtml").html(htmlItem)
                     $("#choiceProduct").html($($("#productListId .list div")[0]).context.innerText)
                 }else{
                     new  ModelCon("数据获取失败,请刷新");

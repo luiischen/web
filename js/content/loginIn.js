@@ -151,7 +151,7 @@ $(document).ready(function(){
             })
         }
     }
-   // localStorage.clear();
+   localStorage.clear();
    localStorage.removeItem("schoolName");
     localStorage.removeItem("userName");
     localStorage.removeItem("schoolId");

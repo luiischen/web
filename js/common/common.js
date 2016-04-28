@@ -1,8 +1,8 @@
-﻿/*
+/*
  autohr:lizhihu
  公共方法
  */
-var url = "http://120.26.97.139:3000/";
+var url = "http://121.41.47.79:3000/";
 //var url = "http://csh.linpoo.cn:3000/";
 //var url="http://172.16.170.69:3000/"
 var isScoreIn = false;
@@ -773,7 +773,7 @@ $(document).ready(function(){
     //},1)
 
 
-    if(month>=2 && month<=7){
+    /*if(month>=2 && month<=7){
         var htmlTerm = "";
         htmlTerm+='<div class="list" >';
         htmlTerm+='<div id="secondTerm"><span>第二学期</span></div>';
@@ -800,7 +800,7 @@ $(document).ready(function(){
         yearHtml+='<div><span>'+yearArr[i]+'</span></div>'
     }
     $("#yearListId .t_list").html(yearHtmlSystem);
-    console.log("yearList", $("#yearListId .t_list").html())
+    console.log("yearList", $("#yearListId .t_list").html())*/
 
     //
 

@@ -14,7 +14,7 @@ var PersonHealth = function(){
   this.productName = "";
 }
 PersonHealth.prototype.getPersonListYear = function(){
-	$("#choiceYear").html($($("#yearListId .list div")[0]).context.innerText);
+	//$("#choiceYear").html($($("#yearListId .list div")[0]).context.innerText);
 	//学年
 	$("#yearId").on("click",function(e){
 		 hideList();
@@ -33,8 +33,13 @@ PersonHealth.prototype.getPersonListYear = function(){
 			$($("#yearListId .list div")[index]).click(function(){
 				var _this = this;
 				$("#choiceYear").html($(_this).context.innerText);
+				var termAndYear = $("#choiceYear").text();
+				var term = "";
+				getHistoryContent(termAndYear,term);
 				$("#yearListId").slideUp(300);
 				$("#yearId img").attr("src", "img/moredown_gray.png");
+
+
 			})
 		}(index)
 		
@@ -42,8 +47,12 @@ PersonHealth.prototype.getPersonListYear = function(){
 	//点击现在
 	$("#nowYear").click(function(){
 		$("#choiceYear").html($($("#yearListId .list div")[0]).context.innerText);
+		var termAndYear = $("#choiceYear").text();
+		var term = "";
+		getHistoryContent(termAndYear,term);
 		$("#yearListId").slideUp(300);
 		$("#yearId img").attr("src", "img/moredown_gray.png");
+
 	})
 	$(document).click(function(event){
 		$("#yearListId").slideUp(300);
@@ -83,12 +92,11 @@ PersonHealth.prototype.getPersonListYear = function(){
 	})
 }*/
 PersonHealth.prototype.getPersonListGrade = function(){
-	$("#choiceGrade").html($($("#gradeListId .list div")[0]).context.innerText);
-	setTimeout(function(){
+	//$("#choiceGrade").html($($("#gradeListId .list div")[0]).context.innerText);
+	/*setTimeout(function(){
+		//console.log($($("#gradeListId .list div")[0]).context.innerText)
 		getProjectItem(gradeBrr[$($("#gradeListId .list div")[0]).context.innerText]);
-	},5)
-
-	console.log("rank1",gradeBrr[$($("#gradeListId .list div")[0]).context.innerText])
+	},5)*/
 	$("#gradeId").on("click",function(e){
 		 hideList();
 		if($("#gradeListId").css("display")!="block"){
@@ -100,20 +108,22 @@ PersonHealth.prototype.getPersonListGrade = function(){
 		}
         stopBubble(e)
 		//event.stopPropagation();
+		$("#gradeListId .list div").each(function(index,val){
+
+			return function(){
+				$($("#gradeListId .list div")[index]).click(function(){
+					var _this = this;
+					$("#choiceGrade").html($(_this).context.innerText);
+					$("#gradeListId").slideUp(300);
+					$("#gradeId img").attr("src", "img/moredown_gray.png");
+					getProjectItem(gradeBrr[$(_this).context.innerText])
+				})
+			}(index)
+
+		})
 	})
 	//选择学期
-	$("#gradeListId .list div").each(function(index,val){
-		return function(){
-			$($("#gradeListId .list div")[index]).click(function(){
-				var _this = this;
-				$("#choiceGrade").html($(_this).context.innerText);
-				$("#gradeListId").slideUp(300);
-				$("#gradeId img").attr("src", "img/moredown_gray.png");
-				getProjectItem(gradeBrr[$(_this).context.innerText])
-			})
-		}(index)
 
-	})
 	$(document).click(function(event){
 		$("#gradeListId").slideUp(300);
 		$("#gradeId img").attr("src", "img/moredown_gray.png");
@@ -121,7 +131,6 @@ PersonHealth.prototype.getPersonListGrade = function(){
 }
 //项目
 PersonHealth.prototype.getPersonListProduct = function(){
-	//$("#choiceProduct").html($($("#productListId .list div")[0]).context.innerText);
 	$("#productId").on("click",function(e){
 		 hideList();
 		if($("#productListId").css("display")!="block"){
@@ -254,6 +263,11 @@ PersonHealth.prototype.getAllData = function(){
 	var _this = this;
 	_this.defalutData();
 	$("#gradeRankCheck").on("click",function(){
+		var termAndYear = $("#choiceYear").text();
+		var term1 = localStorage.getItem("iterm");
+		localStorage.setItem("term",term1)
+		localStorage.setItem("year",termAndYear);
+		localStorage.setItem("grade",$("#choiceGrade").text());
 		_this.defalutData();
 	})
 	$(document).keydown(function(e){
@@ -287,12 +301,67 @@ function yearAndTermNew(){
 		}
 
 	};
-
-
 	for(var i=0;i<yearArr.length;i++){
 		yearHtml+='<div><span style="margin-left:20px;">'+yearArr[i]+'</span></div>'
 	}
 	$("#yearListId .list").html(yearHtml);
+	var newYear = localStorage.getItem("year");
+	if((month>7 || month<2 )&& yearName==year){
+		$($("#yearListId .list div")[0]).remove();
+		if(newYear==null || newYear =="" || newYear==undefined){
+			$("#choiceYear").html($($("#yearListId .list div")[0]).context.innerText);
+		}else{
+			$("#choiceYear").html(newYearr);
+		}
+
+
+	}else{
+		if(newYear==null || newYear =="" || newYear==undefined){
+			$("#choiceYear").html($($("#yearListId .list div")[0]).context.innerText);
+		}else{
+			$("#choiceYear").html(newYear)
+		}
+		//$("#choiceYear").html($($("#yearListId .list div")[0]).context.innerText);
+	}
+}
+var flagIsTrue=false;
+function getHistoryContent(year,term){
+	var url = getURL() + "get_default_class";
+	var name = localStorage.getItem("account")
+	var is_root = localStorage.getItem("is_root");
+	var schoolId = localStorage.getItem("schoolId");
+	var dataDefault = {
+		"account":name,
+		"is_root":is_root,
+		"term":term,
+		"year":year,
+		"school_id":schoolId
+	}
+	$.ajax({
+		data: dataDefault,
+		type: "post",
+		url: url,
+		success: function(dataRes) {
+			if(dataRes.data.user_class.length!=0 ){
+				flagIsTrue = true;
+				classAndGrade(dataRes.data.user_class);
+
+			}else{
+				flagIsTrue = false;
+				//classAndGrade(dataRes.data.user_class)
+				//$("#gradeListHtmlId").html("")
+				$("#choiceGrade").html("暂无年级");
+				$("#gradeListHtmlId").html("");
+				if($.trim($("#choiceGrade").text()) == "暂无年级"){
+					$("#choiceProduct").html("暂无项目");
+					$("#productListIdHtml").html("");
+
+				}
+
+			}
+
+		}
+	})
 }
 function classAndGrade(data) {
 	var arrGradeAndClass = new Array();
@@ -313,33 +382,69 @@ function classAndGrade(data) {
     gradeSort(gradeNameModel)
 	for (var j = 0; j < gradeNameModel.length; j++) {
 		gradeHtml += '<div><span>' + gradeNameModel[j] + '</span></div>'
-		$("#gradeListHtmlId").html(gradeHtml);
-		$("#choiceGrade").html($($("#gradeListHtmlId div")[0]).text());
 	}
+		$("#gradeListHtmlId").html(gradeHtml);
+	var newGrade = localStorage.getItem("grade");
+	if(newGrade==null || newGrade=="" || newGrade==undefined ){
+		$("#choiceGrade").html($($("#gradeListHtmlId div")[0]).text());
+	}else if(newGrade=="暂无年级"){
+		if(flagIsTrue){
+			$("#choiceGrade").html($($("#gradeListHtmlId div")[0]).text());
+		}else{
+			$("#choiceGrade").html(newGrade);
+			$("#gradeListHtmlId").html("");
+			$("#choiceProduct").html("暂无项目");
+			$("#productListIdHtml").html("");
+			return;
+		}
+	}
+	else{
+		$("#choiceGrade").html(newGrade);
+	}
+	   //$("#choiceGrade").html($($("#gradeListHtmlId div")[0]).text());
+
+		getProjectItem(gradeBrr[$("#choiceGrade").text()]);
+
+
 }
 function getProjectItem(grade){
-	var url = getURL() + "get_grade_sport_item";
-	$.ajax({
-		data:{"grade":grade},
-		type:"post",
-		url:url,
-		success:function(data){
-			if(data.header.code=="200"){
-				var htmlItem = "";
-				for(var i=0;i<data.data.sport_item.length;i++){
-					if(product[data.data.sport_item[i]]=="身高" ||product[data.data.sport_item[i]]=="体重"){
-						continue;
-					}
-					else{
-						htmlItem+='<div><span>'+product[data.data.sport_item[i]]+'</span></div>';
-					}
+	if($.trim(grade) == "暂无年级" || $.trim(grade) == undefined){
+		$("#choiceProduct").html("暂无项目");
+		$("#productListIdHtml").html("");
 
+	}else{
+		var url = getURL() + "get_grade_sport_item";
+		$.ajax({
+			data:{"grade":grade},
+			type:"post",
+			url:url,
+			success:function(data){
+				if(data.header.code=="200"){
+					var htmlItem = "";
+					for(var i=0;i<data.data.sport_item.length;i++){
+						if(product[data.data.sport_item[i]]=="身高" ||product[data.data.sport_item[i]]=="体重"){
+							continue;
+						}
+						else{
+							htmlItem+='<div><span>'+product[data.data.sport_item[i]]+'</span></div>';
+						}
+
+					}
+					htmlItem+='<div><span>总分</div>';
+					$("#productListId .list").html(htmlItem)
+					$("#choiceProduct").html($($("#productListId .list div")[0]).context.innerText)
+				}else{
+					new  ModelCon("数据获取失败,请刷新重试");
+					$(".isCancleOk").hide();
+					$(".isSure").off().on("click",function(){
+						$(".mod_wapper").hide();
+						$(".markHide").hide();
+						window.location.href="graderank.html"
+					})
+					return;
 				}
-				htmlItem+='<div><span>总分</div>';
-				$("#productListId .list").html(htmlItem)
-				$("#choiceProduct").html($($("#productListId .list div")[0]).context.innerText)
-			}else{
-				new  ModelCon("数据获取失败,请刷新重试");
+			},error:function(){
+				new  ModelCon("网络异常，请检查您的网络");
 				$(".isCancleOk").hide();
 				$(".isSure").off().on("click",function(){
 					$(".mod_wapper").hide();
@@ -348,18 +453,10 @@ function getProjectItem(grade){
 				})
 				return;
 			}
-		},error:function(){
-			new  ModelCon("网络异常，请检查您的网络");
-			$(".isCancleOk").hide();
-			$(".isSure").off().on("click",function(){
-				$(".mod_wapper").hide();
-				$(".markHide").hide();
-				window.location.href="graderank.html"
-			})
-			return;
-		}
 
-	})
+		})
+	}
+
 }
 $(document).ready(function(){
 	if(localStorage.getItem("clickNum")%2!=0){
