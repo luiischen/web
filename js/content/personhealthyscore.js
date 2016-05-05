@@ -91,6 +91,7 @@ PersonHealth.prototype.getPersonListYear = function() {
                     var year = termAndYear.substring(0,4);
                     var termName = termAndYear.substring(4,8);
                     var term = dataTerm[termName];
+                    $("#gradeListHtmlId").html("")
                     getHistoryContent(term,year);
 
 					$("#yearListId").slideUp(300);
@@ -237,7 +238,6 @@ function getHistoryContent(term,year){
             if(dataRes.data.user_class.length!=0 ){
                 flagIsTrue = true;
                 classAndGrade(dataRes.data.user_class);
-
             }else{
                 flagIsTrue = false;
                 //classAndGrade(dataRes.data.user_class)
@@ -708,9 +708,28 @@ PersonHealth.prototype.getAllData = function() {
 
 })
 	//打印
-printArea();
+//printArea();
 }
+function PrintContent(){
+    $("#aPrint").on("click",function(){
+        $("#aPrint").hide();
+        $("#printChildF").hide();
+        $("#printF").hide();
+        $("#printS").hide();
+        $("#allDiv").hide();
+        $("#isPrintRight").show ();
+        window.print();
+        setTimeout(function(){
+            $("#aPrint").show();
+            $("#printChildF").show();
+            $("#printF").show();
+            $("#printS").show();
+            $("#allDiv").show();
+            $("#isPrintRight").hide ();
+        })
 
+    })
+}
 
 function classAndGrade(data) {
     var arrGradeAndClass = new Array();
@@ -728,7 +747,8 @@ function classAndGrade(data) {
         }
     }
     //年级排序
-    gradeSort(gradeNameModel)
+    gradeSort(gradeNameModel);
+    gradeNameModel = unique1(gradeNameModel);
     for (var j = 0; j < gradeNameModel.length; j++) {
         gradeHtml += '<div><span>' + gradeNameModel[j] + '</span></div>'
 
@@ -748,14 +768,13 @@ function classAndGrade(data) {
             $("#classListHtmlId").html("")
             return;
         }
+    }else if(newGrade=="全部年级"){
+        $("#choiceGrade").html($($("#gradeListHtmlId div")[0]).text());
     }
     else{
         $("#choiceGrade").html(newGrade);
     }
-    /*if($("#choiceGrade").text()=="暂无年级"){
-        $("#choiceClass").html("暂无班级");
-        return;
-    }*/
+
     for (var k = 0; k < gradeNameModel.length; k++) {
         classNameModel[k] = new Array();
         for (var j = 0; j < data.length; j++) {
@@ -879,7 +898,7 @@ $(document).ready(function() {
                 //获取数据
                 personList.getAllData();
                 //向服务器传输数据
-
+                PrintContent();
             }else{
                 new  ModelCon("数据获取失败,请刷新重试");
                 $(".isCancleOk").hide();

@@ -584,12 +584,6 @@ var isClick=false;
 //消息到期提醒
 
 function messageInfo(){
-    /*if(1){
-        $("#messageInfo").slideDown(300);
-        $(".colse").on("click",function(){
-            $("#messageInfo").slideUp(300);
-        })
-    }*/
 
     $(".colse").click(function(){
         var clickNum = localStorage.getItem("clickNum")
@@ -719,9 +713,9 @@ function printArea(){
                 	$("#printChildF").hide();
                 	$("#printF").hide();
                 	$("#printS").hide();
-                    $("#printArea").css("height","98%");
+                    $("#printArea").css("height","95%");
                      $("#isPrintRight").show ();
-                     $("#isPrintRight").css("height","98%")
+                     $("#isPrintRight").css("height","95%")
                     $("#allDiv").hide ();
                 	window.print()
                 	setTimeout(function(){
@@ -734,8 +728,18 @@ function printArea(){
                         $("#allDiv").show ();
                         $("#isPrintRight").css("height","100%")
                         $("#printArea").css("height","100%");
-                	},100)
+                	},50)
 	})
+}
+function unique1(arr) {
+    var result = [], hash = {};
+    for (var i = 0, elem; (elem = arr[i]) != null; i++) {
+        if (!hash[elem]) {
+            result.push(elem);
+            hash[elem] = true;
+        }
+    }
+    return result;
 }
 $(document).ready(function(){
 
@@ -764,46 +768,6 @@ $(document).ready(function(){
         yearHtml+='<div><span style="margin-left:20px;">'+yearArr[i]+'</span></div>'
     }
     $("#yearListId .list").html(yearHtml);
-    //setInterval(function(){
-       /* if(month>=7 && (year==$("#choiceYear").text())){
-            $("#secondTerm").hide();
-        }else{
-            $("#secondTerm").show();
-        }*/
-    //},1)
-
-
-    /*if(month>=2 && month<=7){
-        var htmlTerm = "";
-        htmlTerm+='<div class="list" >';
-        htmlTerm+='<div id="secondTerm"><span>第二学期</span></div>';
-        htmlTerm+='<div id="firstTerm"><span>第一学期</span></div></div>';
-        $("#termListId").html(htmlTerm);
-    }else{
-        var htmlTerm = "";
-        htmlTerm+='<div class="list" >';
-        htmlTerm+='<div id="firstTerm"><span>第一学期</span></div>';
-        htmlTerm+='<div id="secondTerm"><span>第二学期</span></div>';
-        $("#termListId").html(htmlTerm);
-    }
-    setInterval(function(){
-        if(month>=7 && (year==$("#choiceYear").text())){
-            $("#secondTerm").hide();
-        }else{
-            $("#secondTerm").show();
-        }
-    },1)
-
-    //系统管理里面的成绩倒入日期计算
-    var yearHtmlSystem="";
-    for(var i=0;i<yearArr.length;i++){
-        yearHtml+='<div><span>'+yearArr[i]+'</span></div>'
-    }
-    $("#yearListId .t_list").html(yearHtmlSystem);
-    console.log("yearList", $("#yearListId .t_list").html())*/
-
-    //
-
 
 })
 

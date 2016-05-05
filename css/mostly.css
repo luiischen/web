@@ -360,13 +360,16 @@ body .s_tabT {
     min-height: 1400px;
     overflow: hidden;
 }
-body .tabT #title {
+body .tabT #title,.title {
     text-align: center;
     font-size: 20px;
-    color: #404040;
+    margin-bottom:15px;
+    font-family:'宋体',Arial,Times;
+   /* color: #404040;
     margin-bottom: 28px;
-    font-weight: bold;
+    font-weight: bold;*/
 }
+
 body .tabT .aPrint {
     padding: 5px 7px 5px 25px;
     border: 1px solid #e5e5e5;
@@ -557,6 +560,16 @@ body .footer {
     border-collapse: collapse;
     border-spacing: 0;
     display: table;
+}
+.healthTab .imgCode{
+    /*font-family:"宋体",arial,times;*/
+    font-family:"Microsoft YaHei","宋体",STSong,SimHei;
+
+}
+.healthTab .imgCode p{
+   margin:0;
+    padding:0;
+    padding-bottom:6px;
 }
 .healthTab th,
 .healthTab td {
@@ -1060,7 +1073,7 @@ body .footer {
     max-height: 327px;
     overflow-y:auto;
     background: inherit;
-    height:100%;
+
 }
 #assigned .change-alert ul .class-box .class-list .right-item .checkbox-ico {
     display: block;

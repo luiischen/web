@@ -43,8 +43,6 @@ function termAndYear(){
     }
 }
 PersonHealth.prototype.getPersonListYear = function(){
-	//$("#choiceYear").html($($("#yearListId .list div")[0]).context.innerText);
-	//学年
     termAndYear();
 	$("#yearId").on("click",function(e){
 		 hideList();
@@ -84,10 +82,13 @@ PersonHealth.prototype.getPersonListYear = function(){
 
 
 PersonHealth.prototype.getPersonListGrade = function() {
+    if(localStorage.getItem("grade")=="暂无年级"){
+        $("#choiceProduct").html("暂无项目");
+        $("#productListIdHtml").html("");
+    }else{
+        getProjectItem(gradeBrr[localStorage.getItem("grade")]);
+    }
 
-   // $("#choiceGrade").html($($("#gradeListId .list div")[0]).context.innerText);
-    //getProjectItem(gradeBrr[$($("#gradeListId .list div")[0]).context.innerText]);
-    getProjectItem(gradeBrr[localStorage.getItem("grade")]);
     $("#gradeId").on("click", function(e) {
         hideList();
         if ($("#gradeListId").css("display") != "block") {
@@ -443,54 +444,6 @@ PersonHealth.prototype.defalutData = function(){
             })
 
 }
-//班级分割
-/*function classAndGrade(data) {
-    var arrGradeAndClass = new Array();
-    var commonData = dataArr;
-    var temp = ""
-    var gradeHtml = "";
-    var classHtml = "";
-    var classIdNum;
-    for (var i = 0; i < data.length; i++) {
-        var gradeName = commonData[data[i]].split(",")[0];
-        var className = commonData[data[i]].split(",")[1];
-        if (temp != gradeName) {
-            gradeNameModel.push(gradeName);
-            temp = gradeName;
-
-        }
-    }
-    gradeSort(gradeNameModel)
-    for (var j = 0; j < gradeNameModel.length; j++) {
-        gradeHtml += '<div><span>' + gradeNameModel[j] + '</span></div>'
-        $("#gradeListHtmlId").html(gradeHtml);
-        $("#choiceGrade").html($($("#gradeListHtmlId div")[0]).text());
-    }
-    for (var k = 0; k < gradeNameModel.length; k++) {
-        classNameModel[k] = new Array();
-        for (var j = 0; j < data.length; j++) {
-            if (gradeNameModel[k] == commonData[data[j]].split(",")[0]) {
-
-                classNameModel[k].push(commonData[data[j]].split(",")[1])
-            }
-        }
-        classSort(classNameModel[k])
-    }
-
-    for (var i = 0; i < gradeNameModel.length; i++) {
-        if ($("#choiceGrade").text() == gradeNameModel[i]) {
-            classIdNum = i;
-        }
-    }
-    var classHtml = "";
-    for (var j = 0; j < classNameModel[classIdNum].length; j++) {
-        classHtml += '<div><span>' + classNameModel[classIdNum][j] + '</span></div>';
-    }
-    $("#classListHtmlId").html(classHtml);
-    $("#choiceClass").html($($("#classListHtmlId div")[0]).text());
-    defalutClassText = $($("#classListHtmlId div")[0]).text();
-}*/
-
 
 function classAndGrade(data) {
     var arrGradeAndClass = new Array();
@@ -508,7 +461,8 @@ function classAndGrade(data) {
         }
     }
     //年级排序
-    gradeSort(gradeNameModel)
+    gradeSort(gradeNameModel);
+    gradeNameModel = unique1(gradeNameModel)
     for (var j = 0; j < gradeNameModel.length; j++) {
         gradeHtml += '<div><span>' + gradeNameModel[j] + '</span></div>'
 
@@ -528,15 +482,17 @@ function classAndGrade(data) {
             $("#classListHtmlId").html("")
             return;
         }
+        $("#choiceProduct").html("暂无项目");
+        $("#productListIdHtml").html("");
+        return;
+    }else if(newGrade=="全部年级"){
+        $("#choiceGrade").html($($("#gradeListHtmlId div")[0]).text());
     }
     else{
         $("#choiceGrade").html(newGrade);
     }
+
     getProjectItem(gradeBrr[$("#choiceGrade").text()]);
-    /*if($("#choiceGrade").text()=="暂无年级"){
-     $("#choiceClass").html("暂无班级");
-     return;
-     }*/
     for (var k = 0; k < gradeNameModel.length; k++) {
         classNameModel[k] = new Array();
         for (var j = 0; j < data.length; j++) {
@@ -608,10 +564,10 @@ PersonHealth.prototype.getAllData = function(){
 	printArea();
 }
 function getProjectItem(grade){
-    if($.trim(grade) == "暂无年级" || $.trim(grade) == undefined){
+    if($.trim(grade) == "暂无年级" || grade == undefined || grade == "undefined"){
         $("#choiceProduct").html("暂无项目");
         $("#productListIdHtml").html("");
-
+         return;
         //$("#productListId").html("");
     }else{
         var url = getURL() + "get_grade_sport_item";

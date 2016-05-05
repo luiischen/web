@@ -19,7 +19,6 @@ window.onload = function() {
 
     }
     PersonHealth.prototype.getPersonListGrade = function() {
-
        $("#choiceGrade").html($($("#gradeListId .list div")[0]).context.innerText);
     if($.trim($("#choiceGrade").text()) == "全部年级"){
         $("#classListHtmlId").html($($("#classListHtmlId div")[0]).text());

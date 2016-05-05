@@ -405,7 +405,6 @@ PersonHealth.prototype.defalutData = function() {
         type: "post",
         url: getURL()+"sport_item_report_rate",
         success: function(dataRes) {
-			console.log("dataFullLLL",dataRes)
             if(dataRes.data.sport_item_rate.length==0){
                 $("#noData").show();
                 $("#hasNoData").show();
@@ -483,7 +482,28 @@ PersonHealth.prototype.getAllData = function() {
    
 })
 
-	printArea();
+	printArea1();
+}
+function printArea1(){
+	$("#aPrint").on("click",function(){
+		$("#aPrint").hide();
+		$("#printChildF").hide();
+		$("#printF").hide();
+		$("#printS").hide();
+		$("#hasData").css("width","90%");
+		$("#shili").css("width","90%");
+
+		window.print();
+		setTimeout(function(){
+			$("#aPrint").show();
+			$("#printChildF").show();
+			$("#printF").show();
+			$("#printS").show();
+			$("#hasData").css("width","100%");
+			$("#shili").css("width","100%");
+		},100)
+
+	})
 }
 function getHistoryContent(term,year){
 	var url = getURL() + "get_default_class";
@@ -516,8 +536,8 @@ function getHistoryContent(term,year){
 		}
 	})
 }
-	//进行数据拆分和数据渲染
-/*function classAndGrade(data) {
+
+function classAndGrade(data) {
 	var arrGradeAndClass = new Array();
 	var commonData = dataArr;
 	var temp = ""
@@ -531,57 +551,11 @@ function getHistoryContent(term,year){
 		if (temp != gradeName) {
 			gradeNameModel.push(gradeName);
 			temp = gradeName;
-
-		}
-	}
-    gradeSort(gradeNameModel)
-	for (var j = 0; j < gradeNameModel.length; j++) {
-		gradeHtml += '<div><span>' + gradeNameModel[j] + '</span></div>'
-		$("#gradeListHtmlId").html(gradeHtml);
-		$("#choiceGrade").html($($("#gradeListHtmlId div")[0]).text());
-	}
-	for (var k = 0; k < gradeNameModel.length; k++) {
-		classNameModel[k] = new Array();
-		for (var j = 0; j < data.length; j++) {
-			if (gradeNameModel[k] == commonData[data[j]].split(",")[0]) {
-
-				classNameModel[k].push(commonData[data[j]].split(",")[1])
-			}
-		}
-        classSort(classNameModel[k]);
-	}
-
-	for (var i = 0; i < gradeNameModel.length; i++) {
-		if ($("#choiceGrade").text() == gradeNameModel[i]) {
-			classIdNum = i;
-		}
-	}
-	var classHtml = "";
-	classHtml += '<div><span>' + "全部班级" + '</span></div>';
-	for (var j = 0; j < classNameModel[classIdNum].length; j++) {
-		classHtml += '<div><span>' + classNameModel[classIdNum][j] + '</span></div>';
-	}
-	$("#classListHtmlId").html(classHtml);
-	$("#choiceClass").html($($("#classListHtmlId div")[0]).text());
-	defalutClassText = $($("#classListHtmlId div")[0]).text();
-}*/
-function classAndGrade(data) {
-	var arrGradeAndClass = new Array();
-	var commonData = dataArr;
-	var temp = ""
-	var gradeHtml = "";
-	var classHtml = "";
-	var classIdNum;
-	for (var i = 0; i < data.length; i++) {
-		var gradeName = commonData[data[i]].split(",")[0];
-		var className = commonData[data[i]].split(",")[1];
-		if (temp != gradeName) {
-			gradeNameModel.push(gradeName);
-			temp = gradeName;
 		}
 	}
 	//年级排序
 	gradeSort(gradeNameModel)
+	gradeNameModel = unique1(gradeNameModel)
 	for (var j = 0; j < gradeNameModel.length; j++) {
 		gradeHtml += '<div><span>' + gradeNameModel[j] + '</span></div>'
 

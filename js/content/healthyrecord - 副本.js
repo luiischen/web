@@ -10,7 +10,7 @@ function getYearPrint(){
     var year = date.getFullYear();
     var month = date.getMonth()+1;
     var date = date.getDate();
-    return year+" 年 "+month+" 月 "+date+" 日";
+    return year+"-"+month+"-"+date;
 }
 var gradeNameModel = [];
 var classNameModel = [];
@@ -262,12 +262,12 @@ function getChildHtml(childDataList){
     }else if(term_name=="第二学期"){
         term_name = "下学期";
     }*/
-    student_infoAddr += '<tr><td style="font-weight:bold;text-align: center;width:15%">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名</td><td style="text-align: center;width:20%">' + stu_name + '</td><td style="font-weight:bold;text-align: center;width:15%">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别</td><td style="text-align: center;width:10%">' + sex_name + '</td><td style="font-weight:bold;width:20%;text-align: center;">出生年月</td><td style="text-align: center;width:20%">' + stu_age + '</td></tr>';
-    student_infoAddr += '<tr><td style="font-weight:bold;text-align: center;">班&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;级</td><td style="text-align: center">' + class_name + '</td><td style="font-weight:bold;text-align: center;">学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;年</td><td style="text-align: center">' + year_name + '</td><td style="font-weight:bold;text-align: center;">学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;期</td><td style="text-align: center">' + term_name + '</td></tr>';
-    student_infoAddr += '<tr><td style="font-weight:bold;text-align: center;">学&nbsp;籍&nbsp;号</td><td colspan="3" style="text-align: center">' + stu_id + '</td><td style="font-weight:bold;text-align: center;">民&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;族</td><td style="text-align: center">' + stu_nation + '</td></tr>';
+    student_infoAddr += '<tr><td style="font-weight:bold;text-align: center;width:15%">姓名</td><td style="text-align: center;width:20%">' + stu_name + '</td><td style="font-weight:bold;text-align: center;width:15%">性别</td><td style="text-align: center;width:10%">' + sex_name + '</td><td style="font-weight:bold;width:20%;text-align: center;">出生年月</td><td style="text-align: center;width:20%">' + stu_age + '</td></tr>';
+    student_infoAddr += '<tr><td style="font-weight:bold;text-align: center;">班级</td><td style="text-align: center">' + class_name + '</td><td style="font-weight:bold;text-align: center;">学年</td><td style="text-align: center">' + year_name + '</td><td style="font-weight:bold;text-align: center;">学期</td><td style="text-align: center">' + term_name + '</td></tr>';
+    student_infoAddr += '<tr><td style="font-weight:bold;text-align: center;">学籍号</td><td colspan="3" style="text-align: center">' + stu_id + '</td><td style="font-weight:bold;text-align: center;">民族</td><td style="text-align: center">' + stu_nation + '</td></tr>';
     $("#stuInfoAddr").html(student_infoAddr);
     student_infoList += '<tr><th colspan="6" style="border-top:none ;text-align: center;background: #d8d8d8;">健康指标</th></tr>';
-    student_infoList += '<tr style="font-weight:bold;text-align: center"><td>健康指标</td><td>单项指标</td><td>&nbsp;&nbsp;&nbsp;成绩&nbsp;&nbsp;&nbsp;</td><td>得分</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;国家级&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>健康指数(地区)</td></tr>';
+    student_infoList += '<tr style="font-weight:bold;text-align: center"><td>健康指标</td><td>单项指标</td><td>成绩</td><td>得分</td><td>国家级</td><td>健康指数(地区)</td></tr>';
     var td = childDataList[0];
     var allItem = [];
     for(var i=0;i<td.form.length; i++){
@@ -393,22 +393,22 @@ function getChildHtml(childDataList){
     /*for(var b=0;b<td.suggestion.length;b++){
 
         if(td.suggestion[b].content.indexOf("BMI")>-1){*/
-            suggestHtml+='<p style="font-family:仿宋, monospace;">身体形态:</p>';
-            suggestHtml+='<p style="font-family:仿宋, monospace;margin-left: 220px;">'+td.suggestion[0].content+'</p>';
+            suggestHtml+='<p>身体形态:</p>';
+            suggestHtml+='<p style="margin-left: 220px;font-size: 14px;">'+td.suggestion[0].content+'</p>';
 /*
         }else{
             continue;
         }
     }*/
-    suggestHtml+='<p style="font-family:仿宋, monospace;">身体机能:</p>';
+    suggestHtml+='<p>身体机能:</p>';
     for(var b=0;b<td.suggestion.length;b++){
 
         if(td.suggestion[b].content.indexOf("左眼视力")>-1){
 
-            suggestHtml+='<p style="font-family:仿宋, monospace;margin-left: 220px;">视力:'+td.suggestion[b].content+'</p>';
+            suggestHtml+='<p style="margin-left: 220px;font-size: 14px;">视力:'+td.suggestion[b].content+'</p>';
 
         }else if(td.suggestion[b].content.indexOf("你的肺活量")>-1){
-            suggestHtml+='<p style="font-family:仿宋, monospace;margin-left: 220px;">肺活量:'+td.suggestion[b].content+'</p>';
+            suggestHtml+='<p style="margin-left: 220px;font-size: 14px;">肺活量:'+td.suggestion[b].content+'</p>';
         }
         else{
             continue;
@@ -416,19 +416,19 @@ function getChildHtml(childDataList){
         //suggestHtml+='<p>'+td.suggestion[b].content+'</p>';
 
     }
-    suggestHtml+='<p style="font-family:仿宋, monospace;">身体体能:</p>';
+    suggestHtml+='<p>身体体能:</p>';
     for(var b=0;b<td.suggestion.length;b++){
 
         if(td.suggestion[b].content.indexOf("速度")>-1){
 
-            suggestHtml+='<p style="font-family:仿宋, monospace;margin-left: 220px;">'+td.suggestion[b].content+'</p>';
+            suggestHtml+='<p style="margin-left: 220px;font-size: 14px;">'+td.suggestion[b].content+'</p>';
 
         }
         else if(td.suggestion[b].content.indexOf("耐力")>-1){
-            suggestHtml+='<p style="font-family:仿宋, monospace;margin-left: 220px;">'+td.suggestion[b].content+'</p>';
+            suggestHtml+='<p style="margin-left: 220px;font-size: 14px;">'+td.suggestion[b].content+'</p>';
         }
         else if(td.suggestion[b].content.indexOf("柔韧")>-1){
-            suggestHtml+='<p style="font-family:仿宋, monospace;margin-left: 220px;">'+td.suggestion[b].content+'</p>';
+            suggestHtml+='<p style="margin-left: 220px;font-size: 14px;">'+td.suggestion[b].content+'</p>';
         }
         else{
             continue;
@@ -436,11 +436,11 @@ function getChildHtml(childDataList){
     }
    if(childDataList[0].total_score==""|| childDataList[0].total_score==null){
        student_infoList += '<tr><td style="font-weight:bold;text-align: center;" colspan="1" >加分指标</td><td>一分钟跳绳(个)</td><td></td><td></td><td style="text-align: center">/</td><td style="text-align: center">/</td ></tr><tr><td style="font-weight:bold;text-align: center;letter-spacing:18px" colspan="4">总评:<span>分</td><td></td><td></td></tr><tr style="background:#d8d8d8"><th colspan="6" style="text-align:center;"><span>运动建议</span></th></tr>';
-       student_infoList += '<tr><td colspan="6" > <div class="imgCode"> <img src="img/code.png" style="float:left;;margin-top:-6px;width:200px;height:200px;"/><div style="float:left;margin-left:5px;margin-top:15px">'+suggestHtml+'</div><div></div>  <div style="width: 100%;padding: 20px;"><p align="left" style="font-weight: bold;;text-indent: 15px;clear:both;margin-left:35px;">运动指导</p><p align="right";color:rgba(50,20,30,.8);">签名：<span style="display:inline-block;width: 120px;border-bottom: 1px solid #ccc;"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><p></p><p style="float:right;margin-top:12px;margin-right:18px">制表时间：<span>'+getYearPrint()+'</span></p></div> </td></tr>'
+       student_infoList += '<tr><td colspan="6" > <div class="imgCode"> <img src="img/code.png" style="float:left;;margin-top:-6px;width:200px;height:200px;"/><div style="float:left;margin-left:5px;margin-top:15px">'+suggestHtml+'</div><div></div>  <div style="width: 100%;padding: 20px;"><p align="left" style="font-weight: bold;;text-indent: 15px;clear:both;margin-left:35px;">运动指导</p><p align="right";color:rgba(50,20,30,.8);">签名：<span style="display:inline-block;width: 120px;border-bottom: 1px solid #ccc;"></span></p><p align="right";color:rgba(50,20,30,.8);">签名：<span style="display:inline-block;width: 120px;border-bottom: 1px solid #ccc;"></span></p><p style="float:right;margin-top:12px;margin-right:18px">制表时间：<span>'+getYearPrint()+'</span></p></div> </td></tr>'
 
    }else{
-       student_infoList += '<tr><td style="font-weight:bold;text-align: center;" colspan="1">加分指标</td><td>一分钟跳绳(个)</td><td style="text-align: center">'+childDataList[0].addition[0].record+'</td><td style="text-align: center">'+childDataList[0].addition[0].score+'分</td><td style="text-align: center">/</td><td style="text-align: center">/</td></tr><tr><td style="font-weight:bold;text-align: center;letter-spacing:18px" colspan="3" >总评</td><td><div style="font-weight:bold;text-align: center">'+childDataList[0].total_score.toFixed(2)+'分</div></td><td style="font-weight:bold;text-align: center">'+ScoreType[childDataList[0].total_level]+'</td><td style="font-weight:bold;text-align: center">'+childDataList[0].total_area+'级</td></tr><tr style="background:#d8d8d8"><th colspan="6" style="text-align:center"><span>运动建议</span></th></tr>';
-       student_infoList += '<tr><td colspan="6" > <div class="imgCode"> <img src="img/code.png" style="float:left;;margin-top:-6px;width:200px;height:200px;"/><div style="margin-left:5px;margin-top:15px">'+suggestHtml+'</div><div></div>  <div style="width: 100%;padding: 20px;"><p align="left" style="font-weight: bold;text-indent: 15px;clear:both;margin-left:35px;">运动指导</p><p align="right";color:rgba(50,20,30,.8);">签名：<span style="display:inline-block;width: 120px;border-bottom: 1px solid #ccc;"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><p></p><p style="float:right;margin-top:12px;margin-right:18px">制表时间：<span>'+getYearPrint()+'</span></p></div> </td></tr>'
+       student_infoList += '<tr><td style="font-weight:bold;text-align: center;" colspan="1">加分指标</td><td>一分钟跳绳(个)</td><td style="text-align: center">'+childDataList[0].addition[0].record+'</td><td style="text-align: center">'+childDataList[0].addition[0].score+'分</td><td style="text-align: center">/</td><td style="text-align: center">/</td></tr><tr><td style="font-weight:bold;text-align: center;letter-spacing:18px" colspan="3" >总评</td><td><div style="text-align: center">'+childDataList[0].total_score.toFixed(2)+'分</div></td><td style="text-align: center">'+ScoreType[childDataList[0].total_level]+'</td><td style="text-align: center">'+childDataList[0].total_area+'级</td></tr><tr style="background:#d8d8d8"><th colspan="6" style="text-align:center"><span>运动建议</span></th></tr>';
+       student_infoList += '<tr><td colspan="6" > <div class="imgCode"> <img src="img/code.png" style="float:left;;margin-top:-6px;width:200px;height:200px;"/><div style="margin-left:5px;margin-top:15px">'+suggestHtml+'</div><div></div>  <div style="width: 100%;padding: 20px;"><p align="left" style="font-weight: bold;text-indent: 15px;clear:both;margin-left:35px;">运动指导</p><p align="right";color:rgba(50,20,30,.8);">签名：<span style="display:inline-block;width: 120px;border-bottom: 1px solid #ccc;"></span></p><p style="float:right;margin-top:12px;margin-right:18px">制表时间：<span>'+getYearPrint()+'</span></p></div> </td></tr>'
 
    }
     $("#healthItemList").html(student_infoList);
@@ -465,7 +465,7 @@ function getChildPrintHtml(childDataList) {
             var student_infoList = "";
             var stu_table = "";
             if (printNum != 0) {
-                stu_table+='<h2 class="title" style="font-family:仿宋, monospace;margin-top:1700px;margin-bottom: 28px">'+schoolName+'学生健康成长档案</h2>'
+                stu_table+='<h2 class="title" style="margin-top:1700px;margin-bottom: 28px">'+schoolName+'学生健康成长档案</h2>'
                 stu_table += '<div class="stuInfo"><table class="healthTab">';
             } else {
 
@@ -482,14 +482,14 @@ function getChildPrintHtml(childDataList) {
             stu_nation = NationArr[childDataList[printNum][0].nationality];
             term_name = dataTermBrr[childDataList[printNum][0].term];
 
-            student_infoAddr += '<tr><td style="font-weight:bold;text-align: center;width:15%">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名</td><td style="text-align: center;width:20%">' + stu_name + '</td><td style="font-weight:bold;text-align: center;width:15%">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别</td><td style="text-align: center;width:10%">' + sex_name + '</td><td style="font-weight:bold;width:20%;text-align: center;">出生年月</td><td style="text-align: center;width:20%">' + stu_age + '</td></tr>';
-            student_infoAddr += '<tr><td style="font-weight:bold;text-align: center;">班&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;级</td><td style="text-align: center">' + class_name + '</td><td style="font-weight:bold;text-align: center;">学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;年</td><td style="text-align: center">' + year_name + '</td><td style="font-weight:bold;text-align: center;">学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;期</td><td style="text-align: center">' + term_name + '</td></tr>';
-            student_infoAddr += '<tr><td style="font-weight:bold;text-align: center;">学&nbsp;&nbsp;籍&nbsp;&nbsp;号</td><td colspan="3" style="text-align: center">' + stu_id + '</td><td style="font-weight:bold;text-align: center;">民&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;族</td><td style="text-align: center">' + stu_nation + '</td></tr>';
+            student_infoAddr += '<tr><td style="font-weight:bold;text-align: center;width:15%">姓名</td><td style="text-align: center;width:20%">' + stu_name + '</td><td style="font-weight:bold;text-align: center;width:15%">性别</td><td style="text-align: center;width:10%">' + sex_name + '</td><td style="font-weight:bold;width:20%;text-align: center;">出生年月</td><td style="text-align: center;width:20%">' + stu_age + '</td></tr>';
+            student_infoAddr += '<tr><td style="font-weight:bold;text-align: center;">班级</td><td style="text-align: center">' + class_name + '</td><td style="font-weight:bold;text-align: center;">学年</td><td style="text-align: center">' + year_name + '</td><td style="font-weight:bold;text-align: center;">学期</td><td style="text-align: center">' + term_name + '</td></tr>';
+            student_infoAddr += '<tr><td style="font-weight:bold;text-align: center;">学籍号</td><td colspan="3" style="text-align: center">' + stu_id + '</td><td style="font-weight:bold;text-align: center;">民族</td><td style="text-align: center">' + stu_nation + '</td></tr>';
             stu_table += student_infoAddr;
             stu_table += '</table>';
             student_infoList+='<table class="healthTab">';
             student_infoList += '<tr><th colspan="6" style="border-top:none ;text-align: center;background: #d8d8d8;">健康指标</th></tr>';
-            student_infoList += '<tr style="font-weight:bold;text-align: center"><td>健康指标</td><td>单项指标</td><td>&nbsp;&nbsp;&nbsp;成绩&nbsp;&nbsp;&nbsp;</td><td>得分</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;国家级&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>健康指数(地区)</td></tr>';
+            student_infoList += '<tr style="font-weight:bold;text-align: center"><td>健康指标</td><td>单项指标</td><td>成绩</td><td>得分</td><td>国家级</td><td>健康指数(地区)</td></tr>';
 
             var td = childDataList[printNum][0];
             var allItem = [];
@@ -613,40 +613,40 @@ function getChildPrintHtml(childDataList) {
 /*            for(var b=0;b<td.suggestion.length;b++){
 
                 if(td.suggestion[b].content.indexOf("BMI")>-1){*/
-                    suggestHtml+='<p style="font-family:仿宋, monospace;">身体形态:</p>';
-                    suggestHtml+='<p style="font-family:仿宋, monospace;margin-left: 220px;">'+td.suggestion[0].content+'</p>';
+                    suggestHtml+='<p>身体形态:</p>';
+                    suggestHtml+='<p style="margin-left: 220px;font-size: 14px;">'+td.suggestion[0].content+'</p>';
 /*
                 }else{
                     continue;
                 }
             }*/
-            suggestHtml+='<p style="font-family:仿宋, monospace;">身体机能:</p>';
+            suggestHtml+='<p>身体机能:</p>';
             for(var b=0;b<td.suggestion.length;b++){
 
                 if(td.suggestion[b].content.indexOf("视力")>-1){
 
-                    suggestHtml+='<p style="font-family:仿宋, monospace;margin-left: 220px;">视力:'+td.suggestion[b].content+'</p>';
+                    suggestHtml+='<p style="margin-left: 220px;font-size: 14px;">视力:'+td.suggestion[b].content+'</p>';
 
                 }else if(td.suggestion[b].content.indexOf("你的肺活量")>-1){
-                    suggestHtml+='<p style="font-family:仿宋, monospace;margin-left: 220px;">肺活量:'+td.suggestion[b].content+'</p>';
+                    suggestHtml+='<p style="margin-left: 220px;font-size: 14px;">肺活量:'+td.suggestion[b].content+'</p>';
                 }
                 else{
                     continue;
                 }
             }
-            suggestHtml+='<p style="font-family:仿宋, monospace;">身体体能:</p>';
+            suggestHtml+='<p>身体体能:</p>';
             for(var b=0;b<td.suggestion.length;b++){
 
                 if(td.suggestion[b].content.indexOf("速度")>-1){
 
-                    suggestHtml+='<p style="font-family:仿宋, monospace;margin-left: 220px;">'+td.suggestion[b].content+'</p>';
+                    suggestHtml+='<p style="margin-left: 220px;font-size: 14px;">'+td.suggestion[b].content+'</p>';
 
                 }
                 else if(td.suggestion[b].content.indexOf("耐力")>-1){
-                    suggestHtml+='<p style="font-family:仿宋, monospace;margin-left: 220px;">'+td.suggestion[b].content+'</p>';
+                    suggestHtml+='<p style="margin-left: 220px;font-size: 14px;">'+td.suggestion[b].content+'</p>';
                 }
                 else if(td.suggestion[b].content.indexOf("柔韧")>-1){
-                    suggestHtml+='<p style="font-family:仿宋, monospace;margin-left: 220px;">'+td.suggestion[b].content+'</p>';
+                    suggestHtml+='<p style="margin-left: 220px;font-size: 14px;">'+td.suggestion[b].content+'</p>';
                 }
                 else{
                     continue;
@@ -654,11 +654,11 @@ function getChildPrintHtml(childDataList) {
             }
             if(childDataList[printNum][0].total_score==""|| childDataList[printNum][0].total_score==null){
                 student_infoList += '<tr><td style="font-weight:bold;text-align: center;" colspan="1" >加分指标</td><td>一分钟跳绳(个)</td><td></td><td></td><td style="text-align: center">/</td><td style="text-align: center">/</td ></tr><tr><td style="font-weight:bold;text-align: center;letter-spacing:18px" colspan="4">总评:<span>分</td><td></td><td></td></tr><tr style="background:#d8d8d8"><th colspan="6" style="text-align:center;"><span>运动建议</span></th></tr>';
-                student_infoList += '<tr><td colspan="6" > <div class="imgCode"> <img src="img/code.png" style="float:left;margin-top:-6px;width:200px;height:200px;";/><div style="float:left;margin-top:15px">'+suggestHtml+'</div><div></div>  <div style="width: 100%;padding: 20px;"><p align="left" style="font-weight: bold;text-indent: 15px;clear:both;margin-left:35px;">运动指导</p><p align="right";color:rgba(50,20,30,.8);">签名：<span style="display:inline-block;width: 120px;border-bottom: 1px solid #ccc;"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><p></p><p align="right";color:rgba(50,20,30,.8);">制表时间：<span>'+getYearPrint()+'</span></p></div> </td></tr>'
+                student_infoList += '<tr><td colspan="6" > <div class="imgCode"> <img src="img/code.png" style="float:left;margin-top:-6px;width:200px;height:200px;";/><div style="float:left;margin-top:15px">'+suggestHtml+'</div><div></div>  <div style="width: 100%;padding: 20px;"><p align="left" style="font-weight: bold;text-indent: 15px;clear:both;margin-left:35px;">运动指导</p><p align="right";color:rgba(50,20,30,.8);">签名：<span style="display:inline-block;width: 120px;border-bottom: 1px solid #ccc;"></span></p><p align="right";color:rgba(50,20,30,.8);">制表时间：<span>'+getYearPrint()+'</span></p></div> </td></tr>'
 
             }else{
-                student_infoList += '<tr><td style="font-weight:bold;text-align: center;" colspan="1">加分指标</td><td>一分钟跳绳(个)</td><td style="text-align: center">'+childDataList[printNum][0].addition[0].record+'</td><td style="text-align: center">'+childDataList[printNum][0].addition[0].score+'分</td><td style="text-align: center">/</td><td style="text-align: center">/</td></tr><tr><td style="font-weight:bold;text-align: center;letter-spacing:18px" colspan="3" >总评</td><td><div style="font-weight:bold;text-align: center">'+childDataList[printNum][0].total_score.toFixed(2)+'分</div></td><td style="font-weight:bold;text-align: center">'+ScoreType[childDataList[printNum][0].total_level]+'</td><td style="font-weight:bold;text-align: center">'+childDataList[printNum][0].total_area+'级</td></tr><tr style="background:#d8d8d8"><th colspan="6" style="text-align:center"><span>运动建议</span></th></tr>';
-                student_infoList += '<tr><td colspan="6" > <div class="imgCode"> <div style="float:left;;margin-top:-6px;"><img src="img/code.png" style="width:200px;height:200px;"/></div><div style="margin-left:5px;margin-top:15px">'+suggestHtml+'</div><div></div>  <div style="width: 100%;padding: 20px;"><p align="left" style="font-weight: bold;text-indent: 15px;clear:both;margin-left:35px;">运动指导</p><p align="right";color:rgba(50,20,30,.8);">签名：<span style="display:inline-block;width: 120px;border-bottom: 1px solid #ccc;"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><p></p><p style="float:right;margin-top:12px;margin-right:18px">制表时间：<span>'+getYearPrint()+'</span></p></div> </td></tr>'
+                student_infoList += '<tr><td style="font-weight:bold;text-align: center;" colspan="1">加分指标</td><td>一分钟跳绳(个)</td><td style="text-align: center">'+childDataList[printNum][0].addition[0].record+'</td><td style="text-align: center">'+childDataList[printNum][0].addition[0].score+'分</td><td style="text-align: center">/</td><td style="text-align: center">/</td></tr><tr><td style="font-weight:bold;text-align: center;letter-spacing:18px" colspan="3" >总评</td><td><div style="text-align: center">'+childDataList[printNum][0].total_score.toFixed(2)+'分</div></td><td style="text-align: center">'+ScoreType[childDataList[printNum][0].total_level]+'</td><td style="text-align: center">'+childDataList[printNum][0].total_area+'级</td></tr><tr style="background:#d8d8d8"><th colspan="6" style="text-align:center"><span>运动建议</span></th></tr>';
+                student_infoList += '<tr><td colspan="6" > <div class="imgCode"> <div style="float:left;;margin-top:-6px;"><img src="img/code.png" style="width:200px;height:200px;"/></div><div style="margin-left:5px;margin-top:15px">'+suggestHtml+'</div><div></div>  <div style="width: 100%;padding: 20px;"><p align="left" style="font-weight: bold;text-indent: 15px;clear:both;margin-left:35px;">运动指导</p><p align="right";color:rgba(50,20,30,.8);">签名：<span style="display:inline-block;width: 120px;border-bottom: 1px solid #ccc;"></span></p><p style="float:right;margin-top:12px;margin-right:18px">制表时间：<span>'+getYearPrint()+'</span></p></div> </td></tr>'
 
             }
            student_infoList+='</table>'

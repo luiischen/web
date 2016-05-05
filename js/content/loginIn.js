@@ -55,7 +55,8 @@ function loginIn(){
                     localStorage.setItem("userName",userNum);
                     localStorage.setItem("schoolId",data.data.school_id);
                     localStorage.setItem("is_root",data.data.is_root);
-                    localStorage.setItem("nick",data.data.nick)
+                    localStorage.setItem("nick",data.data.nick);
+                    localStorage.setItem("city",data.data.city);
                     var clickNum = 0;
                     localStorage.setItem("clickNum",clickNum)
                     //var dataSchoolInfo ={"name":data.data.nick,"schoolName":data.data.school,"is_root":data.data.is_root};
@@ -139,7 +140,7 @@ function loginIn(){
     });
 }
 $(document).ready(function(){
-    if(!$.cookie("username")){
+    /*if(!$.cookie("username")){
         if(!($.NV('name')=="chrome" || $.NV('name')=="firefox" || $.NV('name')=="360安全浏览器")){
             new  ModelCon("为了不影响您的体验,请您使用最新的360安全浏览器或者火狐浏览器或者谷歌浏览器");
             //css("height",175+"px")
@@ -150,7 +151,7 @@ $(document).ready(function(){
                 $(".markHide").hide();
             })
         }
-    }
+    }*/
    localStorage.clear();
    localStorage.removeItem("schoolName");
     localStorage.removeItem("userName");

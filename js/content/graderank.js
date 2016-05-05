@@ -379,7 +379,8 @@ function classAndGrade(data) {
 
 		}
 	}
-    gradeSort(gradeNameModel)
+    gradeSort(gradeNameModel);
+	gradeNameModel = unique1(gradeNameModel)
 	for (var j = 0; j < gradeNameModel.length; j++) {
 		gradeHtml += '<div><span>' + gradeNameModel[j] + '</span></div>'
 	}
@@ -397,6 +398,8 @@ function classAndGrade(data) {
 			$("#productListIdHtml").html("");
 			return;
 		}
+	}else if(newGrade=="全部年级"){
+		$("#choiceGrade").html($($("#gradeListHtmlId div")[0]).text());
 	}
 	else{
 		$("#choiceGrade").html(newGrade);
@@ -408,7 +411,7 @@ function classAndGrade(data) {
 
 }
 function getProjectItem(grade){
-	if($.trim(grade) == "暂无年级" || $.trim(grade) == undefined){
+	if($.trim(grade) == "暂无年级" || grade == undefined){
 		$("#choiceProduct").html("暂无项目");
 		$("#productListIdHtml").html("");
 
