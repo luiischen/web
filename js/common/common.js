@@ -2,8 +2,8 @@
  autohr:lizhihu
  公共方法
  */
-var url = "http://121.41.47.79:3000/";
-//var url = "http://csh.linpoo.cn:3000/";
+//var url = "http://121.41.47.79:3000/";
+var url = "http://csh.linpoo.cn:3000/";
 //var url="http://172.16.170.69:3000/"
 var isScoreIn = false;
 var COOKIE_NAME = 'userNameLogin';  
