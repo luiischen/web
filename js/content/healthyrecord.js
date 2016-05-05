@@ -394,7 +394,7 @@ function getChildHtml(childDataList){
 
         if(td.suggestion[b].content.indexOf("BMI")>-1){*/
             suggestHtml+='<p style="font-family:仿宋, monospace;">身体形态:</p>';
-            suggestHtml+='<p style="font-family:仿宋, monospace;margin-left: 220px;">'+td.suggestion[0].content+'</p>';
+            suggestHtml+='<p style="font-family:仿宋, monospace;margin-left: 20px;">'+td.suggestion[0].content+'</p>';
 /*
         }else{
             continue;
@@ -405,10 +405,10 @@ function getChildHtml(childDataList){
 
         if(td.suggestion[b].content.indexOf("左眼视力")>-1){
 
-            suggestHtml+='<p style="font-family:仿宋, monospace;margin-left: 220px;">视力:'+td.suggestion[b].content+'</p>';
+            suggestHtml+='<p style="font-family:仿宋, monospace;margin-left: 20px;">视力:'+td.suggestion[b].content+'</p>';
 
         }else if(td.suggestion[b].content.indexOf("你的肺活量")>-1){
-            suggestHtml+='<p style="font-family:仿宋, monospace;margin-left: 220px;">肺活量:'+td.suggestion[b].content+'</p>';
+            suggestHtml+='<p style="font-family:仿宋, monospace;margin-left: 20px;">肺活量:'+td.suggestion[b].content+'</p>';
         }
         else{
             continue;
@@ -421,14 +421,14 @@ function getChildHtml(childDataList){
 
         if(td.suggestion[b].content.indexOf("速度")>-1){
 
-            suggestHtml+='<p style="font-family:仿宋, monospace;margin-left: 220px;">'+td.suggestion[b].content+'</p>';
+            suggestHtml+='<p style="font-family:仿宋, monospace;margin-left: 20px;">'+td.suggestion[b].content+'</p>';
 
         }
         else if(td.suggestion[b].content.indexOf("耐力")>-1){
-            suggestHtml+='<p style="font-family:仿宋, monospace;margin-left: 220px;">'+td.suggestion[b].content+'</p>';
+            suggestHtml+='<p style="font-family:仿宋, monospace;margin-left: 20px;">'+td.suggestion[b].content+'</p>';
         }
         else if(td.suggestion[b].content.indexOf("柔韧")>-1){
-            suggestHtml+='<p style="font-family:仿宋, monospace;margin-left: 220px;">'+td.suggestion[b].content+'</p>';
+            suggestHtml+='<p style="font-family:仿宋, monospace;margin-left: 20px;">'+td.suggestion[b].content+'</p>';
         }
         else{
             continue;
@@ -436,11 +436,11 @@ function getChildHtml(childDataList){
     }
    if(childDataList[0].total_score==""|| childDataList[0].total_score==null){
        student_infoList += '<tr><td style="font-weight:bold;text-align: center;" colspan="1" >加分指标</td><td>一分钟跳绳(个)</td><td></td><td></td><td style="text-align: center">/</td><td style="text-align: center">/</td ></tr><tr><td style="font-weight:bold;text-align: center;letter-spacing:18px" colspan="4">总评:<span>分</td><td></td><td></td></tr><tr style="background:#d8d8d8"><th colspan="6" style="text-align:center;"><span>运动建议</span></th></tr>';
-       student_infoList += '<tr><td colspan="6" > <div class="imgCode"> <img src="img/code.png" style="float:left;;margin-top:-6px;width:200px;height:200px;"/><div style="float:left;margin-left:5px;margin-top:15px">'+suggestHtml+'</div><div></div>  <div style="width: 100%;padding: 20px;"><p align="left" style="font-weight: bold;;text-indent: 15px;clear:both;margin-left:35px;">运动指导</p><p align="right";color:rgba(50,20,30,.8);">签名：<span style="display:inline-block;width: 120px;border-bottom: 1px solid #ccc;"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><p></p><p style="float:right;margin-top:12px;margin-right:18px">制表时间：<span>'+getYearPrint()+'</span></p></div> </td></tr>'
+       student_infoList += '<tr><td colspan="6" ><table border="0" frame=void><tr><td style="border-right:none;width:202px"> <div class="imgCode"> <img src="img/code.png" style="float:left;;margin-top:-6px;width:200px;height:200px;"/><p align="left" style="font-weight: bold;text-indent: 15px;clear:both;margin-left:35px;">运动指导</p></div></td><td style="border-left:none"><div style="margin-left:5px;margin-top:15px">'+suggestHtml+'</div>  <div style="width: 100%;padding: 20px;"><p align="right";color:rgba(50,20,30,.8);">签名：<span style="display:inline-block;width: 120px;border-bottom: 1px solid #ccc;"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><p></p><p style="float:right;margin-top:12px;margin-right:18px">制表时间：<span>'+getYearPrint()+'</span></p></div></td></tr></table> </td></tr>'
 
    }else{
        student_infoList += '<tr><td style="font-weight:bold;text-align: center;" colspan="1">加分指标</td><td>一分钟跳绳(个)</td><td style="text-align: center">'+childDataList[0].addition[0].record+'</td><td style="text-align: center">'+childDataList[0].addition[0].score+'分</td><td style="text-align: center">/</td><td style="text-align: center">/</td></tr><tr><td style="font-weight:bold;text-align: center;letter-spacing:18px" colspan="3" >总评</td><td><div style="font-weight:bold;text-align: center">'+childDataList[0].total_score.toFixed(2)+'分</div></td><td style="font-weight:bold;text-align: center">'+ScoreType[childDataList[0].total_level]+'</td><td style="font-weight:bold;text-align: center">'+childDataList[0].total_area+'级</td></tr><tr style="background:#d8d8d8"><th colspan="6" style="text-align:center"><span>运动建议</span></th></tr>';
-       student_infoList += '<tr><td colspan="6" > <div class="imgCode"> <img src="img/code.png" style="float:left;;margin-top:-6px;width:200px;height:200px;"/><div style="margin-left:5px;margin-top:15px">'+suggestHtml+'</div><div></div>  <div style="width: 100%;padding: 20px;"><p align="left" style="font-weight: bold;text-indent: 15px;clear:both;margin-left:35px;">运动指导</p><p align="right";color:rgba(50,20,30,.8);">签名：<span style="display:inline-block;width: 120px;border-bottom: 1px solid #ccc;"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><p></p><p style="float:right;margin-top:12px;margin-right:18px">制表时间：<span>'+getYearPrint()+'</span></p></div> </td></tr>'
+       student_infoList += '<tr><td colspan="6" ><table border="0" frame=void><tr><td style="border-right:none;width:202px"> <div class="imgCode"> <img src="img/code.png" style="float:left;;margin-top:-6px;width:200px;height:200px;"/><p align="left" style="font-weight: bold;text-indent: 15px;clear:both;margin-left:35px;">运动指导</p></div></td><td style="border-left:none"><div style="margin-left:5px;margin-top:15px">'+suggestHtml+'</div>  <div style="width: 100%;padding: 20px;"><p align="right";color:rgba(50,20,30,.8);">签名：<span style="display:inline-block;width: 120px;border-bottom: 1px solid #ccc;"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><p></p><p style="float:right;margin-top:12px;margin-right:18px">制表时间：<span>'+getYearPrint()+'</span></p></div></td></tr></table> </td></tr>'
 
    }
     $("#healthItemList").html(student_infoList);
@@ -614,7 +614,7 @@ function getChildPrintHtml(childDataList) {
 
                 if(td.suggestion[b].content.indexOf("BMI")>-1){*/
                     suggestHtml+='<p style="font-family:仿宋, monospace;">身体形态:</p>';
-                    suggestHtml+='<p style="font-family:仿宋, monospace;margin-left: 220px;">'+td.suggestion[0].content+'</p>';
+                    suggestHtml+='<p style="font-family:仿宋, monospace;margin-left: 20px;">'+td.suggestion[0].content+'</p>';
 /*
                 }else{
                     continue;
@@ -625,10 +625,10 @@ function getChildPrintHtml(childDataList) {
 
                 if(td.suggestion[b].content.indexOf("视力")>-1){
 
-                    suggestHtml+='<p style="font-family:仿宋, monospace;margin-left: 220px;">视力:'+td.suggestion[b].content+'</p>';
+                    suggestHtml+='<p style="font-family:仿宋, monospace;margin-left: 20px;">视力:'+td.suggestion[b].content+'</p>';
 
                 }else if(td.suggestion[b].content.indexOf("你的肺活量")>-1){
-                    suggestHtml+='<p style="font-family:仿宋, monospace;margin-left: 220px;">肺活量:'+td.suggestion[b].content+'</p>';
+                    suggestHtml+='<p style="font-family:仿宋, monospace;margin-left: 20px;">肺活量:'+td.suggestion[b].content+'</p>';
                 }
                 else{
                     continue;
@@ -639,14 +639,14 @@ function getChildPrintHtml(childDataList) {
 
                 if(td.suggestion[b].content.indexOf("速度")>-1){
 
-                    suggestHtml+='<p style="font-family:仿宋, monospace;margin-left: 220px;">'+td.suggestion[b].content+'</p>';
+                    suggestHtml+='<p style="font-family:仿宋, monospace;margin-left: 20px;">'+td.suggestion[b].content+'</p>';
 
                 }
                 else if(td.suggestion[b].content.indexOf("耐力")>-1){
-                    suggestHtml+='<p style="font-family:仿宋, monospace;margin-left: 220px;">'+td.suggestion[b].content+'</p>';
+                    suggestHtml+='<p style="font-family:仿宋, monospace;margin-left: 20px;">'+td.suggestion[b].content+'</p>';
                 }
                 else if(td.suggestion[b].content.indexOf("柔韧")>-1){
-                    suggestHtml+='<p style="font-family:仿宋, monospace;margin-left: 220px;">'+td.suggestion[b].content+'</p>';
+                    suggestHtml+='<p style="font-family:仿宋, monospace;margin-left: 20px;">'+td.suggestion[b].content+'</p>';
                 }
                 else{
                     continue;
@@ -654,11 +654,11 @@ function getChildPrintHtml(childDataList) {
             }
             if(childDataList[printNum][0].total_score==""|| childDataList[printNum][0].total_score==null){
                 student_infoList += '<tr><td style="font-weight:bold;text-align: center;" colspan="1" >加分指标</td><td>一分钟跳绳(个)</td><td></td><td></td><td style="text-align: center">/</td><td style="text-align: center">/</td ></tr><tr><td style="font-weight:bold;text-align: center;letter-spacing:18px" colspan="4">总评:<span>分</td><td></td><td></td></tr><tr style="background:#d8d8d8"><th colspan="6" style="text-align:center;"><span>运动建议</span></th></tr>';
-                student_infoList += '<tr><td colspan="6" > <div class="imgCode"> <img src="img/code.png" style="float:left;margin-top:-6px;width:200px;height:200px;";/><div style="float:left;margin-top:15px">'+suggestHtml+'</div><div></div>  <div style="width: 100%;padding: 20px;"><p align="left" style="font-weight: bold;text-indent: 15px;clear:both;margin-left:35px;">运动指导</p><p align="right";color:rgba(50,20,30,.8);">签名：<span style="display:inline-block;width: 120px;border-bottom: 1px solid #ccc;"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><p></p><p align="right";color:rgba(50,20,30,.8);">制表时间：<span>'+getYearPrint()+'</span></p></div> </td></tr>'
+                student_infoList += '<tr><td colspan="6" ><table border="0" frame=void><tr><td style="border-right:none;width:202px"> <div class="imgCode"> <img src="img/code.png" style="float:left;;margin-top:-6px;width:200px;height:200px;"/><p align="left" style="font-weight: bold;text-indent: 15px;clear:both;margin-left:35px;">运动指导</p></div></td><td style="border-left:none"><div style="margin-left:5px;margin-top:15px">'+suggestHtml+'</div>  <div style="width: 100%;padding: 20px;"><p align="right";color:rgba(50,20,30,.8);">签名：<span style="display:inline-block;width: 120px;border-bottom: 1px solid #ccc;"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><p></p><p style="float:right;margin-top:12px;margin-right:18px">制表时间：<span>'+getYearPrint()+'</span></p></div></td></tr></table> </td></tr>'
 
             }else{
                 student_infoList += '<tr><td style="font-weight:bold;text-align: center;" colspan="1">加分指标</td><td>一分钟跳绳(个)</td><td style="text-align: center">'+childDataList[printNum][0].addition[0].record+'</td><td style="text-align: center">'+childDataList[printNum][0].addition[0].score+'分</td><td style="text-align: center">/</td><td style="text-align: center">/</td></tr><tr><td style="font-weight:bold;text-align: center;letter-spacing:18px" colspan="3" >总评</td><td><div style="font-weight:bold;text-align: center">'+childDataList[printNum][0].total_score.toFixed(2)+'分</div></td><td style="font-weight:bold;text-align: center">'+ScoreType[childDataList[printNum][0].total_level]+'</td><td style="font-weight:bold;text-align: center">'+childDataList[printNum][0].total_area+'级</td></tr><tr style="background:#d8d8d8"><th colspan="6" style="text-align:center"><span>运动建议</span></th></tr>';
-                student_infoList += '<tr><td colspan="6" > <div class="imgCode"> <div style="float:left;;margin-top:-6px;"><img src="img/code.png" style="width:200px;height:200px;"/></div><div style="margin-left:5px;margin-top:15px">'+suggestHtml+'</div><div></div>  <div style="width: 100%;padding: 20px;"><p align="left" style="font-weight: bold;text-indent: 15px;clear:both;margin-left:35px;">运动指导</p><p align="right";color:rgba(50,20,30,.8);">签名：<span style="display:inline-block;width: 120px;border-bottom: 1px solid #ccc;"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><p></p><p style="float:right;margin-top:12px;margin-right:18px">制表时间：<span>'+getYearPrint()+'</span></p></div> </td></tr>'
+                student_infoList += '<tr><td colspan="6" ><table border="0" frame=void><tr><td style="border-right:none;width:202px"> <div class="imgCode"> <img src="img/code.png" style="float:left;;margin-top:-6px;width:200px;height:200px;"/><p align="left" style="font-weight: bold;text-indent: 15px;clear:both;margin-left:35px;">运动指导</p></div></td><td style="border-left:none"><div style="margin-left:5px;margin-top:15px">'+suggestHtml+'</div>  <div style="width: 100%;padding: 20px;"><p align="right";color:rgba(50,20,30,.8);">签名：<span style="display:inline-block;width: 120px;border-bottom: 1px solid #ccc;"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><p></p><p style="float:right;margin-top:12px;margin-right:18px">制表时间：<span>'+getYearPrint()+'</span></p></div></td></tr></table> </td></tr>'
 
             }
            student_infoList+='</table>'
