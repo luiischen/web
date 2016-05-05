@@ -468,7 +468,7 @@ function getChildPrintHtml(childDataList) {
             var student_infoList = "";
             var stu_table = "";
             if (printNum != 0) {
-                stu_table+='<h2 class="title" style="font-family:仿宋, monospace;font-size: 28px;font-weight:bold;margin-top:1700px;margin-bottom: 28px">'+schoolName+'学生健康成长档案</h2>'
+                stu_table+='<h2 class="title" style="font-family:仿宋, monospace;font-size: 28px;font-weight:bold;margin-top:1700px;margin-bottom: 16px"><p>&nbsp;</p>'+schoolName+'学生健康成长档案</h2>'
                 stu_table += '<div class="stuInfo"><table class="healthTab">';
             } else {
 
