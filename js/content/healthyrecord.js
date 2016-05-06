@@ -295,7 +295,7 @@ function getChildHtml(childDataList){
         var isZero="/"
         var BMIlevalCountry="";
         if(td.form[a].score=="0" || td.form[a].score==""){
-            isZero="/"
+            //isZero="/"
         }else{
             isZero=td.form[a].score;
         }
@@ -518,10 +518,10 @@ function getChildPrintHtml(childDataList) {
                 }
             }
             for (var a = 0; a < td.form.length; a++) {
-                var isZero=""
+                var isZero="/"
                 var BMIlevalCountry="";
                 if(td.form[a].score=="0" || td.form[a].score==""){
-                    isZero="0"
+                    //isZero="0"
                 }else{
                     isZero=td.form[a].score;
                 }
